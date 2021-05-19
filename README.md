@@ -120,6 +120,18 @@ e2 = times_rodadas(e1[0]) # e2 armazena os jogos de cada time, ordenados pelas r
 e3 = times_datas(e2) # e3 armazena os jogos de cada time, ordenados pela data, separados por dentro e fora de casa.
 ~~~~
 
-# Modelos
+# Próximos passos
 
-Em desenvolvimento...
+Reinicialização do projeto. Serão feitas melhorias nas etapas de requisição e banco de dados, para prosseguirmos para a modelagem.
+
+- Requisição e Banco de dados
+  - Melhorias no código de requerimento
+  - Tratamento do objeto req.minuto_a_minuto, transformar em várias tabelas de forma a obter dados estruturados
+  - requerimento nas páginas dos jogadores
+- Banco de dados
+  - Verificar uma possibilidade: Ao inserir um novo campeonato, passamos apenas seu nome (identificado no site ESPN) e uma função busca um jogo_id de uma partida do campeonato, contudo a função buscará todos os jogo_id do campeonato em torno do jogo_id de partida
+  - No banco de dados, teremos várias tabelas de falta, finalização, gols, times, jogadoes,... Contudo, todos os campeonatos serão salvos nas mesmas tabelas, e poderão ser filtrados por um código pré-determinado
+  - Com as funções de requisição prontas, construir a pipeline que gera o banco de dados. Pesquisar uma ferramenta para disparar a execução da pipeline, e acompanhar sua execução, da melhor forma possível.
+- Melhorar versionamento do projeto
+  - utilizar melhor o git
+  - Criar um kernel para o projeto, para mantermos sempre um arquivo de requirements atualizado
