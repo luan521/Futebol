@@ -1,0 +1,3 @@
+similariedade entre strings
+
+https://medium.com/@everton.tomalok/calculando-similaridades-entre-strings-ebbea21d5b7a
