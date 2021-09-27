@@ -2,101 +2,15 @@ import requests as r
 from html2json import collect
 import json
 from bs4 import BeautifulSoup
-
-def SemEspaco(string):
-    s=[]
-    i=0
-    j=0
-    stop =False
-    while not stop:
-        
-        while string[i] == ' ' and not stop:
-            if i < len(string)-1:
-                i += 1
-            if i == len(string)-1:
-                stop=True
-        
-        s.append('')
-        
-        while string[i] != ' ' and not stop:
-            s[j] = s[j]+string[i]
-            if i < len(string)-1:
-                i += 1
-            if i==len(string)-1:
-                if string[i] != ' ':
-                    s[j] = s[j]+string[i]
-                stop=True
-        j +=1
-    return s
-
-def padrao(p,string):
-    
-    ind = []
-    i=0
-    while i+len(p) <= len(string): 
-        if string[i:i+len(p)] == p:
-            ind.append([i,i+len(p)])
-        i += 1
-    return ind
-
-def InicioFim(inicio,fim,string):
-    padrao1 = padrao(inicio,string)
-    padrao2 = padrao(fim,string)
-    
-    padraoif = []
-    
-    padrao1.append([len(string),len(string)])
-    for p2 in padrao2:
-        for i in range(len(padrao1)-1):
-            if p2[0]>=padrao1[i][0] and p2[1]<=padrao1[i+1][0] :
-                if (len(padraoif)>0 and padrao1[i][0]>padraoif[len(padraoif)-1][0]) or len(padraoif)==0:
-                    padraoif.append([padrao1[i][0],p2[1]])
-    return padraoif
-
-# ----------------------------------------------------------------------------------------------------------
-                                            # FUNÇÕES AUXILIARES DE REQUISIÇÃO
-
-# Funções auxiliares da função: data
-
-def mes(x): # Retorna o número do mês x
-    
-    if x == 'Janeiro':
-        return 1
-    elif x == 'Fevereiro':
-        return 2
-    elif x == 'Março':
-        return 3
-    elif x == 'Abril':
-        return 4
-    elif x == 'Maio':
-        return 5
-    elif x == 'Junho':
-        return 6
-    elif x == 'Julho':
-        return 7
-    elif x == 'Agosto':
-        return 8
-    elif x == 'Setembro':
-        return 9
-    elif x == 'Outubro':
-        return 10
-    elif x == 'Novembro':
-        return 11
-    elif x == 'Dezembro':
-        return 12
-    else:
-        return 'erro'
-   
-    
-# Funções auxiliares da função: requisicao_jogadores
+from modulos.process.utils import sem_espaco, padrao, padrao_inicio_fim
 
 def jogadores_inscritos(jogo_id): # Retorna todos os jogadores inscritos para a partida.
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
     st=soup.prettify()
-    abt=SemEspaco(st)
+    abt=sem_espaco(st)
     
-    s=InicioFim(['<span','class="name">\n','<a'],['</a>\n'],abt)
+    s=padrao_inicio_fim(['<span','class="name">\n','<a'],['</a>\n'],abt)
     
     # Buscar em qual índice ocorre a mudança, dos jogadores do time da casa, para os jogadores do time visitante.
     abt0=abt[s[0][0]:s[len(s)-1][1]] 
@@ -124,7 +38,7 @@ def jogadores_inscritos(jogo_id): # Retorna todos os jogadores inscritos para a 
             i+=1
     
         abt1=abt[s[q][0]-8:s[q][0]]
-        v=InicioFim(['class="detail">\n'],['</span>\n'],abt1)
+        v=padrao_inicio_fim(['class="detail">\n'],['</span>\n'],abt1)
         try:
             tempo_substituicao=int(abt1[v[0][0]+1][:-2])
         except:
@@ -152,9 +66,9 @@ def teste_gols(jogo_id): # Retorna se o time da casa e o time visitante, marcara
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
     st=soup.prettify()
-    abt=SemEspaco(st)
+    abt=sem_espaco(st)
     
-    te=InicioFim(['<ul',
+    te=padrao_inicio_fim(['<ul',
     'class="goal',
     'icon-font-before',
     'icon-soccer-ball-before',
@@ -181,9 +95,9 @@ def gols_casa_visitante(q, jogo_id): # Retorna os dados da função requisição
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
     st=soup.prettify()
-    abt=SemEspaco(st)
+    abt=sem_espaco(st)
 
-    te=InicioFim(['<ul',
+    te=padrao_inicio_fim(['<ul',
     'class="goal',
     'icon-font-before',
     'icon-soccer-ball-before',
@@ -192,8 +106,8 @@ def gols_casa_visitante(q, jogo_id): # Retorna os dados da função requisição
     '<li>\n'],['</ul>\n'],abt)
         
     abt_q_1=abt[te[q][0]:te[q][1]]
-    te_q=InicioFim(['<span>\n'],['</span>\n'],abt_q_1)
-    te1=InicioFim(['<li>\n'],['<span>\n'],abt_q_1)
+    te_q=padrao_inicio_fim(['<span>\n'],['</span>\n'],abt_q_1)
+    te1=padrao_inicio_fim(['<li>\n'],['<span>\n'],abt_q_1)
         
     gols_q = []
     for q in range(len(te1)):
