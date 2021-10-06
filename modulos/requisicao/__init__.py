@@ -1,1 +1,2 @@
-from .requisicao_partida import *
+from .partida import *
+from .jogador import *
