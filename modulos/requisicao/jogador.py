@@ -109,3 +109,31 @@ class Estatisticas():
     
     def impedimentos(self, temporada):
         return self.web.find_element_by_xpath(self.x_path(10,temporada)).text
+    
+class Bio():
+    
+    def __init__(self, web):
+        self.web = web
+
+    def x_path(self, pos):
+        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[1]/div/div[{pos}]/div/span[2]'
+    
+    def time(self, ordem):
+        x_path_time = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/a[{ordem}]/div/span[1]'
+        x_path_temps = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/a[{ordem}]/div/span[2]'
+        return self.web.find_element_by_xpath(x_path_time).text, self.web.find_element_by_xpath(x_path_temps).text
+    
+    def posicao(self):
+        return self.web.find_element_by_xpath(self.x_path(2)).text
+    
+    def altura(self):
+        return web.find_element_by_xpath(self.x_path(3)).text.split(', ')[0]
+    
+    def massa(self):
+        return web.find_element_by_xpath(self.x_path(3)).text.split(', ')[1]
+    
+    def data_nascimento(self):
+        return web.find_element_by_xpath(self.x_path(4)).text.split(' (')[0]
+    
+    def nacionalidade(self):
+        return web.find_element_by_xpath(self.x_path(5)).text.split(' (')[0]
