@@ -1,10 +1,85 @@
+# submódulo temporário para requisições pela biblioteca requests
+
 import requests as r
 from html2json import collect
 import json
 from bs4 import BeautifulSoup
-from modulos.process.utils import sem_espaco, padrao, padrao_inicio_fim
 
-def jogadores_inscritos(jogo_id): # Retorna todos os jogadores inscritos para a partida.
+def sem_espaco(string):
+    s=[]
+    i=0
+    j=0
+    stop =False
+    while not stop:
+        
+        while string[i] == ' ' and not stop:
+            if i < len(string)-1:
+                i += 1
+            if i == len(string)-1:
+                stop=True
+        
+        s.append('')
+        
+        while string[i] != ' ' and not stop:
+            s[j] = s[j]+string[i]
+            if i < len(string)-1:
+                i += 1
+            if i==len(string)-1:
+                if string[i] != ' ':
+                    s[j] = s[j]+string[i]
+                stop=True
+        j +=1
+    return s
+
+def padrao(p,string):
+    
+    ind = []
+    i=0
+    while i+len(p) <= len(string): 
+        if string[i:i+len(p)] == p:
+            ind.append([i,i+len(p)])
+        i += 1
+    return ind
+
+def padrao_inicio_fim(inicio,fim,string):
+    padrao1 = padrao(inicio,string)
+    padrao2 = padrao(fim,string)
+    
+    padraoif = []
+    
+    padrao1.append([len(string),len(string)])
+    for p2 in padrao2:
+        for i in range(len(padrao1)-1):
+            if p2[0]>=padrao1[i][0] and p2[1]<=padrao1[i+1][0] :
+                if (len(padraoif)>0 and padrao1[i][0]>padraoif[len(padraoif)-1][0]) or len(padraoif)==0:
+                    padraoif.append([padrao1[i][0],p2[1]])
+    return padraoif
+
+def mes(x): 
+    
+    dict_mes = {'Janeiro': 1,
+                'Fevereiro': 2,
+                'Março': 3,
+                'Abril': 4, 
+                'Maio': 5,
+                'Junho': 6,
+                'Julho': 7,
+                'Agosto': 8,
+                'Setembro': 9,
+                'Outubro': 10,
+                'Novembro': 11,
+                'Dezembro': 12
+               }
+    
+    return dict_mes[x]
+
+####################################
+
+def jogadores_inscritos(jogo_id): 
+    """
+    Retorna todos os jogadores inscritos para a partida.
+    """
+    
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
     st=soup.prettify()
@@ -61,7 +136,10 @@ def jogadores_inscritos(jogo_id): # Retorna todos os jogadores inscritos para a 
 
 # Funções auxiliares da função: requisicao_gols
 
-def teste_gols(jogo_id): # Retorna se o time da casa e o time visitante, marcaram gols.
+def teste_gols(jogo_id): 
+    """
+    Retorna se o time da casa e o time visitante, marcaram gols.
+    """
     
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
@@ -90,7 +168,12 @@ def teste_gols(jogo_id): # Retorna se o time da casa e o time visitante, marcara
     return teste_casa, teste_visitante
 
 
-def gols_casa_visitante(q, jogo_id): # Retorna os dados da função requisição_gols, para q={0, 1}. Se ambos os times marcaram: q=0 representa time da casa, q=1 representa time visitante. Se apenas um time marcou, q=0 represente este time, q=1 gera erro. Se nenhum time marcou, q=0 e q=1 geram erro.
+def gols_casa_visitante(q, jogo_id): 
+    """
+    Retorna os dados da função requisição_gols, para q={0, 1}. 
+    Se ambos os times marcaram: q=0 representa time da casa, q=1 representa time visitante. 
+    Se apenas um time marcou, q=0 represente este time, q=1 gera erro. Se nenhum time marcou, q=0 e q=1 geram erro.
+    """
     
     req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+jogo_id)
     soup=BeautifulSoup(req.content, 'html.parser')
