@@ -28,7 +28,7 @@ class UltimosCincoJogos(WebdriverChrome):
             str: xpath 
         """
         
-        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/div/div/div/div[2]/table/tbody/tr[{pos_v}]/td[{pos_h}]'
+        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/div/div/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
     
     def time(self, jogo):
         """
@@ -147,7 +147,7 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de finalizações no gol, feitas pelo jogador
         """
         
-        reponse = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
+        response = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
         return response
     
     def faltas_cometidas(self, jogo):
@@ -233,7 +233,7 @@ class Estatisticas(WebdriverChrome):
             str: xpath 
         """
         
-        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_v}]/td[{pos_h}]'
+        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
     
     def campeonato(self, temporada):
         """
@@ -430,7 +430,7 @@ class Bio(WebdriverChrome):
             str: altura do jogador
         """
         
-        return web.find_element_by_xpath(self.x_path(3)).text.split(', ')[0]
+        return self.web.find_element_by_xpath(self.x_path(3)).text.split(', ')[0]
     
     def massa(self):
         """
@@ -438,7 +438,7 @@ class Bio(WebdriverChrome):
             str: massa do jogador
         """
         
-        return web.find_element_by_xpath(self.x_path(3)).text.split(', ')[1]
+        return self.web.find_element_by_xpath(self.x_path(3)).text.split(', ')[1]
     
     def data_nascimento(self):
         """
@@ -446,7 +446,7 @@ class Bio(WebdriverChrome):
             str: data de nascimento do jogador
         """
         
-        return web.find_element_by_xpath(self.x_path(4)).text.split(' (')[0]
+        return self.web.find_element_by_xpath(self.x_path(4)).text.split(' (')[0]
     
     def nacionalidade(self):
         """
@@ -454,4 +454,4 @@ class Bio(WebdriverChrome):
             str: nacionalidade do jogador
         """
         
-        return web.find_element_by_xpath(self.x_path(5)).text.split(' (')[0]
+        return self.web.find_element_by_xpath(self.x_path(5)).text.split(' (')[0]
