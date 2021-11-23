@@ -45,3 +45,18 @@ class WebdriverChrome():
         """
         
         self.web.get(f'https://www.espn.com.br/futebol/jogador/bio/_/id/{id_jogador}')
+        
+    def get_odds_dafabet(self, campeonato):
+        """
+        Entra no link para a busca das odds no site Dafabet
+
+        Args:
+            campeonato: (str) completa o link https://www.dafabet.com/pt/dfgoal/sports/240-football/<id_campeonato>. 
+                              Ex <campeontato>='brazil -> '<id_campeonato>='22977-brazil'
+        """
+        dict_id_campeonato = {
+                              'brazil': '22977',
+                              'argentina': '23332'
+                             }
+        id_campeonato = f'{dict_id_campeonato[campeonato]}-{campeonato}'
+        self.web.get(f'https://www.dafabet.com/pt/dfgoal/sports/240-football/{id_campeonato}')

@@ -3,8 +3,8 @@ from html2json import collect
 import json
 from bs4 import BeautifulSoup
 
-from modulos.utils.temp import (sem_espaco, padrao, padrao_inicio_fim, mes,
-                                jogadores_inscritos, teste_gols, gols_casa_visitante)
+from cafu.utils.temp import (sem_espaco, padrao, padrao_inicio_fim, mes,
+                             jogadores_inscritos, teste_gols, gols_casa_visitante)
 
 class Partida():
 
