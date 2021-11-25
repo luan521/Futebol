@@ -10,8 +10,9 @@ class WebdriverChrome():
                           Ex <id_jogador>='199017/everton-ribeiro'
     """
     
-    def __init__(self, path_driver):
-        self.web = webdriver.Chrome(path_driver)
+    def __init__(self, path_driver=None):
+        if path_driver is not None:
+            self.web = webdriver.Chrome(path_driver)
         
     def get_ult_cinco_jogos_jogador(self, id_jogador):
         """
@@ -46,7 +47,7 @@ class WebdriverChrome():
         
         self.web.get(f'https://www.espn.com.br/futebol/jogador/bio/_/id/{id_jogador}')
         
-    def get_odds_dafabet(self, campeonato):
+    def get_campeonato_dafabet(self, campeonato):
         """
         Entra no link para a busca das odds no site Dafabet
 

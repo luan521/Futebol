@@ -11,17 +11,11 @@ class Login(WebdriverChrome):
     Faz o login no site Dafabet
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
-        campeonato: (str) completa o link https://www.dafabet.com/pt/dfgoal/sports/240-football/<id_campeonato>. 
-                          Ex <campeontato>='brazil -> '<id_campeonato>='22977-brazil'. Optional
+        path_driver: (str) caminho para o chromedriver, optional
     """
     
-    def __init__(self, path_driver, campeonato=None):
+    def __init__(self, path_driver=None):
         super().__init__(path_driver)
-        if campeonato is not None:
-            self.get_odds_dafabet(campeonato)
-        else:
-            self.web.get(f'https://www.dafabet.com/pt/dfgoal/sports/240-football')
         
     def login(self):
         """
@@ -45,21 +39,27 @@ class Login(WebdriverChrome):
         
 class TrafficOddsPartida(WebdriverChrome):
     """
-    Busca as odds no site Datafabet
+    Tráfego entre as partidas de um campeonato
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
-        campeonato: (str) completa o link https://www.dafabet.com/pt/dfgoal/sports/240-football/<id_campeonato>. 
-                          Ex <campeontato>='brazil -> '<id_campeonato>='22977-brazil'. Optional
+        path_driver: (str) caminho para o chromedriver, optional
     """
     
-    def __init__(self, path_driver, campeonato):
+    def __init__(self, path_driver=None):
         super().__init__(path_driver)
-        self.get_odds_dafabet(campeonato)
+        
+    def get_quantidade_partidas(self):
+        """
+        Returns:
+            int: Quantidade de partidas no campeonato
+        """
+        
+        partidas = self.web.find_elements_by_class_name('more_markets')
+        return len(partidas)
         
     def join_link_odds_partida(self, index, max_iterate=5):
         """
-        Entra dentro do link de uma partida, no <campeonato>
+        Entra dentro do link de uma partida, no campeonato
 
         Args:
             index: (int) índice da partida do campeonato
