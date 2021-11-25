@@ -52,11 +52,13 @@ class WebdriverChrome():
 
         Args:
             campeonato: (str) completa o link https://www.dafabet.com/pt/dfgoal/sports/240-football/<id_campeonato>. 
-                              Ex <campeontato>='brazil -> '<id_campeonato>='22977-brazil'
+                              Ex <campeontato>='brasil-a -> '<id_campeonato>=''22977-brazil/22980-brasileiro-serie-a''
         """
+       
         dict_id_campeonato = {
-                              'brazil': '22977',
-                              'argentina': '23332'
+                              'brasil-a': '22977-brazil/22980-brasileiro-serie-a',
+                              'brasil-b': '22977-brazil/24267-brasileiro-serie-b',
+                              'franca': '23168-france/23169-ligue-1'
                              }
-        id_campeonato = f'{dict_id_campeonato[campeonato]}-{campeonato}'
-        self.web.get(f'https://www.dafabet.com/pt/dfgoal/sports/240-football/{id_campeonato}')
+       
+        self.web.get(f'https://www.dafabet.com/pt/dfgoal/sports/240-football/{dict_id_campeonato[campeonato]}')
