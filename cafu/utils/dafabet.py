@@ -37,7 +37,7 @@ class Login(WebdriverChrome):
         password_element.send_keys(password)
         enter_button_element.click()
         
-class TrafficOddsPartida(WebdriverChrome):
+class TrafficOddsPartida(Login):
     """
     Tráfego entre as partidas de um campeonato
     
