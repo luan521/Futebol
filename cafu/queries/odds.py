@@ -1,5 +1,5 @@
 from time import sleep
-from cafu.utils import TrafficOddsPartida
+from cafu.utils.queries.dafabet import TrafficOddsPartida
 
 class GetOdds(TrafficOddsPartida):
     """

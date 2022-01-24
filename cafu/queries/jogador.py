@@ -1,4 +1,4 @@
-from cafu.utils.webdriver_chrome import WebdriverChrome
+from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 
 class UltimosCincoJogos(WebdriverChrome):
     """

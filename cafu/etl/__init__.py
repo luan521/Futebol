@@ -1,0 +1,1 @@
+from .partidas_campeonato import partidas_campeonato
