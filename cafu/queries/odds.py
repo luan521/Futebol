@@ -76,6 +76,7 @@ class GetOdds(TrafficOddsPartida):
                 evento = self.web.find_elements_by_class_name(class_evento)[0].text
                 sleep(2)
                 tipo_aposta = self.web.find_elements_by_class_name(class_tipo_aposta)[0].text
+                sleep(2)
                 try:
                     response[tipo_aposta][evento] = odds
                 except:

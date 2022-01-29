@@ -14,7 +14,7 @@ class UltimosCincoJogos(WebdriverChrome):
         super().__init__(path_driver)
         self.get_ult_cinco_jogos_jogador(id_jogador)
 
-    def _x_path(self, pos_v, pos_h):
+    def _x_path(self, pos_v, pos_h, section=2):
         """
         Método interno da classe.
         Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em um jogo
@@ -24,11 +24,11 @@ class UltimosCincoJogos(WebdriverChrome):
         Args:
             pos_v: (int) posição horizontal da informação na tabela, referente a coluna (1-time, 2-data, ....)
             pos_h: (int) posição vertical da informação na tabela, referente ao jogo (1-último, 2-penultimo, ...)
+            section: (int) parâmetro x_path, default=2, no caso <id_jogador>='199017/everton-ribeiro' <section> foi identificado com valor 1, em 29/01/2022
         Returns:
             str: xpath 
         """
-        
-        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/div/div/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
+        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[{section}]/div/div/div/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
     
     def time(self, jogo):
         """
@@ -38,7 +38,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: time do jogador
         """
         
-        return self.web.find_element_by_xpath(self._x_path(1,jogo)).text
+        try:
+            return self.web.find_element_by_xpath(self._x_path(1,jogo)).text
+        except:
+            return self.web.find_element_by_xpath(self._x_path(1,jogo,section=1)).text
     
     def date(self, jogo):
         """
@@ -48,7 +51,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: data da partida 
         """
         
-        return self.web.find_element_by_xpath(self._x_path(2,jogo)).text
+        try:
+            return self.web.find_element_by_xpath(self._x_path(2,jogo)).text
+        except:
+            return self.web.find_element_by_xpath(self._x_path(2,jogo,section=1)).text
     
     def casa_fora(self, jogo):
         """
@@ -58,7 +64,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: se o jogo foi em casa ou fora
         """
         
-        identificador = self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[0]
+        try:
+            identificador = self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[0]
+        except:
+            identificador = self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[0]
         if identificador == 'x':
             return 'casa'
         elif identificador == 'em':
@@ -72,7 +81,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: time adversário
         """
         
-        return self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[1]
+        try:
+            return self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[1]
+        except:
+            return self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[1]
     
     def campeonato(self, jogo):
         """
@@ -82,7 +94,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: campeonato
         """
         
-        return self.web.find_element_by_xpath(self._x_path(4,jogo)).text
+        try:
+            return self.web.find_element_by_xpath(self._x_path(4,jogo)).text
+        except:
+            return self.web.find_element_by_xpath(self._x_path(4,jogo,section=1)).text
     
     def resultado(self, jogo):
         """
@@ -92,7 +107,10 @@ class UltimosCincoJogos(WebdriverChrome):
             dict: resultado-(V, E, D), placar
         """
         
-        info = self.web.find_element_by_xpath(self._x_path(5,jogo)).text.split('\n')
+        try:
+            info = self.web.find_element_by_xpath(self._x_path(5,jogo)).text.split('\n')
+        except:
+            info = self.web.find_element_by_xpath(self._x_path(5,jogo,section=1)).text.split('\n')
         response = {'resultado': info[0], 'placar':info[1]}
         return response
     
@@ -104,7 +122,10 @@ class UltimosCincoJogos(WebdriverChrome):
             str: se o jogador foi titular ou reserva
         """
         
-        return self.web.find_element_by_xpath(self._x_path(6,jogo)).text
+        try:
+            return self.web.find_element_by_xpath(self._x_path(6,jogo)).text
+        except:
+            return self.web.find_element_by_xpath(self._x_path(6,jogo,section=1)).text
     
     def gols(self, jogo):
         """
@@ -114,7 +135,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de gols marcados pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(7,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(7,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(7,jogo,section=1)).text)
         return response
     
     def assistencias(self, jogo):
@@ -125,7 +149,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de assistências feitas pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(8,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(8,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(8,jogo,section=1)).text)
         return response
     
     def finalizacoes(self, jogo):
@@ -136,7 +163,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de finalizações feitas pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(9,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(9,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(9,jogo,section=1)).text)
         return response
     
     def finalizacoes_no_gol(self, jogo):
@@ -147,7 +177,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de finalizações no gol, feitas pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(10,jogo,section=1)).text)
         return response
     
     def faltas_cometidas(self, jogo):
@@ -158,7 +191,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de faltas cometidas pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(11,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(11,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(11,jogo,section=1)).text)
         return response
     
     def faltas_sofridas(self, jogo):
@@ -169,7 +205,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de faltas sofridas pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(12,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(12,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(12,jogo,section=1)).text)
         return response
     
     def impedimentos(self, jogo):
@@ -180,7 +219,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de impedimentos do jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(13,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(13,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(13,jogo,section=1)).text)
         return response
     
     def cartoes_amarelos(self, jogo):
@@ -191,7 +233,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de cartões amarelos levados pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(14,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(14,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(14,jogo,section=1)).text)
         return response
     
     def cartoes_vermelhos(self, jogo):
@@ -202,7 +247,10 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de cartões vermelhos levados pelo jogador
         """
         
-        response = int(self.web.find_element_by_xpath(self._x_path(15,jogo)).text)
+        try:
+            response = int(self.web.find_element_by_xpath(self._x_path(15,jogo)).text)
+        except:
+            response = int(self.web.find_element_by_xpath(self._x_path(15,jogo,section=1)).text)
         return response
     
 class Estatisticas(WebdriverChrome):
