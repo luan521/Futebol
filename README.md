@@ -13,15 +13,40 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
 
 ## Folder structure
 ```
-├───cafu
+├───cafu -> biblioteca
 │   ├───etl
 │   ├───metadata
 │   ├───queries
 │   ├───utils
 │   │   ├───etl
 │   │   ├───queries
-├───imagens_doc
-└───notebooks
+├───docs -> documentação da biblioteca
+│   ├───build
+│   │   ├───doctrees
+│   │   │   └───module
+│   │   └───html
+│   │       ├───module
+│   │       ├───_images
+│   │       ├───_modules
+│   │       │   ├───cafu
+│   │       │   │   ├───etl
+│   │       │   │   ├───metadata
+│   │       │   │   └───queries
+│   │       │   └───modulos
+│   │       │       ├───fluxos
+│   │       │       ├───process
+│   │       │       ├───queries
+│   │       │       └───utils
+│   │       ├───_sources
+│   │       │   └───module
+│   │       └───_static
+│   │           ├───css
+│   │           │   └───fonts
+│   │           └───js
+│   └───source
+│       └───module
+├───imagens_doc -> imagens para a documentação da biblioteca
+└───notebooks -> notebools de exemplo
     ├───etl
     │   ├───prod
     │   └───sketch
@@ -29,3 +54,14 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
         ├───prod
         └───sketch
 ```
+
+## Contents
+Links e conteúdos relevantes para o projeto
+- [ambiente virtual](https://ichi.pro/pt/criando-um-ambiente-virtual-para-jupyter-notebook-com-pip-e-conda-guia-muito-simples-103212890404103)
+
+## Next steps
+- notebooks prod devem estar sempre funcionando
+- incluir logs no código
+- otimizar o espaço do PC: SSD e HD
+- migrar projeto para o linux
+- finalizar o código que constrói o data lake e construir o airflow

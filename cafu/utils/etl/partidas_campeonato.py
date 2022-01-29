@@ -1,18 +1,20 @@
 from cafu.queries.partida import Partida
 
-def dados_partida(id_):
+def dados_partida(id_, lim=50):
     """
     Função auxiliar (id_left_right).
     Busca os dados da partida, entra em loop até que os dados sejam retornados
         
     Args:
         id_: (int) id da partida
+        lim: (int) quantidade limite de iterações
     Returns:
          list: campeonato, times, date 
     """
     
     stop = False
-    while not stop:
+    count = 0
+    while not stop and count<lim:
         try:
             req = Partida(str(id_))
             campeonato = req.campeonato()
@@ -20,7 +22,7 @@ def dados_partida(id_):
             date = req.data()
             stop = True
         except:
-            pass
+            count+=1
     return campeonato, times, date
 
 def id_left_right(id_inicial, campeonato_fix, left=True, partidas=None, dates=None, ids=None):
