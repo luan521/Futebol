@@ -60,8 +60,11 @@ Links e conteúdos relevantes para o projeto
 - [ambiente virtual](https://ichi.pro/pt/criando-um-ambiente-virtual-para-jupyter-notebook-com-pip-e-conda-guia-muito-simples-103212890404103)
 
 ## Next steps
-- notebooks prod devem estar sempre funcionando
+- notebooks prod devem estar sempre funcionando 
+    - site_aposta.ipynb: método get_odds da classe GetOdds (cafu.queries.odds) esta retornando erro, muitas requisições sendo feitas em pouco tempo.
 - incluir logs no código
+- chromedriver não mostrar o navegador -> opção default
+- verificar se o chromedriver esta fechando, ou se o processamento continua ocorrendo
 - otimizar o espaço do PC: SSD e HD
 - migrar projeto para o linux
 - finalizar o código que constrói o data lake e construir o airflow

@@ -1,2 +1,2 @@
-from .queries.temp import *
+from .queries import *
 from .etl import *

@@ -45,7 +45,7 @@ class GetOdds(TrafficOddsPartida):
     
     def _close_open_bets(self):
         """
-        Método interno da classe
+        Método interno da classe.
         Fecha as apostas abertas, para prosseguir com a coleta das odds
         """
         
