@@ -58,6 +58,8 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
 ## Contents
 Links e conteúdos relevantes para o projeto
 - [ambiente virtual](https://ichi.pro/pt/criando-um-ambiente-virtual-para-jupyter-notebook-com-pip-e-conda-guia-muito-simples-103212890404103)
+- [SSD + HD: Como salvar arquivos automaticamente no HD?](https://www.youtube.com/watch?v=BKxCnUlK6c0)
+- [COMO DIRECIONAR ARQUIVOS DO SSD PARA O HD](https://www.youtube.com/watch?v=5IanANDJxE8)
 
 ## Next steps
 - notebooks prod devem estar sempre funcionando &#9745;
