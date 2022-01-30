@@ -10,10 +10,11 @@ class Login(WebdriverChrome):
     
     Args:
         start_webdriver: (bool) se o Chrome driver deve ser iniciado
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, start_webdriver=True):
-        super().__init__(start_webdriver)
+    def __init__(self, start_webdriver=True, headless=True):
+        super().__init__(start_webdriver, headless)
         
     def login(self):
         """
@@ -41,10 +42,11 @@ class TrafficOddsPartida(Login):
     
     Args:
         start_webdriver: (bool) se o Chrome driver deve ser iniciado
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, start_webdriver=True):
-        super().__init__(start_webdriver)
+    def __init__(self, start_webdriver=True, headless=True):
+        super().__init__(start_webdriver, headless)
         
     def get_quantidade_partidas(self):
         """

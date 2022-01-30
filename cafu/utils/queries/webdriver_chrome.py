@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.metadata.paths import path
 path_driver = path('initial_path')+'\\chromedriver.exe'
@@ -10,13 +11,15 @@ class WebdriverChrome():
     
     Args:
         start_webdriver: (bool) se o Chrome driver deve ser iniciado
-        id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/_/id/<id_jogador>. 
-                          Ex <id_jogador>='199017/everton-ribeiro'
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, start_webdriver=True):
+    def __init__(self, start_webdriver=True, headless=True):
+        chrome_options = Options()
+        if headless:
+            chrome_options.add_argument("--headless")
         if start_webdriver:
-            self.web = webdriver.Chrome(path_driver)
+            self.web = webdriver.Chrome(path_driver, options=chrome_options)
         
     def get_ult_cinco_jogos_jogador(self, id_jogador):
         """

@@ -7,10 +7,11 @@ class UltimosCincoJogos(WebdriverChrome):
     Args:
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/_/id/<id_jogador>. 
                           Ex <id_jogador>='199017/everton-ribeiro'
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, id_jogador):
-        super().__init__()
+    def __init__(self, id_jogador, headless=True):
+        super().__init__(headless=headless)
         self.get_ult_cinco_jogos_jogador(id_jogador)
 
     def _x_path(self, pos_v, pos_h, section=2):
@@ -259,10 +260,11 @@ class Estatisticas(WebdriverChrome):
     Args:
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/estatisticas/_/id/<id_jogador>.
                           Ex <id_jogador>='199017/everton-ribeiro'
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, id_jogador):
-        super().__init__()
+    def __init__(self, id_jogador, headless=True):
+        super().__init__(headless=headless)
         self.get_estatisticas_jogador(id_jogador)
 
     def _x_path(self, pos_v, pos_h):
@@ -427,10 +429,11 @@ class Bio(WebdriverChrome):
     Args:
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/bio/_/id/<id_jogador>.
                           Ex <id_jogador>='199017/everton-ribeiro'
+        headless: (bool) se o navegador será mostrado ou não
     """
     
-    def __init__(self, id_jogador):
-        super().__init__()
+    def __init__(self, id_jogador, headless=True):
+        super().__init__(headless=headless)
         self.get_bio_jogador(id_jogador)
 
     def x_path(self, pos):

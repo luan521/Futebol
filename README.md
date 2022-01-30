@@ -62,7 +62,8 @@ Links e conteúdos relevantes para o projeto
 ## Next steps
 - notebooks prod devem estar sempre funcionando &#9745;
 - incluir logs no código
-- chromedriver não mostrar o navegador -> opção default
+    - método nacionalidade da classe cafu.queries.Bio, nem todos jogadores possuem esse parâmetro definido, ex id_jogador = '252107/vinicius-junior'
+- chromedriver não mostrar o navegador -> opção default &#9745;
 - otimizar o espaço do PC: SSD e HD
 - migrar projeto para o linux
 - finalizar o código que constrói o data lake e construir o airflow
