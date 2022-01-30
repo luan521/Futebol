@@ -1,18 +1,21 @@
 from selenium import webdriver
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
+from cafu.metadata.paths import path
+path_driver = path('initial_path')+'\\chromedriver.exe'
 
 class WebdriverChrome():
     """
-    Inicializa a sessão do chromedriver e entra em alguns links úteis
+    Inicializa a sessão do chromedriver e entra em alguns links úteis. 
+    Método self.web.close() fecha a sessão do Chrome driver
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
+        start_webdriver: (bool) se o Chrome driver deve ser iniciado
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/_/id/<id_jogador>. 
                           Ex <id_jogador>='199017/everton-ribeiro'
     """
     
-    def __init__(self, path_driver=None):
-        if path_driver is not None:
+    def __init__(self, start_webdriver=True):
+        if start_webdriver:
             self.web = webdriver.Chrome(path_driver)
         
     def get_ult_cinco_jogos_jogador(self, id_jogador):

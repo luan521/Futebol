@@ -5,13 +5,12 @@ class UltimosCincoJogos(WebdriverChrome):
     Extrai informações das cinco últimas partidas do jogador
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/_/id/<id_jogador>. 
                           Ex <id_jogador>='199017/everton-ribeiro'
     """
     
-    def __init__(self, path_driver, id_jogador):
-        super().__init__(path_driver)
+    def __init__(self, id_jogador):
+        super().__init__()
         self.get_ult_cinco_jogos_jogador(id_jogador)
 
     def _x_path(self, pos_v, pos_h, section=2):
@@ -258,13 +257,12 @@ class Estatisticas(WebdriverChrome):
     Extrai informações estatísticas das últimas temporadas do jogador
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/estatisticas/_/id/<id_jogador>.
                           Ex <id_jogador>='199017/everton-ribeiro'
     """
     
-    def __init__(self, path_driver, id_jogador):
-        super().__init__(path_driver)
+    def __init__(self, id_jogador):
+        super().__init__()
         self.get_estatisticas_jogador(id_jogador)
 
     def _x_path(self, pos_v, pos_h):
@@ -427,13 +425,12 @@ class Bio(WebdriverChrome):
     Extrai informações da biografia do jogador
     
     Args:
-        path_driver: (str) caminho para o chromedriver 
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/bio/_/id/<id_jogador>.
                           Ex <id_jogador>='199017/everton-ribeiro'
     """
     
-    def __init__(self, path_driver, id_jogador):
-        super().__init__(path_driver)
+    def __init__(self, id_jogador):
+        super().__init__()
         self.get_bio_jogador(id_jogador)
 
     def x_path(self, pos):

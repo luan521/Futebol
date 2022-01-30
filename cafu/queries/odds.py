@@ -6,11 +6,11 @@ class GetOdds(TrafficOddsPartida):
     Busca as odds da partida
     
     Args:
-        path_driver: (str) caminho para o chromedriver, optional
+        start_webdriver: (bool) se o Chrome driver deve ser iniciado
     """
     
-    def __init__(self, path_driver=None):
-        super().__init__(path_driver)
+    def __init__(self, start_webdriver=True):
+        super().__init__(start_webdriver)
         
     def open_odds(self, max_iterate=30):
         """

@@ -9,11 +9,11 @@ class Login(WebdriverChrome):
     Faz o login no site Dafabet
     
     Args:
-        path_driver: (str) caminho para o chromedriver, optional
+        start_webdriver: (bool) se o Chrome driver deve ser iniciado
     """
     
-    def __init__(self, path_driver=None):
-        super().__init__(path_driver)
+    def __init__(self, start_webdriver=True):
+        super().__init__(start_webdriver)
         
     def login(self):
         """
@@ -40,11 +40,11 @@ class TrafficOddsPartida(Login):
     Tráfego entre as partidas de um campeonato
     
     Args:
-        path_driver: (str) caminho para o chromedriver, optional
+        start_webdriver: (bool) se o Chrome driver deve ser iniciado
     """
     
-    def __init__(self, path_driver=None):
-        super().__init__(path_driver)
+    def __init__(self, start_webdriver=True):
+        super().__init__(start_webdriver)
         
     def get_quantidade_partidas(self):
         """
