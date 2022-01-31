@@ -61,6 +61,7 @@ Links e conteúdos relevantes para o projeto
 - [SSD + HD: Como salvar arquivos automaticamente no HD?](https://www.youtube.com/watch?v=BKxCnUlK6c0)
 - [COMO DIRECIONAR ARQUIVOS DO SSD PARA O HD](https://www.youtube.com/watch?v=5IanANDJxE8)
 - [python logging](https://docs.python.org/3/howto/logging.html)
+- [Saindo do Zero com a Biblioteca OS no Python](https://www.youtube.com/watch?v=ROCyIPA1wWA) pode ser útil na montagem do data lake
 
 ## Next steps
 - notebooks prod devem estar sempre funcionando &#9745;
