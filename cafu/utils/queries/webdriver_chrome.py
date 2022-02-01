@@ -5,7 +5,7 @@ from cafu.metadata.paths import path
 path_driver = path('initial_path')+'\\chromedriver.exe'
 
 import logging
-filename = path('logs_cafu')+'\\logs.log'
+filename = path('logs_cafu')+'\\logs.txt'
 logging.basicConfig(filename=filename, 
                     format='%(asctime)s %(message)s', 
                     datefmt='%d/%m/%Y %I:%M:%S %p',

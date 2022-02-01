@@ -9,7 +9,7 @@ credentials_dafabet = json.load(r)
 user, password = credentials_dafabet['user'], credentials_dafabet['password']
 
 import logging
-filename = path('logs_cafu')+'\\logs.log'
+filename = path('logs_cafu')+'\\logs.txt'
 logging.basicConfig(filename=filename, 
                     format='%(asctime)s %(message)s', 
                     datefmt='%d/%m/%Y %I:%M:%S %p',
