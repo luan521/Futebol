@@ -1,28 +1,40 @@
+from tqdm import tqdm
 from cafu.queries.partida import Partida
+from cafu.metadata.paths import path
 
-def dados_partida(id_, lim=50):
+import logging
+filename = path('logs_cafu')+'\\logs.log'
+logging.basicConfig(filename=filename, 
+                    format='%(asctime)s %(message)s', 
+                    datefmt='%d/%m/%Y %I:%M:%S %p',
+                    level=logging.INFO)
+
+def dados_partida(id_, max_iterate=50):
     """
     Função auxiliar (id_left_right).
     Busca os dados da partida, entra em loop até que os dados sejam retornados
         
     Args:
         id_: (int) id da partida
-        lim: (int) quantidade limite de iterações
+        max_iterate: número máximo de tentativas
     Returns:
          list: campeonato, times, date 
     """
     
     stop = False
-    count = 0
-    while not stop and count<lim:
-        try:
-            req = Partida(str(id_))
-            campeonato = req.campeonato()
-            times = req.nomes_times()
-            date = req.data()
-            stop = True
-        except:
-            count+=1
+    count = 1
+    with tqdm(total=max_iterate) as barra_progresso:
+        while not stop and count<=max_iterate:
+            try:
+                req = Partida(str(id_))
+                campeonato = req.campeonato()
+                times = req.nomes_times()
+                date = req.data()
+                stop = True
+            except:
+                count+=1
+            barra_progresso.update(1)
+    
     return campeonato, times, date
 
 def id_left_right(id_inicial, campeonato_fix, left=True, partidas=None, dates=None, ids=None):
@@ -61,18 +73,32 @@ def id_left_right(id_inicial, campeonato_fix, left=True, partidas=None, dates=No
     else:
         ids.append(id_)
         
-    while campeonato == campeonato_fix:
-        id_ = id_ + fator
-        campeonato, times, date = dados_partida(id_)
-        partidas.append(times)
-        dates.append(date)
-        ids.append(id_)
-        if len(set(partidas)) < len(partidas):
-            break
-    
-    id_ = id_ - fator
-    partidas = partidas[:-1]
-    dates = dates[:-1]
-    ids = ids[:-1]
-    
-    return ids, partidas, dates
+    try:
+        if partidas is None:
+            total = 100
+        else:
+            total = 380-len(partidas)
+        with tqdm(total=total) as barra_progresso:
+            while campeonato == campeonato_fix:
+                id_ = id_ + fator
+                campeonato, times, date = dados_partida(id_)
+                partidas.append(times)
+                dates.append(date)
+                ids.append(id_)
+                if len(set(partidas)) < len(partidas):
+                    break
+                barra_progresso.update(1)
+
+        id_ = id_ - fator
+        partidas = partidas[:-1]
+        dates = dates[:-1]
+        ids = ids[:-1]
+
+        logging.info(f"SUCCESS utils.etl.partidas_campeonato.id_left_right: Function executed successfully. <id_inicial>={id_inicial}, <campeonato_fix>={campeonato_fix}, <left>={left}, len(<partidas>)={len(partidas)}")
+            
+        return ids, partidas, dates
+    except Exception as err:
+        logging.error("ERROR utils.etl.partidas_campeonato.id_left_right: Unexpected error: Could not execute function. <id_inicial>={id_inicial}, <campeonato_fix>={campeonato_fix}, <left>={left}, <partidas>={partidas}, <dates>={dates}, <ids>={ids}")
+        logging.error(err)
+            
+        return

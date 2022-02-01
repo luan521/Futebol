@@ -1,5 +1,7 @@
 paths = {
-         'initial_path': 'C:\\Users\\Luan\\futebol\\Futebol'
+         'initial_path': 'C:\\Users\\Luan\\futebol\\Futebol',
+         'credentials': 'C:\\Users\\Luan\\futebol\\credentials',
+         'logs_cafu': 'C:\\Users\\Luan\\futebol\\logs_cafu'
         }
 
 def path(key):
@@ -11,5 +13,3 @@ def path(key):
     """
     
     return paths[key]
-    
-    

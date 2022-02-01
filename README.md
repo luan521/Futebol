@@ -50,9 +50,10 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
     ├───etl
     │   ├───prod
     │   └───sketch
-    └───requisicao
-        ├───prod
-        └───sketch
+    ├───requisicao
+    │   ├───prod
+    │   └───sketch
+    └───sketch
 ```
 
 ## Contents
