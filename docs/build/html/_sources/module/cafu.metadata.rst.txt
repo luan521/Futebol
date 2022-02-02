@@ -28,3 +28,12 @@ cafu.metadata.campeonatos\_espn module
    :show-inheritance:
    :private-members:
 
+cafu.metadata.paths module
+--------------------------
+
+.. automodule:: cafu.metadata.paths
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+

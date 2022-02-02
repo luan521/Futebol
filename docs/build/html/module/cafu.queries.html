@@ -92,18 +92,39 @@
 <span id="cafu-queries-jogador-module"></span><h2>cafu.queries.jogador module<a class="headerlink" href="#module-cafu.queries.jogador" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="cafu.queries.jogador.Bio">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Bio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Bio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
 <p>Extrai informações da biografia do jogador</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_driver</strong> – (str) caminho para o chromedriver</p></li>
 <li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/bio/_/id">https://www.espn.com.br/futebol/jogador/bio/_/id</a>/&lt;id_jogador&gt;.
 Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio._x_path">
+<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio._x_path" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da classe.
+Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação de biografia</p>
+<figure class="align-default">
+<img alt="../_images/biografia.png" src="../_images/biografia.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pos</strong> – (int) posição na tabela biografia (2-posicao, 3-altura;massa, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>xpath</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.jogador.Bio.altura">
 <span class="sig-name descname"><span class="pre">altura</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.altura"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.altura" title="Permalink to this definition"></a></dt>
@@ -184,40 +205,19 @@ Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.x_path">
-<span class="sig-name descname"><span class="pre">x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.x_path" title="Permalink to this definition"></a></dt>
-<dd><p>Método interno da classe.
-Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação de biografia</p>
-<figure class="align-default">
-<img alt="../_images/biografia.png" src="../_images/biografia.png" />
-</figure>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pos</strong> – (int) posição na tabela biografia (2-posicao, 3-altura;massa, …)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>xpath</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Estatisticas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Estatisticas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
 <p>Extrai informações estatísticas das últimas temporadas do jogador</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_driver</strong> – (str) caminho para o chromedriver</p></li>
 <li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/estatisticas/_/id">https://www.espn.com.br/futebol/jogador/estatisticas/_/id</a>/&lt;id_jogador&gt;.
 Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
 </ul>
 </dd>
 </dl>
@@ -456,21 +456,21 @@ Define o xpath do método find_element_by_xpath da biblioteca selenium, para a b
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">UltimosCincoJogos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">UltimosCincoJogos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
 <p>Extrai informações das cinco últimas partidas do jogador</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_driver</strong> – (str) caminho para o chromedriver</p></li>
 <li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/_/id">https://www.espn.com.br/futebol/jogador/_/id</a>/&lt;id_jogador&gt;.
 Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos._x_path">
-<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos._x_path" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos._x_path" title="Permalink to this definition"></a></dt>
 <dd><p>Método interno da classe.
 Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em um jogo</p>
 <figure class="align-default">
@@ -481,6 +481,7 @@ Define o xpath do método find_element_by_xpath da biblioteca selenium, para a b
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pos_v</strong> – (int) posição horizontal da informação na tabela, referente a coluna (1-time, 2-data, ….)</p></li>
 <li><p><strong>pos_h</strong> – (int) posição vertical da informação na tabela, referente ao jogo (1-último, 2-penultimo, …)</p></li>
+<li><p><strong>section</strong> – (int) parâmetro x_path, default=2, no caso &lt;id_jogador&gt;=’199017/everton-ribeiro’ &lt;section&gt; foi identificado com valor 1, em 29/01/2022</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -755,18 +756,21 @@ Define o xpath do método find_element_by_xpath da biblioteca selenium, para a b
 <span id="cafu-queries-odds-module"></span><h2>cafu.queries.odds module<a class="headerlink" href="#module-cafu.queries.odds" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="cafu.queries.odds.GetOdds">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.odds.</span></span><span class="sig-name descname"><span class="pre">GetOdds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_driver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.dafabet.TrafficOddsPartida</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.odds.</span></span><span class="sig-name descname"><span class="pre">GetOdds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.dafabet.TrafficOddsPartida" title="cafu.utils.queries.dafabet.TrafficOddsPartida"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.dafabet.TrafficOddsPartida</span></code></a></p>
 <p>Busca as odds da partida</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path_driver</strong> – (str) caminho para o chromedriver, optional</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_webdriver</strong> – (bool) se o Chrome driver deve ser iniciado</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.odds.GetOdds._close_open_bets">
 <span class="sig-name descname"><span class="pre">_close_open_bets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds._close_open_bets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds._close_open_bets" title="Permalink to this definition"></a></dt>
-<dd><p>Método interno da classe
+<dd><p>Método interno da classe.
 Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
 </dd></dl>
 
@@ -785,10 +789,10 @@ Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
 <dd class="field-odd"><p><strong>max_iterate</strong> – número máximo de tentativas</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>se a execução foi bem sucedida</p>
+<dd class="field-even"><p>quantidade de mercados na partida</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
