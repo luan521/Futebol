@@ -1,0 +1,7 @@
+02/01/2022 03:58:41 PM ERROR: Unexpected error: Could not import data
+02/01/2022 03:58:41 PM name 'pd' is not defined
+02/01/2022 03:58:58 PM ERROR: Unexpected error: Could not import data
+02/01/2022 03:58:58 PM name 'pd' is not defined
+02/01/2022 03:59:07 PM ERROR: Unexpected error: Could not import data
+02/01/2022 03:59:07 PM name 'pd' is not defined
+02/01/2022 03:59:15 PM SUCCESS: Data import

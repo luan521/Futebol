@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cafu.queries package &mdash; Sample Docs v2019.07.29 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cafu.utils package" href="cafu.utils.html" />
+    <link rel="prev" title="cafu.metadata package" href="cafu.metadata.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sample Docs
+          </a>
+              <div class="version">
+                v2019.07.29
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">cafu</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cafu.html">cafu package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="cafu.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="cafu.etl.html">cafu.etl package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cafu.metadata.html">cafu.metadata package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cafu.queries package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cafu.utils.html">cafu.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sample Docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">cafu</a> &raquo;</li>
+          <li><a href="cafu.html">cafu package</a> &raquo;</li>
+      <li>cafu.queries package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module/cafu.queries.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cafu.queries">
+<span id="cafu-queries-package"></span><h1>cafu.queries package<a class="headerlink" href="#module-cafu.queries" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-cafu.queries.jogador">
+<span id="cafu-queries-jogador-module"></span><h2>cafu.queries.jogador module<a class="headerlink" href="#module-cafu.queries.jogador" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Bio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
+<p>Extrai informações da biografia do jogador</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/bio/_/id">https://www.espn.com.br/futebol/jogador/bio/_/id</a>/&lt;id_jogador&gt;.
+Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio._x_path">
+<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio._x_path" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da classe.
+Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação de biografia</p>
+<figure class="align-default">
+<img alt="../_images/biografia.png" src="../_images/biografia.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pos</strong> – (int) posição na tabela biografia (2-posicao, 3-altura;massa, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>xpath</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.altura">
+<span class="sig-name descname"><span class="pre">altura</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.altura"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.altura" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>altura do jogador</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.data_nascimento">
+<span class="sig-name descname"><span class="pre">data_nascimento</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.data_nascimento"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.data_nascimento" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>data de nascimento do jogador</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.massa">
+<span class="sig-name descname"><span class="pre">massa</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.massa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.massa" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>massa do jogador</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.nacionalidade">
+<span class="sig-name descname"><span class="pre">nacionalidade</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.nacionalidade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.nacionalidade" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>nacionalidade do jogador</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.posicao">
+<span class="sig-name descname"><span class="pre">posicao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.posicao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.posicao" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>posição do jogador</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Bio.time">
+<span class="sig-name descname"><span class="pre">time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Bio.time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Bio.time" title="Permalink to this definition"></a></dt>
+<dd><p>Todos os times do histórico de carreira do jogador
+:param pos: (int) posição na tabela “Histórico da Carreira”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>time do jogador, quantidade de temporadas</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">Estatisticas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
+<p>Extrai informações estatísticas das últimas temporadas do jogador</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/estatisticas/_/id">https://www.espn.com.br/futebol/jogador/estatisticas/_/id</a>/&lt;id_jogador&gt;.
+Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas._x_path">
+<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas._x_path" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da classe.
+Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em uma temporada</p>
+<figure class="align-default">
+<img alt="../_images/estatisticas.png" src="../_images/estatisticas.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos_v</strong> – (int) posição horizontal da informação na tabela, referente a coluna (1-titular, 2-faltas_cometidas, ….)</p></li>
+<li><p><strong>pos_h</strong> – (int) posição vertical da informação na tabela, referente a temporada (1-último, 2-penultimo, …)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>xpath</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.assistencias">
+<span class="sig-name descname"><span class="pre">assistencias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.assistencias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.assistencias" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de assistências feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.campeonato">
+<span class="sig-name descname"><span class="pre">campeonato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.campeonato"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.campeonato" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>campeonato</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.cartoes_amarelos">
+<span class="sig-name descname"><span class="pre">cartoes_amarelos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.cartoes_amarelos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.cartoes_amarelos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de cartões amarelos levados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.cartoes_vermelhos">
+<span class="sig-name descname"><span class="pre">cartoes_vermelhos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.cartoes_vermelhos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.cartoes_vermelhos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de cartões vermelhos levados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.faltas_cometidas">
+<span class="sig-name descname"><span class="pre">faltas_cometidas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.faltas_cometidas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.faltas_cometidas" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de faltas cometidas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.faltas_sofridas">
+<span class="sig-name descname"><span class="pre">faltas_sofridas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.faltas_sofridas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.faltas_sofridas" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de faltas sofridas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.finalizacoes">
+<span class="sig-name descname"><span class="pre">finalizacoes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.finalizacoes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.finalizacoes" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de finalizações feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.finalizacoes_no_gol">
+<span class="sig-name descname"><span class="pre">finalizacoes_no_gol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.finalizacoes_no_gol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.finalizacoes_no_gol" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de finalizações no gol, feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.gols">
+<span class="sig-name descname"><span class="pre">gols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.gols" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de gols marcados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.impedimentos">
+<span class="sig-name descname"><span class="pre">impedimentos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.impedimentos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.impedimentos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de impedimentos do jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.reserva">
+<span class="sig-name descname"><span class="pre">reserva</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.reserva"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.reserva" title="Permalink to this definition"></a></dt>
+<dd><p>Funciona apenas para a temporada atual
+:param temporada: (int) (1-atual, 2-passada, …)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>quantidade de vezes em que o jogador foi reserva</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.time">
+<span class="sig-name descname"><span class="pre">time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.time" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>time do jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.Estatisticas.titular">
+<span class="sig-name descname"><span class="pre">titular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#Estatisticas.titular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.Estatisticas.titular" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temporada</strong> – (int) (1-atual, 2-passada, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de vezes em que o jogador foi titular</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.jogador.</span></span><span class="sig-name descname"><span class="pre">UltimosCincoJogos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_jogador</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome" title="cafu.utils.queries.webdriver_chrome.WebdriverChrome"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.webdriver_chrome.WebdriverChrome</span></code></a></p>
+<p>Extrai informações das cinco últimas partidas do jogador</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_jogador</strong> – (str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/jogador/_/id">https://www.espn.com.br/futebol/jogador/_/id</a>/&lt;id_jogador&gt;.
+Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos._x_path">
+<span class="sig-name descname"><span class="pre">_x_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos._x_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos._x_path" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da classe.
+Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em um jogo</p>
+<figure class="align-default">
+<img alt="../_images/ult_5_jogos.png" src="../_images/ult_5_jogos.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos_v</strong> – (int) posição horizontal da informação na tabela, referente a coluna (1-time, 2-data, ….)</p></li>
+<li><p><strong>pos_h</strong> – (int) posição vertical da informação na tabela, referente ao jogo (1-último, 2-penultimo, …)</p></li>
+<li><p><strong>section</strong> – (int) parâmetro x_path, default=2, no caso &lt;id_jogador&gt;=’199017/everton-ribeiro’ &lt;section&gt; foi identificado com valor 1, em 29/01/2022</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>xpath</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.adversario">
+<span class="sig-name descname"><span class="pre">adversario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.adversario"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.adversario" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>time adversário</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.assistencias">
+<span class="sig-name descname"><span class="pre">assistencias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.assistencias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.assistencias" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de assistências feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.campeonato">
+<span class="sig-name descname"><span class="pre">campeonato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.campeonato"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.campeonato" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>campeonato</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.cartoes_amarelos">
+<span class="sig-name descname"><span class="pre">cartoes_amarelos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.cartoes_amarelos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.cartoes_amarelos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de cartões amarelos levados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.cartoes_vermelhos">
+<span class="sig-name descname"><span class="pre">cartoes_vermelhos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.cartoes_vermelhos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.cartoes_vermelhos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de cartões vermelhos levados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.casa_fora">
+<span class="sig-name descname"><span class="pre">casa_fora</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.casa_fora"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.casa_fora" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>se o jogo foi em casa ou fora</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.date">
+<span class="sig-name descname"><span class="pre">date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.date" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data da partida</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.faltas_cometidas">
+<span class="sig-name descname"><span class="pre">faltas_cometidas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.faltas_cometidas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.faltas_cometidas" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de faltas cometidas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.faltas_sofridas">
+<span class="sig-name descname"><span class="pre">faltas_sofridas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.faltas_sofridas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.faltas_sofridas" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de faltas sofridas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.finalizacoes">
+<span class="sig-name descname"><span class="pre">finalizacoes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.finalizacoes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.finalizacoes" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de finalizações feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.finalizacoes_no_gol">
+<span class="sig-name descname"><span class="pre">finalizacoes_no_gol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.finalizacoes_no_gol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.finalizacoes_no_gol" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de finalizações no gol, feitas pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.gols">
+<span class="sig-name descname"><span class="pre">gols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.gols" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de gols marcados pelo jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.impedimentos">
+<span class="sig-name descname"><span class="pre">impedimentos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.impedimentos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.impedimentos" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de impedimentos do jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.resultado">
+<span class="sig-name descname"><span class="pre">resultado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.resultado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.resultado" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>resultado-(V, E, D), placar</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.time">
+<span class="sig-name descname"><span class="pre">time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.time" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>time do jogador</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.jogador.UltimosCincoJogos.titular_reserva">
+<span class="sig-name descname"><span class="pre">titular_reserva</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/jogador.html#UltimosCincoJogos.titular_reserva"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.jogador.UltimosCincoJogos.titular_reserva" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo</strong> – (int) jogo (1-último, 2-penultimo, …)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>se o jogador foi titular ou reserva</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cafu.queries.odds">
+<span id="cafu-queries-odds-module"></span><h2>cafu.queries.odds module<a class="headerlink" href="#module-cafu.queries.odds" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cafu.queries.odds.GetOdds">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.odds.</span></span><span class="sig-name descname"><span class="pre">GetOdds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cafu.utils.queries.html#cafu.utils.queries.dafabet.TrafficOddsPartida" title="cafu.utils.queries.dafabet.TrafficOddsPartida"><code class="xref py py-class docutils literal notranslate"><span class="pre">cafu.utils.queries.dafabet.TrafficOddsPartida</span></code></a></p>
+<p>Busca as odds da partida</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_webdriver</strong> – (bool) se o Chrome driver deve ser iniciado</p></li>
+<li><p><strong>headless</strong> – (bool) se o navegador será mostrado ou não</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.odds.GetOdds._close_open_bets">
+<span class="sig-name descname"><span class="pre">_close_open_bets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds._close_open_bets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds._close_open_bets" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da classe.
+Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.odds.GetOdds.get_odds">
+<span class="sig-name descname"><span class="pre">get_odds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds.get_odds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds.get_odds" title="Permalink to this definition"></a></dt>
+<dd><p>Busca todas as odds da partida</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.odds.GetOdds.open_odds">
+<span class="sig-name descname"><span class="pre">open_odds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_iterate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds.open_odds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds.open_odds" title="Permalink to this definition"></a></dt>
+<dd><p>Entra no link “Todos os mercados” e abre todas as odds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_iterate</strong> – número máximo de tentativas</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantidade de mercados na partida</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cafu.queries.partida">
+<span id="cafu-queries-partida-module"></span><h2>cafu.queries.partida module<a class="headerlink" href="#module-cafu.queries.partida" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.partida.</span></span><span class="sig-name descname"><span class="pre">Partida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.campeonato">
+<span class="sig-name descname"><span class="pre">campeonato</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.campeonato"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.campeonato" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.cartoes_amarelos">
+<span class="sig-name descname"><span class="pre">cartoes_amarelos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.cartoes_amarelos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.cartoes_amarelos" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.cartoes_vermelhos">
+<span class="sig-name descname"><span class="pre">cartoes_vermelhos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.cartoes_vermelhos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.cartoes_vermelhos" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.chutes_fora_nogol">
+<span class="sig-name descname"><span class="pre">chutes_fora_nogol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.chutes_fora_nogol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.chutes_fora_nogol" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.data">
+<span class="sig-name descname"><span class="pre">data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.defesas">
+<span class="sig-name descname"><span class="pre">defesas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.defesas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.defesas" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.escanteios">
+<span class="sig-name descname"><span class="pre">escanteios</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.escanteios"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.escanteios" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.faltas">
+<span class="sig-name descname"><span class="pre">faltas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.faltas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.faltas" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.formacao">
+<span class="sig-name descname"><span class="pre">formacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.formacao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.formacao" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.gols">
+<span class="sig-name descname"><span class="pre">gols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.gols" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.impedimentos">
+<span class="sig-name descname"><span class="pre">impedimentos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.impedimentos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.impedimentos" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.jogadores">
+<span class="sig-name descname"><span class="pre">jogadores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.jogadores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.jogadores" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.minuto_a_minuto">
+<span class="sig-name descname"><span class="pre">minuto_a_minuto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.minuto_a_minuto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.minuto_a_minuto" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.nomes_times">
+<span class="sig-name descname"><span class="pre">nomes_times</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.nomes_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.nomes_times" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.placar">
+<span class="sig-name descname"><span class="pre">placar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.placar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.placar" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.posse">
+<span class="sig-name descname"><span class="pre">posse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.posse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.posse" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.queries.partida.Partida.teste_jogo_finalizado">
+<span class="sig-name descname"><span class="pre">teste_jogo_finalizado</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.teste_jogo_finalizado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.teste_jogo_finalizado" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cafu.metadata.html" class="btn btn-neutral float-left" title="cafu.metadata package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cafu.utils.html" class="btn btn-neutral float-right" title="cafu.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
