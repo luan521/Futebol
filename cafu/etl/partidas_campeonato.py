@@ -4,7 +4,7 @@ from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.paths import path
 
 import logging
-filename = path('logs_cafu')+'\\logs.txt'
+filename = path('logs_cafu')+'/logs.txt'
 logging.basicConfig(filename=filename, 
                     format='%(asctime)s %(message)s', 
                     datefmt='%d/%m/%Y %I:%M:%S %p',
@@ -52,9 +52,12 @@ def partidas_campeonato(pais_divisao, temporada, qt_jogos_rodada=10):
         df[['time_casa','time_visitante']] = pd.DataFrame(df['partida'].values.tolist(), index= df.index)
         df = df.drop('partida', axis=1)
         
-        logging.info(f"SUCCESS etl.partidas_campeonato.partidas_campeonato: Function executed successfully. <pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}")
+        logging.info(f"SUCCESS etl.partidas_campeonato.partidas_campeonato: Function executed successfully. "
+                     f"<pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}")
         return df
     except:
-        logging.error("ERROR etl.partidas_campeonato.partidas_campeonato: Unexpected error: Could not execute function. <pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}")
+        logging.error(f"ERROR etl.partidas_campeonato.partidas_campeonato: Unexpected error: "
+                      f"Could not execute function. <pais_divisao>={pais_divisao}, <temporada>={temporada}, "
+                      f"<qt_jogos_rodada>={qt_jogos_rodada}")
         logging.error(err)
         return

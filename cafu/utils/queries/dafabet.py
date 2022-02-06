@@ -1,10 +1,11 @@
 import json
 from time import sleep
 from tqdm import tqdm
+from cafu.utils.loop_try import loop_try
 from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 
 from cafu.metadata.paths import path
-r = open(path('credentials')+'\\dafabet.json')
+r = open(path('credentials')+'/dafabet.json')
 credentials_dafabet = json.load(r)
 user, password = credentials_dafabet['user'], credentials_dafabet['password']
 
@@ -48,9 +49,11 @@ class Login(WebdriverChrome):
             password_element.send_keys(password)
             enter_button_element.click()
             
-            logging.info("SUCCESS utils.queries.dafabet.Login.login: Function executed successfully")
+            logging.info("SUCCESS utils.queries.dafabet.Login.login: "
+                         "Function executed successfully")
         except Exception as err:
-            logging.error("ERROR utils.queries.dafabet.Login.login: Unexpected error: Could not execute function")
+            logging.error("ERROR utils.queries.dafabet.Login.login: Unexpected error: "
+                          "Could not execute function")
             logging.error(err)
         
 class TrafficOddsPartida(Login):
@@ -76,13 +79,16 @@ class TrafficOddsPartida(Login):
             response = len(partidas)
             
             if response > 0:
-                logging.info("SUCCESS utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: Function executed successfully")
+                logging.info("SUCCESS utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: "
+                             "Function executed successfully")
             else:
-                logging.warning("WARNING utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: No matches found")
+                logging.warning("WARNING utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: "
+                                "No matches found")
             
             return response
         except Exception as err:
-            logging.error("ERROR utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: Unexpected error: Could not execute function")
+            logging.error("ERROR utils.queries.dafabet.TrafficOddsPartida.get_quantidade_partidas: "
+                          "Unexpected error: Could not execute function")
             logging.error(err)
             
             return     
@@ -98,36 +104,65 @@ class TrafficOddsPartida(Login):
         Returns:
             str: descrição da partida, quando o método é bem sucedido
         """
-
-        i = 1
-        success = False 
-        with tqdm(total=max_iterate) as barra_progresso:
-            while (i<=max_iterate) and not success:
+        
+        def _try_join_link_odds_partida():
+            try:
+                partidas = self.web.find_elements_by_class_name('more_markets')
+                qt_odds = partidas[index].text
+                if qt_odds == '0':
+                    return True, None
+                partidas[index].click()
+                sleep(2)
+                descricao_partida = {}
                 try:
-                    partidas = self.web.find_elements_by_class_name('more_markets')
-                    qt_odds = partidas[index].text
-                    if qt_odds == '0':
-                        break
-                    partidas[index].click()
-                    sleep(2)
-                    descricao_partida = {}
-                    try:
-                        descricao_partida_texto = self.web.find_elements_by_class_name('event-header-description')[0].text
-                        descricao_partida['horario'] = descricao_partida_texto.split('\n')[1][9:]
-                        descricao_partida['time_casa'] = descricao_partida_texto.split('\n')[0].split(' vs ')[0]
-                        descricao_partida['time_visitante'] = descricao_partida_texto.split('\n')[0].split(' vs ')[1]
-                    except:
-                        descricao_partida_texto = self.web.find_elements_by_class_name('live-event')[0].text
-                        descricao_partida['horario'] = 'ao vivo'
-                        descricao_partida['time_casa'] = descricao_partida_texto.split(' vs ')[0]
-                        descricao_partida['time_visitante'] = descricao_partida_texto.split(' vs ')[1]
-                    success = True
+                    descricao_partida_texto = self.web.find_elements_by_class_name('event-header-description')[0].text
+                    descricao_partida['horario'] = descricao_partida_texto.split('\n')[1][9:]
+                    descricao_partida['time_casa'] = descricao_partida_texto.split('\n')[0].split(' vs ')[0]
+                    descricao_partida['time_visitante'] = descricao_partida_texto.split('\n')[0].split(' vs ')[1]
                 except:
-                    pass
-                i+=1
-                barra_progresso.update(1)
+                    descricao_partida_texto = self.web.find_elements_by_class_name('live-event')[0].text
+                    descricao_partida['horario'] = 'ao vivo'
+                    descricao_partida['time_casa'] = descricao_partida_texto.split(' vs ')[0]
+                    descricao_partida['time_visitante'] = descricao_partida_texto.split(' vs ')[1]
+                return True, None
+            except:
+                return False, None
+            success = loop_try(_try_join_link_odds_partida, max_iterate, 
+                               time_sleep=2, barra_progresso=True)[0]
+
+        #i = 1
+        #success = False 
+        #with tqdm(total=max_iterate) as barra_progresso:
+        #    while (i<=max_iterate) and not success:
+        #        try:
+        #            partidas = self.web.find_elements_by_class_name('more_markets')
+        #            qt_odds = partidas[index].text
+        #            if qt_odds == '0':
+        #                break
+        #            partidas[index].click()
+        #            sleep(2)
+        #            descricao_partida = {}
+        #            try:
+        #                descricao_partida_texto = self.web.find_elements_by_class_name('event-header-description')[0].text
+        #                descricao_partida['horario'] = descricao_partida_texto.split('\n')[1][9:]
+        #                descricao_partida['time_casa'] = descricao_partida_texto.split('\n')[0].split(' vs ')[0]
+        #                descricao_partida['time_visitante'] = descricao_partida_texto.split('\n')[0].split(' vs ')[1]
+        #            except:
+        #                descricao_partida_texto = self.web.find_elements_by_class_name('live-event')[0].text
+        #                descricao_partida['horario'] = 'ao vivo'
+        #                descricao_partida['time_casa'] = descricao_partida_texto.split(' vs ')[0]
+        #                descricao_partida['time_visitante'] = descricao_partida_texto.split(' vs ')[1]
+        #            success = True
+        #        except:
+        #            pass
+        #        i+=1
+        #        barra_progresso.update(1)
 
         if success:
-            logging.info(f"SUCCESS utils.queries.dafabet.TrafficOddsPartida.join_link_odds_partida: Function executed successfully. <index>={index}, <max_iterate>={max_iterate}. {descricao_partida}")
+            logging.info(f"SUCCESS utils.queries.dafabet.TrafficOddsPartida.join_link_odds_partida: "
+                         f"Function executed successfully. <index>={index}, <max_iterate>={max_iterate}. "
+                         f"{descricao_partida}")
         else:
-            logging.error(f"ERROR utils.queries.dafabet.TrafficOddsPartida.join_link_odds_partida: Unexpected error: Could not execute function with default max_iterate. <index>={index}, <max_iterate>={max_iterate}")
+            logging.error(f"ERROR utils.queries.dafabet.TrafficOddsPartida.join_link_odds_partida: "
+                          f"Unexpected error: Could not execute function with default max_iterate. "
+                          f"<index>={index}, <max_iterate>={max_iterate}")

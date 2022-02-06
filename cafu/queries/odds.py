@@ -1,10 +1,11 @@
 from time import sleep
 from tqdm import tqdm
 from cafu.utils.queries.dafabet import TrafficOddsPartida
+from cafu.utils.loop_try import loop_try
 from cafu.metadata.paths import path
 
 import logging
-filename = path('logs_cafu')+'\\logs.txt'
+filename = path('logs_cafu')+'/logs.txt'
 logging.basicConfig(filename=filename, 
                     format='%(asctime)s %(message)s', 
                     datefmt='%d/%m/%Y %I:%M:%S %p',
@@ -46,9 +47,7 @@ class GetOdds(TrafficOddsPartida):
             
             return
         
-        i = 1
-        success = False 
-        while (i<=max_iterate) and not success:
+        def _try_open_odds():
             try:
                 eventos = self.web.find_elements_by_class_name('event_path-title.ellipsis.rollup-title.x.collapsed')
                 for e in tqdm(eventos):
@@ -57,17 +56,20 @@ class GetOdds(TrafficOddsPartida):
                     except:
                         pass
                 if len(eventos) == 0:
-                    success = True
+                    return True, None
+                else:
+                    return False, None
             except:
-                pass
-            i+=1
-
+                return False, None
+        success = loop_try(_try_open_odds, max_iterate)[0]
+        
         if success:
             logging.info("SUCCESS queries.odds.GetOdds.open_odds: Function executed successfully")
             
             return qt_mercados
         else:
-            logging.error(f"ERROR queries.odds.GetOdds.open_odds: Unexpected error: Could not execute function with default max_iterate. <max_iterate>={max_iterate}")
+            logging.error(f"ERROR queries.odds.GetOdds.open_odds: Unexpected error: Could not "
+                          f"execute function with default max_iterate. <max_iterate>={max_iterate}")
             
             return
     
@@ -94,28 +96,75 @@ class GetOdds(TrafficOddsPartida):
         class_name_all_odds = 'formatted_price.price'
         elements_all_odds = self.web.find_elements_by_class_name(class_name_all_odds)
 
-        try:
-            response = {}
-            for e in tqdm(elements_all_odds):
-                odds = e.text
-                if odds != '':
-                    e.click()
-                    class_evento = 'market-description.bg-info.text-md.text-light.p5.m0.pl10'
-                    class_tipo_aposta = 'selection-market-period-description'
-                    evento = self.web.find_elements_by_class_name(class_evento)[0].text
-                    sleep(1)
-                    tipo_aposta = self.web.find_elements_by_class_name(class_tipo_aposta)[0].text
-                    sleep(1)
-                    try:
-                        response[tipo_aposta][evento] = odds
-                    except:
-                        response[tipo_aposta] = {evento: odds} 
-                self._close_open_bets()
-                sleep(1)
+        response = {}
+        for e in tqdm(elements_all_odds):
+            odds = e.text
+            if odds != '':
+                e.click()
+                class_evento = 'market-description.bg-info.text-md.text-light.p5.m0.pl10'
+                class_tipo_aposta = 'selection-market-period-description'
                 
-            logging.info("SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully")
-            
-            return response
-        except Exception as err:
-            logging.error("ERROR queries.odds.GetOdds.get_odds: Unexpected error: Could not execute function")
-            logging.error(err)
+                def _find_evento():
+                    try:
+                        evento = self.web.find_elements_by_class_name(class_evento)[0].text
+                        return True, evento
+                    except:
+                        try:
+                            xpath = '//*[@id="centre"]/div[7]/div[1]/span[2]'
+                            self.web.find_element_by_xpath(xpath).click()
+                        except:
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <evento>, part-1")
+                            return False, None
+                        try:
+                            sleep(1)
+                            e.click()
+                        except:
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <evento>, part-2")
+                        return False, None
+                def _find_tipo_aposta():
+                    try:
+                        tipo_aposta = self.web.find_elements_by_class_name(class_tipo_aposta)[0].text
+                        # Garantindo que o método não retorne tipo_aposta=','
+                        if tipo_aposta == ',': 
+                            return False, None
+                        else:
+                            return True, tipo_aposta
+                    except:
+                        try:
+                            xpath = '//*[@id="centre"]/div[7]/div[1]/span[2]'
+                            self.web.find_element_by_xpath(xpath).click()
+                        except:
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <tipo_aposta>, part-1")
+                            return False, None
+                        try:
+                            sleep(1)
+                            e.click()
+                        except:
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <tipo_aposta>, part-2")
+                        return False, None
+                max_iterate, time_sleep = 10, 2
+                success, evento = loop_try(_find_evento, max_iterate, time_sleep)
+                if not success:
+                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <evento> by method find_elements_by_class_name")
+                    return
+                success, tipo_aposta = loop_try(_find_tipo_aposta, max_iterate, time_sleep)
+                if not success:
+                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <tipo_aposta> by method find_elements_by_class_name")
+                    return
+                logging.info(f"INFO queries.odds.GetOdds.get_odds: Complete {tipo_aposta} | {evento} | {odds}")
+                
+                try:
+                    response[tipo_aposta][evento] = odds
+                except:
+                    try:
+                        response[tipo_aposta] = {evento: odds} 
+                    except Exception as err:
+                        logging.error("ERROR queries.odds.GetOdds.get_odds: Could not add odds to dict")
+                        logging.error(err)
+
+                        return
+            self._close_open_bets()
+
+        logging.info("SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully")
+
+        return response

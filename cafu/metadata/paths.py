@@ -1,7 +1,7 @@
 paths = {
-         'initial_path': 'C:\\Users\\Luan\\futebol\\Futebol',
-         'credentials': 'C:\\Users\\Luan\\futebol\\credentials',
-         'logs_cafu': 'C:\\Users\\Luan\\futebol\\logs_cafu'
+         'initial_path': '/home/luan/futebol/Futebol',
+         'credentials': '/home/luan/futebol/credentials',
+         'logs_cafu': '/home/luan/futebol/logs_cafu'
         }
 
 def path(key):
