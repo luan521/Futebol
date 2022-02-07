@@ -39,7 +39,7 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
 │           ├── temp.py
 │           └── webdriver_chrome.py
 ├── chromedriver -> ChromeDriver 91.0.4472.101. chromedriver_linux64. Supports Chrome version 91 
-├── create_virtual_env.sh -> Criar mambiente virtual
+├── create_virtual_env.sh -> criar mambiente virtual
 ├── docs -> documentação da biblioteca
 ├── imagens_doc -> imagens para a documentação da biblioteca
 │   ├── biografia.png
@@ -65,7 +65,7 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
 │       └── Untitled.ipynb
 ├── README.md
 ├── requirements.txt 
-├── run_doc.sh -> Gerar documentação automática da biblioteca em docs.build.html.module
+├── run_doc.sh -> gerar documentação automática da biblioteca em docs.build.html.module
 └── setup.py
 ```
 
