@@ -19,7 +19,7 @@ def loop_try(f, max_iterate, time_sleep=0, bool_progress=False):
         time_sleep: (float) tempo de espera para a próxima tentativa, em segundos
         bool_progress: (bool) se o método tqdm será utilizado
     Returns:
-        bool: se o método foi bem sucedido
+        tuple: (x1, x2) x1 bool, se o método foi bem sucedido
     """
     
     i = 1

@@ -4,14 +4,14 @@ import json
 from bs4 import BeautifulSoup
 import datetime
 
-from cafu.utils.queries.temp import (sem_espaco, padrao, padrao_inicio_fim, mes,
-                                     jogadores_inscritos, teste_gols, gols_casa_visitante)
+from cafu.utils.queries.partida import (sem_espaco, padrao, padrao_inicio_fim, mes,
+                                        jogadores_inscritos, teste_gols, gols_casa_visitante)
 
 class Partida():
 
     def __init__(self, jogo_id):
         
-        self.jogo_id = jogo_id
+        self.jogo_id = str(jogo_id)
     
     def teste_jogo_finalizado(self):
     

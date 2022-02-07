@@ -67,9 +67,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for cafu.utils.queries.temp</h1><div class="highlight"><pre>
-<span></span><span class="c1"># submódulo temporário para requisições pela biblioteca requests</span>
-
-<span class="kn">import</span> <span class="nn">requests</span> <span class="k">as</span> <span class="nn">r</span>
+<span></span><span class="kn">import</span> <span class="nn">requests</span> <span class="k">as</span> <span class="nn">r</span>
 <span class="kn">from</span> <span class="nn">html2json</span> <span class="kn">import</span> <span class="n">collect</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
@@ -296,6 +294,35 @@
                 <span class="n">gols_q</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;minutos_gols&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">minuto</span><span class="p">))</span>                
                 
     <span class="k">return</span> <span class="n">gols_q</span></div>
+
+<div class="viewcode-block" id="find_id_jogadores"><a class="viewcode-back" href="../../../../module/cafu.utils.queries.html#cafu.utils.queries.temp.find_id_jogadores">[docs]</a><span class="k">def</span> <span class="nf">find_id_jogadores</span><span class="p">(</span><span class="n">jogo_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        jogo_id: (int) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=&lt;jogo_id&gt;. </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: códigos dos jogadores que foram inscritos para a partida, referente ao &lt;jogo_id&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">web</span> <span class="o">=</span> <span class="n">WebdriverChrome</span><span class="p">()</span>
+    <span class="n">link_partida</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://www.espn.com.br/futebol/escalacoes?jogoId=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">web</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link_partida</span><span class="p">)</span>
+    
+    <span class="n">padrao</span> <span class="o">=</span> <span class="s1">&#39;jogador/.+/id/[0-9]+/.+&#39;</span>
+    <span class="n">links_0</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_elements_by_tag_name</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">links_0</span><span class="p">]</span>
+    
+    <span class="n">web</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="n">ids_jogadores</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">id_</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">padrao</span><span class="p">,</span> <span class="n">l</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">13</span><span class="p">:]</span>
+            <span class="n">id_part1</span> <span class="o">=</span> <span class="n">id_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">id_part2</span> <span class="o">=</span> <span class="n">id_</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ids_jogadores</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;part1&#39;</span><span class="p">:</span> <span class="n">id_part1</span><span class="p">,</span> <span class="s1">&#39;id_part2&#39;</span><span class="p">:</span> <span class="n">id_part2</span><span class="p">})</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">ids_jogadores</span></div>
 </pre></div>
 
            </div>
