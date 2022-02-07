@@ -469,7 +469,7 @@ class Estatisticas(WebdriverChrome):
             str: xpath 
         """
         
-        return (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/
+        return (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
                 f'div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]')
     
     def campeonato(self, temporada):
@@ -501,7 +501,7 @@ class Estatisticas(WebdriverChrome):
         """
         
         try:
-            x_path = (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/
+            x_path = (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
                       f'div/div[2]/div[2]/table/tbody/tr[{temporada}]/td[2]/div/a')
             response = self.web.find_element_by_xpath(x_path).text
             logging.info(f"SUCCESS queries.jogador.Estatisticas.time: Function executed successfully. <temporada>={temporada}")
@@ -551,12 +551,14 @@ class Estatisticas(WebdriverChrome):
             
                 return response
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.Estatisticas.reserva: Unexpected error: Could not execute function. <temporada>={temporada}")
+                logging.error(f"ERROR queries.jogador.Estatisticas.reserva: Unexpected error: "
+                              F"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return
         else:
-            logging.warning("WARNING queries.jogador.Estatisticas.reserva: Method works only for current season (<temporada>=1)")
+            logging.warning("WARNING queries.jogador.Estatisticas.reserva: "
+                            "Method works only for current season (<temporada>=1)")
             return
         
     def faltas_cometidas(self, temporada):

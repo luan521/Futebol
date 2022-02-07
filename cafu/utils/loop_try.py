@@ -9,7 +9,7 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-def loop_try(f, max_iterate, time_sleep=0, barra_progresso=False):
+def loop_try(f, max_iterate, time_sleep=0, bool_progress=False):
     """
     loop de tentativas de executar a função <f>
     
@@ -17,14 +17,14 @@ def loop_try(f, max_iterate, time_sleep=0, barra_progresso=False):
         f: (function) Args - None. Returns - tuple (x1, x2) x1 bool, se a função foi bem executada ou não
         max_iterate: número máximo de tentativas
         time_sleep: (float) tempo de espera para a próxima tentativa, em segundos
-        barra_progresso: (bool) se o método tqdm será utilizado
+        bool_progress: (bool) se o método tqdm será utilizado
     Returns:
         bool: se o método foi bem sucedido
     """
     
     i = 1
     success = False 
-    if barra_progresso:
+    if bool_progress:
         with tqdm(total=max_iterate) as barra_progresso:
             while (i<=max_iterate) and not success:
                 if i>1:
@@ -41,10 +41,10 @@ def loop_try(f, max_iterate, time_sleep=0, barra_progresso=False):
             
     if success:
         logging.info(f"SUCCESS utils.loop_try.loop_try: Function executed successfully. <f>={f}, "
-                     f"<max_iterate>={max_iterate}, <time_sleep>={time_sleep}, <barra_progresso>={barra_progresso}")
+                     f"<max_iterate>={max_iterate}, <time_sleep>={time_sleep}, <barra_progresso>={bool_progress}")
     else:
         logging.error(f"ERROR utils.loop_try.loop_try: Unexpected error: Could not execute function "
                       f"with default max_iterate. <f>={f},<max_iterate>={max_iterate}, <time_sleep>={time_sleep}, "
-                      f"<barra_progresso>={barra_progresso}")
+                      f"<barra_progresso>={bool_progress}")
         
     return success, response

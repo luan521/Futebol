@@ -36,4 +36,3 @@ cafu.queries.partida module
    :undoc-members:
    :show-inheritance:
    :private-members:
-

@@ -18,4 +18,3 @@ cafu.utils.etl.partidas\_campeonato module
    :undoc-members:
    :show-inheritance:
    :private-members:
-

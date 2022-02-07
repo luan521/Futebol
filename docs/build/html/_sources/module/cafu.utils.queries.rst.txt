@@ -36,4 +36,3 @@ cafu.utils.queries.webdriver\_chrome module
    :undoc-members:
    :show-inheritance:
    :private-members:
-
