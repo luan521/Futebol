@@ -78,6 +78,9 @@ Links e conteúdos relevantes para o projeto
 - [Saindo do Zero com a Biblioteca OS no Python](https://www.youtube.com/watch?v=ROCyIPA1wWA) pode ser útil na montagem do data lake
 - [Como Criar Barra de Progresso no Python para os seus Códigos](https://www.youtube.com/watch?v=qRFPGuBc-KE)
 - [Docker em 22 minutos - teoria e prática (Rápido!)](https://www.youtube.com/watch?v=Kzcz-EVKBEQ)
+- [Step-by-Step Python and Postgres Tutorial with psycopg2](https://www.youtube.com/watch?v=2PDkXviEMD0)
+- [Como iniciar um projeto Django com PostgreSQL e Docker - Dicas de Python](https://www.youtube.com/watch?v=xxjzwdtWozI)
+- [Data Science - PostgreSQL Database using Python Programming](https://www.youtube.com/watch?v=d1atQKLFHgY)
 
 ## Next steps
 - notebooks prod devem estar sempre funcionando &#9745;
