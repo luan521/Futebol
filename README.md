@@ -1,14 +1,12 @@
 # Oracle cafu
-- Coleta de dados
-- ETL
-- Cluster Analysis
-- Streaming / Dashboard
-- Modelagem
-- Aposta automática
+Serviço para aposta automática em partidas de futebol, no site [Dafabet](https://www.dafabet.com/pt/dfgoal/sports/240-football)
 
-O objetivo é criar diversos modelos que consigam fazer previsões em uma partida de futebol. Por exemplo: Em uma partida entre Liverpool e Manchester City pela Premier League, dado informações dos dois times nas últimas partidas do campeonato, qual a probabilidade do Liverpool marcar o primeiro gol da partida? Ou então, qual a probabilidade de ocorrer mais de três gols na partida? Criaremos um banco de dados, e depois modelos de Machine Learning, que buscam responder perguntas como estas.
-
-Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos otimizar nossas apostas.
+1. Coleta de dados
+2. ETL (Data Lake e banco de dados)
+3. Cluster Analysis
+4. Streaming / Dashboard
+5. Modelagem
+6. Aposta automática
 
 ## Folder structure
 ```
@@ -68,6 +66,18 @@ Com as probabilidades computadas, e possuindo odds de sites de apostas, podemos 
 ├── run_doc.sh -> gerar documentação automática da biblioteca em docs.build.html.module
 └── setup.py
 ```
+
+## Prerequisites
+1. Criar arquivo 'dafabet.json':
+    - 'user': usuário no site dafabet
+    - 'password': senha no site dafabet
+2. Atualizar caminhos locais em cafu/metadata/paths.py
+3. Verificar se o chromedriver possui a versão compatível com o Google Chrome
+4. Instalar o projeto junto com os requirements:
+```
+>> pip install .
+```
+**Acesse docs.build.html.module e notebooks para aprender as funcionalidades do projeto**
 
 ## Contents
 Links e conteúdos relevantes para o projeto
