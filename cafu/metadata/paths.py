@@ -4,6 +4,12 @@ paths = {
          'logs_cafu': '/home/luan/futebol/logs_cafu'
         }
 
+"""
+- initial_path: caminho local para o projeto 
+- credentials: caminho local do arquivo 'dafabet.json', possui as credenciais para acessar a conta no site
+- logs_cafu: caminho local para o diretório onde o arquivo 'logs.txt' será criado, os logs gerados pela execução das funções irão para este arquivo
+"""
+
 def path(key):
     """
     Args:
