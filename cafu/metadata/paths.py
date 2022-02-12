@@ -5,10 +5,14 @@ paths = {
         }
 
 """
+description_paths
+
 - initial_path: caminho local para o projeto 
+
 - credentials: caminho local do arquivo 'dafabet.json', que contém:
          - 'user': usuário no site dafabet
          - 'password': senha no site dafabet
+
 - logs_cafu: caminho local para o diretório onde o arquivo 'logs.txt' será criado, os logs gerados pela execução das funções irão para este arquivo
 """
 

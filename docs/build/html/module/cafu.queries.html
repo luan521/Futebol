@@ -806,30 +806,78 @@ Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.queries.partida.</span></span><span class="sig-name descname"><span class="pre">Partida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Retorna informações sobre uma partida de futebol, buscando no site da ESPN</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo_id</strong> – (int or str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/escalacoes">https://www.espn.com.br/futebol/escalacoes</a>?jogoId=&lt;jogo_id&gt;.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.campeonato">
 <span class="sig-name descname"><span class="pre">campeonato</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.campeonato"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.campeonato" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>campeonato disputado</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.cartoes_amarelos">
 <span class="sig-name descname"><span class="pre">cartoes_amarelos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.cartoes_amarelos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.cartoes_amarelos" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(quantidade de cartões amarelos levados pelo time da casa,
+quantidade de cartões amarelos levados pelo time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.cartoes_vermelhos">
 <span class="sig-name descname"><span class="pre">cartoes_vermelhos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.cartoes_vermelhos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.cartoes_vermelhos" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(quantidade de cartões vermelhos levados pelo time da casa,
+quantidade de cartões vermelhos levados pelo time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.chutes_fora_nogol">
 <span class="sig-name descname"><span class="pre">chutes_fora_nogol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.chutes_fora_nogol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.chutes_fora_nogol" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(time da casa [x1, x2], time visitante [x3, x4]) chutes para fora, chutes no gol</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.data">
 <span class="sig-name descname"><span class="pre">data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>data da partida</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.defesas">
@@ -839,57 +887,150 @@ Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.escanteios">
 <span class="sig-name descname"><span class="pre">escanteios</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.escanteios"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.escanteios" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(quantidade de escanteios para o time da casa,
+quantidade de escanteios para o time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.faltas">
 <span class="sig-name descname"><span class="pre">faltas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.faltas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.faltas" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(quantidade de faltas cometidas pelo time da casa,
+quantidade de faltas cometidas pelo time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.formacao">
 <span class="sig-name descname"><span class="pre">formacao</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.formacao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.formacao" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(formação do time da casa, formação do time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.gols">
 <span class="sig-name descname"><span class="pre">gols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.gols" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(gols marcados pelo time da casa, gols marcados pelo time visitante).
+nome do jogador, minuto</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.impedimentos">
 <span class="sig-name descname"><span class="pre">impedimentos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.impedimentos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.impedimentos" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(quantidade de impedimentos marcados para o time da casa,
+quantidade de impedimentos marcados para o time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.jogadores">
 <span class="sig-name descname"><span class="pre">jogadores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.jogadores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.jogadores" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(jogadores do time da casa, jogadores do time visitante) apenas jogadores que atuaram na partida.
+nome, camisa, minuto que entrou, minuto que saiu.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.minuto_a_minuto">
 <span class="sig-name descname"><span class="pre">minuto_a_minuto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.minuto_a_minuto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.minuto_a_minuto" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>descrições dos momentos da partida. tempo, descrição</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.nomes_times">
 <span class="sig-name descname"><span class="pre">nomes_times</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.nomes_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.nomes_times" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(time da casa, time visitante)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.placar">
 <span class="sig-name descname"><span class="pre">placar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.placar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.placar" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>placar da partida</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.posse">
 <span class="sig-name descname"><span class="pre">posse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.posse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.posse" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>posse de bola</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.partida.Partida.teste_jogo_finalizado">
 <span class="sig-name descname"><span class="pre">teste_jogo_finalizado</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/partida.html#Partida.teste_jogo_finalizado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.partida.Partida.teste_jogo_finalizado" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Se o jogo foi finalizado</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

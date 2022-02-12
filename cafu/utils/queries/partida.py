@@ -225,32 +225,3 @@ def gols_casa_visitante(q, jogo_id):
                 gols_q[i]['minutos_gols'].append(int(minuto))                
                 
     return gols_q
-
-def find_id_jogadores(jogo_id):
-    """
-    Args:
-        jogo_id: (int) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=<jogo_id>. 
-    Returns:
-        list: códigos dos jogadores que foram inscritos para a partida, referente ao <jogo_id>
-    """
-    
-    web = WebdriverChrome()
-    link_partida = f'https://www.espn.com.br/futebol/escalacoes?jogoId={jogo_id}'
-    web.web.get(link_partida)
-    
-    padrao = 'jogador/.+/id/[0-9]+/.+'
-    links_0 = web.web.find_elements_by_tag_name('a')
-    links = [l.get_attribute('href') for l in links_0]
-    
-    web.web.close()
-    
-    ids_jogadores = []
-    for l in links:
-        try:
-            id_ = re.findall(padrao, l)[0][13:]
-            id_part1 = id_.split('/')[0]
-            id_part2 = id_.split('/')[1]
-            ids_jogadores.append({'part1': id_part1, 'id_part2': id_part2})
-        except:
-            pass
-    return ids_jogadores

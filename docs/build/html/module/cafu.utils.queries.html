@@ -161,61 +161,45 @@ Barra de progresso para a quantidade de tentativas, em relação à quantidade m
 </dd></dl>
 
 </section>
-<section id="module-cafu.utils.queries.temp">
-<span id="cafu-utils-queries-temp-module"></span><h2>cafu.utils.queries.temp module<a class="headerlink" href="#module-cafu.utils.queries.temp" title="Permalink to this headline"></a></h2>
+<section id="module-cafu.utils.queries.partida">
+<span id="cafu-utils-queries-partida-module"></span><h2>cafu.utils.queries.partida module<a class="headerlink" href="#module-cafu.utils.queries.partida" title="Permalink to this headline"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.find_id_jogadores">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">find_id_jogadores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#find_id_jogadores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.find_id_jogadores" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>jogo_id</strong> – (int) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/escalacoes">https://www.espn.com.br/futebol/escalacoes</a>?jogoId=&lt;jogo_id&gt;.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>códigos dos jogadores que foram inscritos para a partida, referente ao &lt;jogo_id&gt;</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.gols_casa_visitante">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">gols_casa_visitante</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#gols_casa_visitante"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.gols_casa_visitante" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.gols_casa_visitante">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">gols_casa_visitante</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#gols_casa_visitante"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.gols_casa_visitante" title="Permalink to this definition"></a></dt>
 <dd><p>Retorna os dados da função requisição_gols, para q={0, 1}.
 Se ambos os times marcaram: q=0 representa time da casa, q=1 representa time visitante.
 Se apenas um time marcou, q=0 represente este time, q=1 gera erro. Se nenhum time marcou, q=0 e q=1 geram erro.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.jogadores_inscritos">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">jogadores_inscritos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#jogadores_inscritos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.jogadores_inscritos" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.jogadores_inscritos">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">jogadores_inscritos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#jogadores_inscritos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.jogadores_inscritos" title="Permalink to this definition"></a></dt>
 <dd><p>Retorna todos os jogadores inscritos para a partida.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.mes">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">mes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#mes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.mes" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.mes">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">mes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#mes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.mes" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.padrao">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">padrao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#padrao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.padrao" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.padrao">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">padrao</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#padrao"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.padrao" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.padrao_inicio_fim">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">padrao_inicio_fim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#padrao_inicio_fim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.padrao_inicio_fim" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.padrao_inicio_fim">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">padrao_inicio_fim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#padrao_inicio_fim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.padrao_inicio_fim" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.sem_espaco">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">sem_espaco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#sem_espaco"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.sem_espaco" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.sem_espaco">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">sem_espaco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#sem_espaco"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.sem_espaco" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.queries.temp.teste_gols">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.temp.</span></span><span class="sig-name descname"><span class="pre">teste_gols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/temp.html#teste_gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.temp.teste_gols" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cafu.utils.queries.partida.teste_gols">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.partida.</span></span><span class="sig-name descname"><span class="pre">teste_gols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/partida.html#teste_gols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.partida.teste_gols" title="Permalink to this definition"></a></dt>
 <dd><p>Retorna se o time da casa e o time visitante, marcaram gols.</p>
 </dd></dl>
 

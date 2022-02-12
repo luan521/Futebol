@@ -10,22 +10,25 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-def partidas_campeonato(pais_divisao, temporada, qt_jogos_rodada=10):
+def partidas_campeonato(pais_divisao, temporada):
     """
     Busca as partidas do campeonato <campeonato_fix>
         
     Args:
         pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
         temporada: (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn
-        qt_jogos_rodada: (int) quantidade de jogos que ocorrem em uma rodada
     Returns:
          pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante
     """
     
     dados_campeonato = campeonato_espn(pais_divisao, temporada) 
-    campeonato, id_inicial = dados_campeonato['nome'], dados_campeonato['id']
-    ids, partidas, dates = id_left_right(id_inicial, campeonato)
-    ids, partidas, dates = id_left_right(id_inicial+1, campeonato, left=False, partidas=partidas, dates=dates, ids=ids)
+    campeonato = dados_campeonato['nome']
+    id_inicial =dados_campeonato['id']
+    qt_jogos_rodada = dados_campeonato['qt_jogos_rodada']
+    qt_partidas_campeonato = 2*qt_jogos_rodada*(2*qt_jogos_rodada-1)
+    ids, partidas, dates = id_left_right(id_inicial, campeonato, qt_partidas_campeonato)
+    ids, partidas, dates = id_left_right(id_inicial+1, campeonato, qt_partidas_campeonato,
+                                         left=False, partidas=partidas, dates=dates, ids=ids)
     
     try:
         data = []
@@ -55,7 +58,7 @@ def partidas_campeonato(pais_divisao, temporada, qt_jogos_rodada=10):
         logging.info(f"SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. "
                      f"<pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}")
         return df
-    except:
+    except Exception as err:
         logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: Unexpected error: "
                       f"Could not execute function. <pais_divisao>={pais_divisao}, <temporada>={temporada}, "
                       f"<qt_jogos_rodada>={qt_jogos_rodada}")
