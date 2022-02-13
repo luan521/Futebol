@@ -37,7 +37,6 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 │           ├── temp.py
 │           └── webdriver_chrome.py
 ├── chromedriver -> ChromeDriver 91.0.4472.101. chromedriver_linux64. Supports Chrome version 91 
-├── create_virtual_env.sh -> criar ambiente virtual
 ├── docs -> documentação da biblioteca
 ├── imagens_doc -> imagens para a documentação da biblioteca
 │   ├── biografia.png
