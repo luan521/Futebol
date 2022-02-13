@@ -75,10 +75,10 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 3. Verificar se o chromedriver possui a versão compatível com o Google Chrome
 4. Criar ambiente virtual:
 ```
-conda create -n futebol python=3.8 ;
-conda activate futebol ;
-pip install --user ipykernel ;
-python -m ipykernel install --user --name=futebol 
+>> conda create -n futebol python=3.8 
+>> conda activate futebol 
+>> pip install --user ipykernel 
+>> python -m ipykernel install --user --name=futebol 
 ```
 5. Instalar o projeto junto com os requirements:
 ```
