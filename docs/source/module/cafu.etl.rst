@@ -7,15 +7,10 @@ cafu.etl package
    :show-inheritance:
    :private-members:
 
-Submodules
-----------
+Subpackages
+-----------
 
-cafu.etl.partidas\_campeonato module
-------------------------------------
+.. toctree::
+   :maxdepth: 2
 
-.. automodule:: cafu.etl.partidas_campeonato
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :private-members:
-
+   cafu.etl.data_lake

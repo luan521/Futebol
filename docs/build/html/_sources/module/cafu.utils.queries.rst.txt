@@ -19,10 +19,10 @@ cafu.utils.queries.dafabet module
    :show-inheritance:
    :private-members:
 
-cafu.utils.queries.temp module
-------------------------------
+cafu.utils.queries.partida module
+---------------------------------
 
-.. automodule:: cafu.utils.queries.temp
+.. automodule:: cafu.utils.queries.partida
    :members:
    :undoc-members:
    :show-inheritance:
@@ -36,4 +36,3 @@ cafu.utils.queries.webdriver\_chrome module
    :undoc-members:
    :show-inheritance:
    :private-members:
-

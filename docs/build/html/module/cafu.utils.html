@@ -97,12 +97,82 @@
 <li class="toctree-l1"><a class="reference internal" href="cafu.utils.queries.html">cafu.utils.queries package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cafu.utils.queries.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cafu.utils.queries.html#module-cafu.utils.queries.dafabet">cafu.utils.queries.dafabet module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cafu.utils.queries.html#module-cafu.utils.queries.temp">cafu.utils.queries.temp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cafu.utils.queries.html#module-cafu.utils.queries.partida">cafu.utils.queries.partida module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cafu.utils.queries.html#module-cafu.utils.queries.webdriver_chrome">cafu.utils.queries.webdriver_chrome module</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-cafu.utils.loop_try">
+<span id="cafu-utils-loop-try-module"></span><h2>cafu.utils.loop_try module<a class="headerlink" href="#module-cafu.utils.loop_try" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.loop_try.loop_try">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.loop_try.</span></span><span class="sig-name descname"><span class="pre">loop_try</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iterate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_sleep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/loop_try.html#loop_try"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.loop_try.loop_try" title="Permalink to this definition"></a></dt>
+<dd><p>loop de tentativas de executar a função &lt;f&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – (function) Args - None. Returns - tuple (x1, x2) x1 bool, se a função foi bem executada ou não</p></li>
+<li><p><strong>max_iterate</strong> – número máximo de tentativas</p></li>
+<li><p><strong>time_sleep</strong> – (float) tempo de espera para a próxima tentativa, em segundos</p></li>
+<li><p><strong>bool_progress</strong> – (bool) se o método tqdm será utilizado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(x1, x2) x1 bool, se o método foi bem sucedido</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cafu.utils.string">
+<span id="cafu-utils-string-module"></span><h2>cafu.utils.string module<a class="headerlink" href="#module-cafu.utils.string" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.string.convert_str_var_time">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.string.</span></span><span class="sig-name descname"><span class="pre">convert_str_var_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/string.html#convert_str_var_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.string.convert_str_var_time" title="Permalink to this definition"></a></dt>
+<dd><p>Converte a variação de tempo para string, format - m minutes and s seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>init</strong> – (float) tempo inicial</p></li>
+<li><p><strong>end</strong> – (float) tempo final</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>variação (end-init)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.string.identify_string_in_list">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.string.</span></span><span class="sig-name descname"><span class="pre">identify_string_in_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_strings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/string.html#identify_string_in_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.string.identify_string_in_list" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – (str)</p></li>
+<li><p><strong>list_strings</strong> – (list) strings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>index da string mais parecida com &lt;string&gt;, na lista &lt;list_strings&gt;</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

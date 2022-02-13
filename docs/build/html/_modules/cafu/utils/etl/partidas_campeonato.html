@@ -69,10 +69,11 @@
   <h1>Source code for cafu.utils.etl.partidas_campeonato</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">cafu.queries.partida</span> <span class="kn">import</span> <span class="n">Partida</span>
+<span class="kn">from</span> <span class="nn">cafu.utils.loop_try</span> <span class="kn">import</span> <span class="n">loop_try</span>
 <span class="kn">from</span> <span class="nn">cafu.metadata.paths</span> <span class="kn">import</span> <span class="n">path</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;logs_cafu&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">logs.txt&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;logs_cafu&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/logs.txt&#39;</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> 
                     <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> 
                     <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %I:%M:%S %p&#39;</span><span class="p">,</span>
@@ -90,29 +91,31 @@
 <span class="sd">         list: campeonato, times, date </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">stop</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">max_iterate</span><span class="p">)</span> <span class="k">as</span> <span class="n">barra_progresso</span><span class="p">:</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">stop</span> <span class="ow">and</span> <span class="n">count</span><span class="o">&lt;=</span><span class="n">max_iterate</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">req</span> <span class="o">=</span> <span class="n">Partida</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">id_</span><span class="p">))</span>
-                <span class="n">campeonato</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">campeonato</span><span class="p">()</span>
-                <span class="n">times</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">nomes_times</span><span class="p">()</span>
-                <span class="n">date</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
-                <span class="n">stop</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">count</span><span class="o">+=</span><span class="mi">1</span>
-            <span class="n">barra_progresso</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_try_dados_partida</span><span class="p">():</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">Partida</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">id_</span><span class="p">))</span>
+        <span class="n">campeonato</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">campeonato</span><span class="p">()</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">nomes_times</span><span class="p">()</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">campeonato</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">times</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_try_dados_partida</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span></div>
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+        <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span></div>
 
-<div class="viewcode-block" id="id_left_right"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.partidas_campeonato.id_left_right">[docs]</a><span class="k">def</span> <span class="nf">id_left_right</span><span class="p">(</span><span class="n">id_inicial</span><span class="p">,</span> <span class="n">campeonato_fix</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">partidas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="id_left_right"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.partidas_campeonato.id_left_right">[docs]</a><span class="k">def</span> <span class="nf">id_left_right</span><span class="p">(</span><span class="n">id_inicial</span><span class="p">,</span> <span class="n">campeonato_fix</span><span class="p">,</span> <span class="n">qt_partidas_campeonato</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">partidas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Percorre os ids dos jogos, iniciando por &lt;id_inicial&gt;, subtraindo quando &lt;left&gt; True, somando quando &lt;left&gt; False.</span>
 <span class="sd">        </span>
 <span class="sd">    Args:</span>
 <span class="sd">        id_inicial: (int) id inicial </span>
 <span class="sd">        campeonato_fix: (str) campeonato, no formato fornecido pelo site da ESPN</span>
+<span class="sd">        qt_partidas_campeonato: (int) quantidade total de partidas no campeonato</span>
 <span class="sd">        left: (bool) Se os jogos_ids serão percorridos para a esquerda ou direita, iniciando por &lt;id_inicial&gt;</span>
 <span class="sd">        partidas: (list) elementos no formato (time_casa, time_visitante), utilizar quando estas partidas já tiverem sido computadas, optional</span>
 <span class="sd">        dates: (list) datas das partidas já computadas, optional</span>
@@ -126,27 +129,27 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fator</span> <span class="o">=</span> <span class="mi">1</span>
     
-    <span class="n">id_</span> <span class="o">=</span> <span class="n">id_inicial</span> 
-    <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">dados_partida</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">partidas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">partidas</span> <span class="o">=</span> <span class="p">[</span><span class="n">times</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">partidas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">dates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">date</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
-        
     <span class="k">try</span><span class="p">:</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="n">id_inicial</span> 
+        <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">dados_partida</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">partidas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="n">partidas</span> <span class="o">=</span> <span class="p">[</span><span class="n">times</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="mi">380</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span>
+            <span class="n">partidas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">date</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">qt_partidas_campeonato</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">qt_partidas_campeonato</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">)</span> <span class="k">as</span> <span class="n">barra_progresso</span><span class="p">:</span>
             <span class="k">while</span> <span class="n">campeonato</span> <span class="o">==</span> <span class="n">campeonato_fix</span><span class="p">:</span>
                 <span class="n">id_</span> <span class="o">=</span> <span class="n">id_</span> <span class="o">+</span> <span class="n">fator</span>
@@ -163,11 +166,15 @@
         <span class="n">dates</span> <span class="o">=</span> <span class="n">dates</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS utils.etl.partidas_campeonato.id_left_right: Function executed successfully. &lt;id_inicial&gt;=</span><span class="si">{</span><span class="n">id_inicial</span><span class="si">}</span><span class="s2">, &lt;campeonato_fix&gt;=</span><span class="si">{</span><span class="n">campeonato_fix</span><span class="si">}</span><span class="s2">, &lt;left&gt;=</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">, len(&lt;partidas&gt;)=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS utils.etl.partidas_campeonato.id_left_right: &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;id_inicial&gt;=</span><span class="si">{</span><span class="n">id_inicial</span><span class="si">}</span><span class="s2">, &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;&lt;campeonato_fix&gt;=</span><span class="si">{</span><span class="n">campeonato_fix</span><span class="si">}</span><span class="s2">, &lt;left&gt;=</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">, len(&lt;partidas&gt;)=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
         <span class="k">return</span> <span class="n">ids</span><span class="p">,</span> <span class="n">partidas</span><span class="p">,</span> <span class="n">dates</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR utils.etl.partidas_campeonato.id_left_right: Unexpected error: Could not execute function. &lt;id_inicial&gt;=</span><span class="si">{id_inicial}</span><span class="s2">, &lt;campeonato_fix&gt;=</span><span class="si">{campeonato_fix}</span><span class="s2">, &lt;left&gt;=</span><span class="si">{left}</span><span class="s2">, &lt;partidas&gt;=</span><span class="si">{partidas}</span><span class="s2">, &lt;dates&gt;=</span><span class="si">{dates}</span><span class="s2">, &lt;ids&gt;=</span><span class="si">{ids}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR utils.etl.partidas_campeonato.id_left_right: Unexpected error: &quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;Could not execute function. &lt;id_inicial&gt;=</span><span class="si">{</span><span class="n">id_inicial</span><span class="si">}</span><span class="s2">, &quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;&lt;campeonato_fix&gt;=</span><span class="si">{</span><span class="n">campeonato_fix</span><span class="si">}</span><span class="s2">, &lt;left&gt;=</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">, len(&lt;partidas&gt;)=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
             
         <span class="k">return</span></div>

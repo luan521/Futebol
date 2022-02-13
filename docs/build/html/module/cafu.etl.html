@@ -18,7 +18,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="cafu.metadata package" href="cafu.metadata.html" />
+    <link rel="next" title="cafu.etl.data_lake package" href="cafu.etl.data_lake.html" />
     <link rel="prev" title="cafu package" href="cafu.html" /> 
 </head>
 
@@ -85,32 +85,18 @@
              
   <section id="module-cafu.etl">
 <span id="cafu-etl-package"></span><h1>cafu.etl package<a class="headerlink" href="#module-cafu.etl" title="Permalink to this headline"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
-</section>
-<section id="module-cafu.etl.partidas_campeonato">
-<span id="cafu-etl-partidas-campeonato-module"></span><h2>cafu.etl.partidas_campeonato module<a class="headerlink" href="#module-cafu.etl.partidas_campeonato" title="Permalink to this headline"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="cafu.etl.partidas_campeonato.partidas_campeonato">
-<span class="sig-prename descclassname"><span class="pre">cafu.etl.partidas_campeonato.</span></span><span class="sig-name descname"><span class="pre">partidas_campeonato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pais_divisao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qt_jogos_rodada</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/etl/partidas_campeonato.html#partidas_campeonato"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.etl.partidas_campeonato.partidas_campeonato" title="Permalink to this definition"></a></dt>
-<dd><p>Busca as partidas do campeonato &lt;campeonato_fix&gt;</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pais_divisao</strong> – (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn</p></li>
-<li><p><strong>temporada</strong> – (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn</p></li>
-<li><p><strong>qt_jogos_rodada</strong> – (int) quantidade de jogos que ocorrem em uma rodada</p></li>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cafu.etl.data_lake.html">cafu.etl.data_lake package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cafu.etl.data_lake.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cafu.etl.data_lake.html#module-cafu.etl.data_lake.jogadores_partida">cafu.etl.data_lake.jogadores_partida module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cafu.etl.data_lake.html#module-cafu.etl.data_lake.partidas_campeonato">cafu.etl.data_lake.partidas_campeonato module</a></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>jogo_id, dates, rodada, time_casa, time_visitante</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>pandas dataframe</p>
-</dd>
-</dl>
-</dd></dl>
-
+</li>
+</ul>
+</div>
 </section>
 </section>
 
@@ -119,7 +105,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="cafu.html" class="btn btn-neutral float-left" title="cafu package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="cafu.metadata.html" class="btn btn-neutral float-right" title="cafu.metadata package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cafu.etl.data_lake.html" class="btn btn-neutral float-right" title="cafu.etl.data_lake package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

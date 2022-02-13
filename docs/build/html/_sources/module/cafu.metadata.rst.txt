@@ -36,4 +36,3 @@ cafu.metadata.paths module
    :undoc-members:
    :show-inheritance:
    :private-members:
-
