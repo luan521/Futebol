@@ -1,5 +1,7 @@
 import pandas as pd
+import time
 from cafu.utils.etl.partidas_campeonato import id_left_right
+from cafu.utils.string import convert_str_var_time
 from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.paths import path
 
@@ -12,7 +14,7 @@ logging.basicConfig(filename=filename,
 
 def partidas_campeonato(pais_divisao, temporada):
     """
-    Busca as partidas do campeonato <campeonato_fix>
+    Busca as partidas do campeonato, no site da ESPN
         
     Args:
         pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
@@ -20,6 +22,8 @@ def partidas_campeonato(pais_divisao, temporada):
     Returns:
          pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante
     """
+    
+    init = time.time()
     
     dados_campeonato = campeonato_espn(pais_divisao, temporada) 
     campeonato = dados_campeonato['nome']
@@ -55,12 +59,17 @@ def partidas_campeonato(pais_divisao, temporada):
         df[['time_casa','time_visitante']] = pd.DataFrame(df['partida'].values.tolist(), index= df.index)
         df = df.drop('partida', axis=1)
         
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
         logging.info(f"SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. "
-                     f"<pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}")
+                     f"<pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                     f"runtime = {runtime_str}")
         return df
     except Exception as err:
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
         logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: Unexpected error: "
                       f"Could not execute function. <pais_divisao>={pais_divisao}, <temporada>={temporada}, "
-                      f"<qt_jogos_rodada>={qt_jogos_rodada}")
+                      f"<qt_jogos_rodada>={qt_jogos_rodada}. runtime = {runtime_str}")
         logging.error(err)
         return

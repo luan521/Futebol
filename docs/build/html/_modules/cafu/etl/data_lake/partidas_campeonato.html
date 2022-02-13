@@ -68,7 +68,9 @@
              
   <h1>Source code for cafu.etl.data_lake.partidas_campeonato</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.etl.partidas_campeonato</span> <span class="kn">import</span> <span class="n">id_left_right</span>
+<span class="kn">from</span> <span class="nn">cafu.utils.string</span> <span class="kn">import</span> <span class="n">convert_str_var_time</span>
 <span class="kn">from</span> <span class="nn">cafu.metadata.campeonatos_espn</span> <span class="kn">import</span> <span class="n">campeonato_espn</span>
 <span class="kn">from</span> <span class="nn">cafu.metadata.paths</span> <span class="kn">import</span> <span class="n">path</span>
 
@@ -81,7 +83,7 @@
 
 <div class="viewcode-block" id="partidas_campeonato"><a class="viewcode-back" href="../../../../module/cafu.etl.data_lake.html#cafu.etl.data_lake.partidas_campeonato.partidas_campeonato">[docs]</a><span class="k">def</span> <span class="nf">partidas_campeonato</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Busca as partidas do campeonato &lt;campeonato_fix&gt;</span>
+<span class="sd">    Busca as partidas do campeonato, no site da ESPN</span>
 <span class="sd">        </span>
 <span class="sd">    Args:</span>
 <span class="sd">        pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn</span>
@@ -89,6 +91,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">         pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
     <span class="n">dados_campeonato</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">)</span> 
     <span class="n">campeonato</span> <span class="o">=</span> <span class="n">dados_campeonato</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span>
@@ -124,13 +128,18 @@
         <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;time_casa&#39;</span><span class="p">,</span><span class="s1">&#39;time_visitante&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;partida&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;partida&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. &quot;</span>
-                     <span class="sa">f</span><span class="s2">&quot;&lt;pais_divisao&gt;=</span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">, &lt;qt_jogos_rodada&gt;=</span><span class="si">{</span><span class="n">qt_jogos_rodada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                     <span class="sa">f</span><span class="s2">&quot;&lt;pais_divisao&gt;=</span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">, &lt;qt_jogos_rodada&gt;=</span><span class="si">{</span><span class="n">qt_jogos_rodada</span><span class="si">}</span><span class="s2">. &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: Unexpected error: &quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;Could not execute function. &lt;pais_divisao&gt;=</span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">, &quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;&lt;qt_jogos_rodada&gt;=</span><span class="si">{</span><span class="n">qt_jogos_rodada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                      <span class="sa">f</span><span class="s2">&quot;&lt;qt_jogos_rodada&gt;=</span><span class="si">{</span><span class="n">qt_jogos_rodada</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span></div>
 </pre></div>

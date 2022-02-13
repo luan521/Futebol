@@ -67,10 +67,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for cafu.queries.odds</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.queries.dafabet</span> <span class="kn">import</span> <span class="n">TrafficOddsPartida</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.loop_try</span> <span class="kn">import</span> <span class="n">loop_try</span>
+<span class="kn">from</span> <span class="nn">cafu.utils.string</span> <span class="kn">import</span> <span class="n">convert_str_var_time</span>
 <span class="kn">from</span> <span class="nn">cafu.metadata.paths</span> <span class="kn">import</span> <span class="n">path</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -157,15 +159,26 @@
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">stop</span> <span class="o">=</span> <span class="kc">True</span></div>
         
-<div class="viewcode-block" id="GetOdds.get_odds"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.odds.GetOdds.get_odds">[docs]</a>    <span class="k">def</span> <span class="nf">get_odds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="GetOdds.get_odds"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.odds.GetOdds.get_odds">[docs]</a>    <span class="k">def</span> <span class="nf">get_odds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qt_desconsiderar</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Busca todas as odds da partida</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            qt_desconsiderar: (int) quantidade de links iniciais que serão desconsiderados, default=0</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict or tuple: método bem sucedido -&gt; return dict, odds da partida. método não bem sucedido -&gt; </span>
+<span class="sd">        return tuple, (odds adquiridas com sucesso, quantidade de links bem sucedidos)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="n">class_name_all_odds</span> <span class="o">=</span> <span class="s1">&#39;formatted_price.price&#39;</span>
         <span class="n">elements_all_odds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="n">class_name_all_odds</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="n">qt_desconsiderar</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">elements_all_odds</span> <span class="o">=</span> <span class="n">elements_all_odds</span><span class="p">[</span><span class="n">qt_desconsiderar</span><span class="p">:]</span>
+        
         <span class="n">response</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">elements_all_odds</span><span class="p">):</span>
             <span class="n">odds</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">text</span>
             <span class="k">if</span> <span class="n">odds</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
@@ -214,12 +227,18 @@
                 <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span>
                 <span class="n">success</span><span class="p">,</span> <span class="n">evento</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_find_evento</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;evento&gt; by method find_elements_by_class_name&quot;</span><span class="p">)</span>
-                    <span class="k">return</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;evento&gt; by method find_elements_by_class_name. &quot;</span>
+                                  <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">count</span>
                 <span class="n">success</span><span class="p">,</span> <span class="n">tipo_aposta</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_find_tipo_aposta</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;tipo_aposta&gt; by method find_elements_by_class_name&quot;</span><span class="p">)</span>
-                    <span class="k">return</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;tipo_aposta&gt; by method find_elements_by_class_name. &quot;</span>
+                                  <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">count</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO queries.odds.GetOdds.get_odds: Complete </span><span class="si">{</span><span class="n">tipo_aposta</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">evento</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">odds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 
                 <span class="k">try</span><span class="p">:</span>
@@ -228,13 +247,20 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">response</span><span class="p">[</span><span class="n">tipo_aposta</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">evento</span><span class="p">:</span> <span class="n">odds</span><span class="p">}</span> 
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not add odds to dict&quot;</span><span class="p">)</span>
+                        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                        <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not add odds to dict. &quot;</span>
+                                      <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 
-                        <span class="k">return</span>
+                        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">count</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_close_open_bets</span><span class="p">()</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully&quot;</span><span class="p">)</span>
+            <span class="n">count</span><span class="o">+=</span><span class="mi">1</span>
+        
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully. &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">response</span></div></div>
 </pre></div>

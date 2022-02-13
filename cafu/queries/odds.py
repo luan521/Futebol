@@ -1,7 +1,9 @@
+import time
 from time import sleep
 from tqdm import tqdm
 from cafu.utils.queries.dafabet import TrafficOddsPartida
 from cafu.utils.loop_try import loop_try
+from cafu.utils.string import convert_str_var_time
 from cafu.metadata.paths import path
 
 import logging
@@ -88,15 +90,26 @@ class GetOdds(TrafficOddsPartida):
             except:
                 stop = True
         
-    def get_odds(self):
+    def get_odds(self, qt_desconsiderar=0):
         """
         Busca todas as odds da partida
+        
+        Args:
+            qt_desconsiderar: (int) quantidade de links iniciais que serão desconsiderados, default=0
+        Returns:
+            dict or tuple: método bem sucedido -> return dict, odds da partida. método não bem sucedido -> 
+        return tuple, (odds adquiridas com sucesso, quantidade de links bem sucedidos)
         """
+        
+        init = time.time()
         
         class_name_all_odds = 'formatted_price.price'
         elements_all_odds = self.web.find_elements_by_class_name(class_name_all_odds)
-
+        if qt_desconsiderar>0:
+            elements_all_odds = elements_all_odds[qt_desconsiderar:]
+        
         response = {}
+        count = 0
         for e in tqdm(elements_all_odds):
             odds = e.text
             if odds != '':
@@ -145,12 +158,18 @@ class GetOdds(TrafficOddsPartida):
                 max_iterate, time_sleep = 10, 2
                 success, evento = loop_try(_find_evento, max_iterate, time_sleep)
                 if not success:
-                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <evento> by method find_elements_by_class_name")
-                    return
+                    end = time.time()
+                    runtime_str = convert_str_var_time(init, end)
+                    logging.error(f"ERROR queries.odds.GetOdds.get_odds: Could not find <evento> by method find_elements_by_class_name. "
+                                  f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
+                    return response, count
                 success, tipo_aposta = loop_try(_find_tipo_aposta, max_iterate, time_sleep)
                 if not success:
-                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <tipo_aposta> by method find_elements_by_class_name")
-                    return
+                    end = time.time()
+                    runtime_str = convert_str_var_time(init, end)
+                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <tipo_aposta> by method find_elements_by_class_name. "
+                                  f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
+                    return response, count
                 logging.info(f"INFO queries.odds.GetOdds.get_odds: Complete {tipo_aposta} | {evento} | {odds}")
                 
                 try:
@@ -159,12 +178,19 @@ class GetOdds(TrafficOddsPartida):
                     try:
                         response[tipo_aposta] = {evento: odds} 
                     except Exception as err:
-                        logging.error("ERROR queries.odds.GetOdds.get_odds: Could not add odds to dict")
+                        end = time.time()
+                        runtime_str = convert_str_var_time(init, end)
+                        logging.error(f"ERROR queries.odds.GetOdds.get_odds: Could not add odds to dict. "
+                                      f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
                         logging.error(err)
 
-                        return
+                        return response, count
             self._close_open_bets()
-
-        logging.info("SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully")
+            count+=1
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.odds.GetOdds.get_odds: Function executed successfully. "
+                     f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
 
         return response

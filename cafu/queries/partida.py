@@ -3,6 +3,8 @@ from html2json import collect
 import json
 from bs4 import BeautifulSoup
 import datetime
+import time
+from cafu.utils.string import convert_str_var_time
 from cafu.utils.queries.partida import (sem_espaco, padrao, padrao_inicio_fim, mes,
                                         jogadores_inscritos, teste_gols, gols_casa_visitante)
 
@@ -33,6 +35,8 @@ class Partida():
             bool: Se o jogo foi finalizado
         """
         
+        init = time.time()
+        
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
             soup=BeautifulSoup(req.content, 'html.parser')
@@ -45,12 +49,16 @@ class Partida():
             else:
                 response = False
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.teste_jogo_finalizado: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.teste_jogo_finalizado: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def campeonato(self):
@@ -58,6 +66,8 @@ class Partida():
         Returns:
             str: campeonato disputado
         """
+        
+        init = time.time()
     
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
@@ -73,12 +83,16 @@ class Partida():
                 response = response + ' ' + x
             response = response[1:-1]
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.campeonato: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.campeonato: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def data(self):
@@ -86,6 +100,8 @@ class Partida():
         Returns:
             datetime: data da partida
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
@@ -106,13 +122,17 @@ class Partida():
             year = int(date[2])
 
             response = datetime.datetime(year, month, day)
-
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.data: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.data: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def nomes_times(self):
@@ -120,6 +140,8 @@ class Partida():
         Returns:
             tuple: (time da casa, time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
@@ -145,13 +167,17 @@ class Partida():
             time_visitante = time_visitante[1:]
 
             response = time_casa, time_visitante
-
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.nomes_times: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.nomes_times: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def formacao(self):
@@ -159,6 +185,8 @@ class Partida():
         Returns:
             tuple: (formação do time da casa, formação do time visitante)
         """
+        
+        init = time.time()
     
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
@@ -173,17 +201,25 @@ class Partida():
                 formacao_casa = abt[ind_formacao_casa][:-1] 
                 formacao_visitante = abt[ind_formacao_visitante][:-1]
             else:
+                end = time.time()
+                runtime_str = convert_str_var_time(init, end)
                 logging.error(f"ERROR queries.Partida.formacao: "
-                              f"Could not execute function because the match hasn't happened yet. <jogo_id>={self.jogo_id}")
+                              f"Could not execute function because the match hasn't happened yet. <jogo_id>={self.jogo_id}. "
+                              f"runtime = {runtime_str}")
                 return
             
             response = formacao_casa, formacao_visitante
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.formacao: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.formacao: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def jogadores(self):
@@ -192,6 +228,8 @@ class Partida():
             tuple: (jogadores do time da casa, jogadores do time visitante) apenas jogadores que atuaram na partida.
             nome, camisa, minuto que entrou, minuto que saiu.
         """
+        
+        init = time.time()
     
         try:
             jogadores_casa_0, jogadores_visitante_0 = jogadores_inscritos(self.jogo_id)
@@ -236,12 +274,16 @@ class Partida():
 
             response = jogadores_casa, jogadores_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.jogadores: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.jogadores: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def gols(self):
@@ -250,6 +292,8 @@ class Partida():
             tuple: (gols marcados pelo time da casa, gols marcados pelo time visitante). 
             nome do jogador, minuto
         """
+        
+        init = time.time()
 
         try:
             teste_casa, teste_visitante = teste_gols(self.jogo_id)
@@ -267,12 +311,16 @@ class Partida():
 
             response = gols_casa, gols_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.gols: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.gols: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def placar(self):
@@ -280,6 +328,8 @@ class Partida():
         Returns:
             tuple: placar da partida
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
@@ -299,12 +349,16 @@ class Partida():
 
             response = gols_casa, gols_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.placar: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.placar: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def posse(self):
@@ -312,6 +366,8 @@ class Partida():
         Returns:
             tuple: posse de bola
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -328,12 +384,16 @@ class Partida():
 
             response = resultado_casa, resultado_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.posse: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.posse: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def chutes_fora_nogol(self):
@@ -341,6 +401,8 @@ class Partida():
         Returns:
             tuple: (time da casa [x1, x2], time visitante [x3, x4]) chutes para fora, chutes no gol
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -362,12 +424,16 @@ class Partida():
 
             response = resultado_casa, resultado_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.chutes_fora_nogol: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.chutes_fora_nogol: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
         
 
@@ -377,6 +443,8 @@ class Partida():
             tuple: (quantidade de faltas cometidas pelo time da casa, 
             quantidade de faltas cometidas pelo time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -390,13 +458,17 @@ class Partida():
             resultado_visitante = int(abt[imp[0][0]+5][:-1])
 
             response = resultado_casa, resultado_visitante
-
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.faltas: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.faltas: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def cartoes_amarelos(self):
@@ -405,6 +477,8 @@ class Partida():
             tuple: (quantidade de cartões amarelos levados pelo time da casa, 
             quantidade de cartões amarelos levados pelo time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -418,13 +492,17 @@ class Partida():
             resultado_visitante = int(abt[imp[0][0]+6][:-1])
 
             response = resultado_casa, resultado_visitante
-        
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.cartoes_amarelos: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.cartoes_amarelos: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
 
     def cartoes_vermelhos(self):
@@ -433,6 +511,8 @@ class Partida():
             tuple: (quantidade de cartões vermelhos levados pelo time da casa, 
             quantidade de cartões vermelhos levados pelo time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -447,12 +527,16 @@ class Partida():
 
             response = resultado_casa, resultado_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.cartoes_vermelhos: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.cartoes_vermelhos: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def impedimentos(self):
@@ -461,6 +545,8 @@ class Partida():
             tuple: (quantidade de impedimentos marcados para o time da casa, 
             quantidade de impedimentos marcados para o time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -474,13 +560,17 @@ class Partida():
             resultado_visitante = int(abt[imp[0][0]+5][:-1])
 
             response = resultado_casa, resultado_visitante
-
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.impedimentos: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.impedimentos: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
 
     def escanteios(self):
@@ -489,6 +579,8 @@ class Partida():
             tuple: (quantidade de escanteios para o time da casa, 
             quantidade de escanteios para o time visitante)
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
@@ -503,15 +595,22 @@ class Partida():
 
             response = resultado_casa, resultado_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.escanteios: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.escanteios: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
 
     def defesas(self):
+        
+        init = time.time()
+        
         try:
             req = r.get("https://www.espn.com.br/futebol/partida-estatisticas?jogoId="+self.jogo_id)
             soup =  BeautifulSoup(req.content, 'html.parser')
@@ -525,12 +624,16 @@ class Partida():
 
             response = resultado_casa, resultado_visitante
             
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.defesas: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.defesas: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
     def minuto_a_minuto(self):
@@ -538,6 +641,8 @@ class Partida():
         Returns:
             list: descrições dos momentos da partida. tempo, descrição
         """
+        
+        init = time.time()
         
         try:
             req = r.get("https://www.espn.com.br/futebol/comentario?jogoId="+self.jogo_id)
@@ -574,11 +679,15 @@ class Partida():
                 descricao = descricao[1:-1]
 
                 response.append({'tempo': tempo, 'descrição' : descricao})
-
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.info(f"SUCCESS queries.Partida.minuto_a_minuto: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}")
+                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             return response
         except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.minuto_a_minuto: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}")
+                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)

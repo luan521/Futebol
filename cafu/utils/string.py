@@ -37,3 +37,25 @@ def identify_string_in_list(string, list_strings):
                         f"string_found={list_strings[index_string_in_list]}) = {min_dist}")
     
     return index_string_in_list
+
+def convert_str_var_time(init, end):
+    """
+    Converte a variação de tempo para string, format - m minutes and s seconds
+    
+    Args:
+        init: (float) tempo inicial
+        end: (float) tempo final 
+    Returns:
+        str: variação (end-init)
+    """
+    
+    runtime = end - init
+    minutes, seconds = int(runtime/60), round(runtime%60, 0)
+    if minutes>0:
+        runtime_str = f'{minutes} minutes'
+        if seconds>0:
+            runtime_str = f'{runtime_str} and {seconds} seconds'
+    else:
+        runtime_str = f'{seconds} seconds'
+        
+    return runtime_str

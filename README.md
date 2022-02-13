@@ -101,4 +101,7 @@ Links e conteúdos relevantes para o projeto
     - duas branchs development devem existir (development-linux e development-windows). As duas devem se encontrar no mesmo nível, prontas para a construção do etl, que será feito no ambiente linux (branch derivada da development-linux)
 - finalizar as funcionalidades necessárias para a próxima etapa (etl para a construção do data lake) &#9745;
 - inserir logs e doc em cafu.queries.partida &#9745;
+- Verificar, informações aparentemente excluídas do site ESPN:
+    - [cafu.queries.jogador.UltimosCincoJogos](https://www.espn.com.br/futebol/jogador/_/id/252107/vinicius-junior) 
+    - [cafu.queries.jogador.Estatisticas](https://www.espn.com.br/futebol/jogador/estatisticas/_/id/252107/vinicius-junior)
 - etl para a construção do data lake, utilizar o airflow

@@ -776,8 +776,20 @@ Fecha as apostas abertas, para prosseguir com a coleta das odds</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cafu.queries.odds.GetOdds.get_odds">
-<span class="sig-name descname"><span class="pre">get_odds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds.get_odds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds.get_odds" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_odds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qt_desconsiderar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/queries/odds.html#GetOdds.get_odds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.queries.odds.GetOdds.get_odds" title="Permalink to this definition"></a></dt>
 <dd><p>Busca todas as odds da partida</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>qt_desconsiderar</strong> – (int) quantidade de links iniciais que serão desconsiderados, default=0</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>método bem sucedido -&gt; return dict, odds da partida. método não bem sucedido -&gt;</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or tuple</p>
+</dd>
+</dl>
+<p>return tuple, (odds adquiridas com sucesso, quantidade de links bem sucedidos)</p>
 </dd></dl>
 
 <dl class="py method">

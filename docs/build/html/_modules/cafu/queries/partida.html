@@ -72,6 +72,8 @@
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">cafu.utils.string</span> <span class="kn">import</span> <span class="n">convert_str_var_time</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.queries.partida</span> <span class="kn">import</span> <span class="p">(</span><span class="n">sem_espaco</span><span class="p">,</span> <span class="n">padrao</span><span class="p">,</span> <span class="n">padrao_inicio_fim</span><span class="p">,</span> <span class="n">mes</span><span class="p">,</span>
                                         <span class="n">jogadores_inscritos</span><span class="p">,</span> <span class="n">teste_gols</span><span class="p">,</span> <span class="n">gols_casa_visitante</span><span class="p">)</span>
 
@@ -102,6 +104,8 @@
 <span class="sd">            bool: Se o jogo foi finalizado</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
             <span class="n">soup</span><span class="o">=</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
@@ -114,12 +118,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">response</span> <span class="o">=</span> <span class="kc">False</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.teste_jogo_finalizado: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.teste_jogo_finalizado: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.campeonato"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.campeonato">[docs]</a>    <span class="k">def</span> <span class="nf">campeonato</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -127,6 +135,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: campeonato disputado</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -142,12 +152,16 @@
                 <span class="n">response</span> <span class="o">=</span> <span class="n">response</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">x</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.campeonato: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.campeonato: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.data"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -155,6 +169,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            datetime: data da partida</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -175,13 +191,17 @@
             <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">date</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
-
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.data: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.data: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.nomes_times"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.nomes_times">[docs]</a>    <span class="k">def</span> <span class="nf">nomes_times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -189,6 +209,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: (time da casa, time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -214,13 +236,17 @@
             <span class="n">time_visitante</span> <span class="o">=</span> <span class="n">time_visitante</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">time_casa</span><span class="p">,</span> <span class="n">time_visitante</span>
-
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.nomes_times: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.nomes_times: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.formacao"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.formacao">[docs]</a>    <span class="k">def</span> <span class="nf">formacao</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -228,6 +254,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: (formação do time da casa, formação do time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -242,17 +270,25 @@
                 <span class="n">formacao_casa</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_casa</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
                 <span class="n">formacao_visitante</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_visitante</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.formacao: &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;Could not execute function because the match hasn&#39;t happened yet. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                              <span class="sa">f</span><span class="s2">&quot;Could not execute function because the match hasn&#39;t happened yet. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">return</span>
             
             <span class="n">response</span> <span class="o">=</span> <span class="n">formacao_casa</span><span class="p">,</span> <span class="n">formacao_visitante</span>
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.formacao: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.formacao: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.jogadores"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.jogadores">[docs]</a>    <span class="k">def</span> <span class="nf">jogadores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -261,6 +297,8 @@
 <span class="sd">            tuple: (jogadores do time da casa, jogadores do time visitante) apenas jogadores que atuaram na partida.</span>
 <span class="sd">            nome, camisa, minuto que entrou, minuto que saiu.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
         <span class="k">try</span><span class="p">:</span>
             <span class="n">jogadores_casa_0</span><span class="p">,</span> <span class="n">jogadores_visitante_0</span> <span class="o">=</span> <span class="n">jogadores_inscritos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -305,12 +343,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">jogadores_casa</span><span class="p">,</span> <span class="n">jogadores_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.jogadores: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.jogadores: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.gols"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.gols">[docs]</a>    <span class="k">def</span> <span class="nf">gols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -319,6 +361,8 @@
 <span class="sd">            tuple: (gols marcados pelo time da casa, gols marcados pelo time visitante). </span>
 <span class="sd">            nome do jogador, minuto</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">teste_casa</span><span class="p">,</span> <span class="n">teste_visitante</span> <span class="o">=</span> <span class="n">teste_gols</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -336,12 +380,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">gols_casa</span><span class="p">,</span> <span class="n">gols_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.gols: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.gols: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.placar"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.placar">[docs]</a>    <span class="k">def</span> <span class="nf">placar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -349,6 +397,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: placar da partida</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -368,12 +418,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">gols_casa</span><span class="p">,</span> <span class="n">gols_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.placar: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.placar: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.posse"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.posse">[docs]</a>    <span class="k">def</span> <span class="nf">posse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -381,6 +435,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: posse de bola</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -397,12 +453,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.posse: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.posse: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.chutes_fora_nogol"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.chutes_fora_nogol">[docs]</a>    <span class="k">def</span> <span class="nf">chutes_fora_nogol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -410,6 +470,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: (time da casa [x1, x2], time visitante [x3, x4]) chutes para fora, chutes no gol</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -431,12 +493,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.chutes_fora_nogol: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.chutes_fora_nogol: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
         
 
@@ -446,6 +512,8 @@
 <span class="sd">            tuple: (quantidade de faltas cometidas pelo time da casa, </span>
 <span class="sd">            quantidade de faltas cometidas pelo time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -459,13 +527,17 @@
             <span class="n">resultado_visitante</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">abt</span><span class="p">[</span><span class="n">imp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">5</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
-
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.faltas: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.faltas: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.cartoes_amarelos"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.cartoes_amarelos">[docs]</a>    <span class="k">def</span> <span class="nf">cartoes_amarelos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -474,6 +546,8 @@
 <span class="sd">            tuple: (quantidade de cartões amarelos levados pelo time da casa, </span>
 <span class="sd">            quantidade de cartões amarelos levados pelo time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -487,13 +561,17 @@
             <span class="n">resultado_visitante</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">abt</span><span class="p">[</span><span class="n">imp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">6</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
-        
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.cartoes_amarelos: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.cartoes_amarelos: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Partida.cartoes_vermelhos"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.cartoes_vermelhos">[docs]</a>    <span class="k">def</span> <span class="nf">cartoes_vermelhos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -502,6 +580,8 @@
 <span class="sd">            tuple: (quantidade de cartões vermelhos levados pelo time da casa, </span>
 <span class="sd">            quantidade de cartões vermelhos levados pelo time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -516,12 +596,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.cartoes_vermelhos: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.cartoes_vermelhos: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.impedimentos"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.impedimentos">[docs]</a>    <span class="k">def</span> <span class="nf">impedimentos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -530,6 +614,8 @@
 <span class="sd">            tuple: (quantidade de impedimentos marcados para o time da casa, </span>
 <span class="sd">            quantidade de impedimentos marcados para o time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -543,13 +629,17 @@
             <span class="n">resultado_visitante</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">abt</span><span class="p">[</span><span class="n">imp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">5</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
-
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.impedimentos: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.impedimentos: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Partida.escanteios"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.escanteios">[docs]</a>    <span class="k">def</span> <span class="nf">escanteios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -558,6 +648,8 @@
 <span class="sd">            tuple: (quantidade de escanteios para o time da casa, </span>
 <span class="sd">            quantidade de escanteios para o time visitante)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -572,15 +664,22 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.escanteios: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.escanteios: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Partida.defesas"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.defesas">[docs]</a>    <span class="k">def</span> <span class="nf">defesas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/partida-estatisticas?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
             <span class="n">soup</span> <span class="o">=</span>  <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
@@ -594,12 +693,16 @@
 
             <span class="n">response</span> <span class="o">=</span> <span class="n">resultado_casa</span><span class="p">,</span> <span class="n">resultado_visitante</span>
             
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.defesas: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.defesas: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
 <div class="viewcode-block" id="Partida.minuto_a_minuto"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.minuto_a_minuto">[docs]</a>    <span class="k">def</span> <span class="nf">minuto_a_minuto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -607,6 +710,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: descrições dos momentos da partida. tempo, descrição</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
         <span class="k">try</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/comentario?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
@@ -643,13 +748,17 @@
                 <span class="n">descricao</span> <span class="o">=</span> <span class="n">descricao</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
                 <span class="n">response</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;tempo&#39;</span><span class="p">:</span> <span class="n">tempo</span><span class="p">,</span> <span class="s1">&#39;descrição&#39;</span> <span class="p">:</span> <span class="n">descricao</span><span class="p">})</span>
-
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.minuto_a_minuto: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.minuto_a_minuto: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div></div>
 </pre></div>
 
