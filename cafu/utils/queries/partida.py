@@ -1,5 +1,3 @@
-# submódulo temporário para requisições pela biblioteca requests
-
 import requests as r
 from html2json import collect
 import json

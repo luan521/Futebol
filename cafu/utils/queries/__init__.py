@@ -1,3 +1,3 @@
 from .dafabet import *
-from .temp import *
+from .partida import *
 from .webdriver_chrome import *

@@ -2,7 +2,7 @@ from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 from cafu.metadata.paths import path
 
 import logging
-filename = path('logs_cafu')+'\\logs.txt'
+filename = path('logs_cafu')+'/logs.txt'
 logging.basicConfig(filename=filename, 
                     format='%(asctime)s %(message)s', 
                     datefmt='%d/%m/%Y %I:%M:%S %p',
@@ -52,7 +52,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = self.web.find_element_by_xpath(self._x_path(1,jogo,section=1)).text
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.time: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.time: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -76,7 +77,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = self.web.find_element_by_xpath(self._x_path(2,jogo,section=1)).text
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.date: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.date: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -99,7 +101,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 identificador = self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[0]
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -109,7 +112,8 @@ class UltimosCincoJogos(WebdriverChrome):
         elif identificador == 'em':
             response = 'fora'
         else:
-            logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: identificador not in (x, em). <jogo>={jogo}")  
+            logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: "
+                          f"identificador not in (x, em). <jogo>={jogo}")  
             return
         
         logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.casa_fora: Function executed successfully. <jogo>={jogo}")
@@ -130,7 +134,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[1]
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.adversario: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.adversario: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -153,7 +158,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = self.web.find_element_by_xpath(self._x_path(4,jogo,section=1)).text
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.campeonato: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.campeonato: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -176,7 +182,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 info = self.web.find_element_by_xpath(self._x_path(5,jogo,section=1)).text.split('\n')
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.resultado: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.resultado: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -205,7 +212,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = self.web.find_element_by_xpath(self._x_path(6,jogo,section=1)).text
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.titular_reserva: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.titular_reserva: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -228,7 +236,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(7,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.gols: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.gols: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -251,7 +260,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(8,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.assistencias: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.assistencias: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -274,7 +284,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(9,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes: Unexpected error: "
+                              f"Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -297,7 +308,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(10,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes_no_gol: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes_no_gol: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -320,7 +332,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(11,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_cometidas: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_cometidas: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -343,7 +356,8 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(12,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_sofridas: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_sofridas: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
@@ -366,12 +380,14 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(13,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.impedimentos: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.impedimentos: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.impedimentos: Function executed successfully. <jogo>={jogo}")
+        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.impedimentos: "
+                     f"Function executed successfully. <jogo>={jogo}")
         
         return response
     
@@ -389,12 +405,14 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(14,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_amarelos: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_amarelos: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_amarelos: Function executed successfully. <jogo>={jogo}")
+        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_amarelos: "
+                     f"Function executed successfully. <jogo>={jogo}")
         
         return response
     
@@ -412,12 +430,14 @@ class UltimosCincoJogos(WebdriverChrome):
             try:
                 response = int(self.web.find_element_by_xpath(self._x_path(15,jogo,section=1)).text)
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_vermelhos: Unexpected error: Could not execute function. <jogo>={jogo}")
+                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_vermelhos: "
+                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
                 logging.error(err)
                 
                 return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_vermelhos: Function executed successfully. <jogo>={jogo}")
+        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_vermelhos: "
+                     f"Function executed successfully. <jogo>={jogo}")
         
         return response
     
@@ -449,7 +469,8 @@ class Estatisticas(WebdriverChrome):
             str: xpath 
         """
         
-        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
+        return (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
+                f'div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]')
     
     def campeonato(self, temporada):
         """
@@ -480,7 +501,8 @@ class Estatisticas(WebdriverChrome):
         """
         
         try:
-            x_path = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/div/div[2]/div[2]/table/tbody/tr[{temporada}]/td[2]/div/a'
+            x_path = (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
+                      f'div/div[2]/div[2]/table/tbody/tr[{temporada}]/td[2]/div/a')
             response = self.web.find_element_by_xpath(x_path).text
             logging.info(f"SUCCESS queries.jogador.Estatisticas.time: Function executed successfully. <temporada>={temporada}")
             
@@ -505,7 +527,8 @@ class Estatisticas(WebdriverChrome):
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.titular: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.titular: Unexpected error: "
+                          f"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return
@@ -528,12 +551,14 @@ class Estatisticas(WebdriverChrome):
             
                 return response
             except Exception as err:
-                logging.error(f"ERROR queries.jogador.Estatisticas.reserva: Unexpected error: Could not execute function. <temporada>={temporada}")
+                logging.error(f"ERROR queries.jogador.Estatisticas.reserva: Unexpected error: "
+                              F"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return
         else:
-            logging.warning("WARNING queries.jogador.Estatisticas.reserva: Method works only for current season (<temporada>=1)")
+            logging.warning("WARNING queries.jogador.Estatisticas.reserva: "
+                            "Method works only for current season (<temporada>=1)")
             return
         
     def faltas_cometidas(self, temporada):
@@ -546,11 +571,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(2,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_cometidas: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_cometidas: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_cometidas: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_cometidas: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -565,11 +592,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(3,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_sofridas: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_sofridas: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_sofridas: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_sofridas: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -584,11 +613,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(4,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_amarelos: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_amarelos: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_amarelos: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_amarelos: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -603,11 +634,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(5,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_vermelhos: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_vermelhos: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_vermelhos: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_vermelhos: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -622,11 +655,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(6,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.gols: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.gols: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.gols: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.gols: Unexpected error: "
+                          f"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -641,11 +676,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(7,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.assistencias: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.assistencias: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.assistencias: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.assistencias: Unexpected error: "
+                          f"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -660,11 +697,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(8,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes: Unexpected error: "
+                          f"Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -679,11 +718,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(9,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes_no_gol: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes_no_gol: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes_no_gol: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes_no_gol: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 
@@ -698,11 +739,13 @@ class Estatisticas(WebdriverChrome):
         
         try:
             response = self.web.find_element_by_xpath(self._x_path(10,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.impedimentos: Function executed successfully. <temporada>={temporada}")
+            logging.info(f"SUCCESS queries.jogador.Estatisticas.impedimentos: "
+                         f"Function executed successfully. <temporada>={temporada}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.impedimentos: Unexpected error: Could not execute function. <temporada>={temporada}")
+            logging.error(f"ERROR queries.jogador.Estatisticas.impedimentos: "
+                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
             logging.error(err)
             
             return 

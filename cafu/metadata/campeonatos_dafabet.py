@@ -10,7 +10,7 @@ def campeonato_dafabet(campeonato):
         campeonato: (str) chave do dicionário dict_id_campeonato
     Returns:
         str: completa o link https://www.dafabet.com/pt/dfgoal/sports/240-football/<id_campeonato>. 
-             Ex <campeontato>='brasil-a -> '<id_campeonato>=''22977-brazil/22980-brasileiro-serie-a''
+        Ex <campeontato>='brasil-a -> '<id_campeonato>=''22977-brazil/22980-brasileiro-serie-a''
     """
     
     return dict_id_campeonato[campeonato]
