@@ -73,7 +73,14 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
     - 'password': senha no site dafabet
 2. Atualizar caminhos locais em cafu/metadata/paths.py
 3. Verificar se o chromedriver possui a versão compatível com o Google Chrome
-4. Instalar o projeto junto com os requirements:
+4. Criar ambiente virtual:
+```
+conda create -n futebol python=3.8 ;
+conda activate futebol ;
+pip install --user ipykernel ;
+python -m ipykernel install --user --name=futebol 
+```
+5. Instalar o projeto junto com os requirements:
 ```
 >> pip install .
 ```
