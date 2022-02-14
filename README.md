@@ -99,13 +99,6 @@ Links e conteúdos relevantes para o projeto
 - [Data Science - PostgreSQL Database using Python Programming](https://www.youtube.com/watch?v=d1atQKLFHgY)
 
 ## Next steps
-- notebooks prod devem estar sempre funcionando &#9745;
-- incluir logs no código &#9745;
-- chromedriver não mostrar o navegador -> opção default &#9745;
-- otimizar o espaço do PC: SSD e HD &#9745;
-- migrar projeto para o linux &#9745;
-- finalizar as funcionalidades necessárias para a próxima etapa (etl para a construção do data lake) &#9745;
-- inserir logs e doc em cafu.queries.partida &#9745;
 - Verificar, informações aparentemente excluídas do site ESPN:
     - [cafu.queries.jogador.UltimosCincoJogos](https://www.espn.com.br/futebol/jogador/_/id/252107/vinicius-junior) 
     - [cafu.queries.jogador.Estatisticas](https://www.espn.com.br/futebol/jogador/estatisticas/_/id/252107/vinicius-junior)
