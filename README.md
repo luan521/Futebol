@@ -66,9 +66,4 @@ Links e conteúdos relevantes para o projeto
 - [Como Criar Barra de Progresso no Python para os seus Códigos](https://www.youtube.com/watch?v=qRFPGuBc-KE)
 
 ## Next steps
-- notebooks prod devem estar sempre funcionando &#9745;
-- incluir logs no código &#9745;
-- chromedriver não mostrar o navegador -> opção default &#9745;
-- otimizar o espaço do PC: SSD e HD
-- migrar projeto para o linux
 - finalizar o código que constrói o data lake e construir o airflow
