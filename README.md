@@ -66,7 +66,7 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 └── setup.py
 ```
 
-## Prerequisites
+## Setup
 1. Criar arquivo 'dafabet.json':
     - 'user': usuário no site dafabet
     - 'password': senha no site dafabet
