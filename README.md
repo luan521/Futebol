@@ -72,7 +72,7 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
     - 'user': usuário no site dafabet
     - 'password': senha no site dafabet
 2. Atualizar caminhos locais em cafu/metadata/paths.py
-3. Instalar o Google chrome version 98, utilize o insalador ChromeSetup.exe, siga o [tutorial](https://www.youtube.com/watch?v=9pQP99uquYs&t=148s)
+3. Instalar o Google chrome version 98, utilize o insalador ChromeSetup.exe, siga o [tutorial](https://www.youtube.com/watch?v=9pQP99uquYs&t=148s) para retirar a atualização automática do navegador
 4. Criar ambiente virtual:
 ```
 >> conda create -n futebol python=3.8 
