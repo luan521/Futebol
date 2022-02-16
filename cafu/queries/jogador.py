@@ -1,3 +1,5 @@
+import time
+from cafu.utils.string import convert_str_var_time
 from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 from cafu.metadata.paths import path
 
@@ -8,9 +10,9 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-class UltimosCincoJogos(WebdriverChrome):
+class AtuacoesJogador(WebdriverChrome):
     """
-    Extrai informações das cinco últimas partidas do jogador
+    Extrai informações do desempenho do jogador no atual campeonato disputado
     
     Args:
         id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/_/id/<id_jogador>. 
@@ -20,48 +22,53 @@ class UltimosCincoJogos(WebdriverChrome):
     
     def __init__(self, id_jogador, headless=True):
         super().__init__(headless=headless)
-        self.get_ult_cinco_jogos_jogador(id_jogador)
+        self.get_atuacoes_jogador(id_jogador)
+        self.id_jogador = id_jogador
 
     def _x_path(self, pos_v, pos_h, section=2):
         """
         Método interno da classe.
         Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em um jogo
         
-        .. figure:: ../../../imagens_doc/ult_5_jogos.png
+        .. figure:: ../../../imagens_doc/atuacoes_jogador.png
         
         Args:
-            pos_v: (int) posição horizontal da informação na tabela, referente a coluna (1-time, 2-data, ....)
+            pos_v: (int) posição horizontal da informação na tabela, referente a coluna 
             pos_h: (int) posição vertical da informação na tabela, referente ao jogo (1-último, 2-penultimo, ...)
-            section: (int) parâmetro x_path, default=2, no caso <id_jogador>='199017/everton-ribeiro' <section> foi identificado com valor 1, em 29/01/2022
         Returns:
             str: xpath 
         """
-        return f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[{section}]/div/div/div/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]'
+        
+        response = (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/div/div[2]/'
+                    f'div[2]/div/div/div/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]')
+        return response 
     
-    def time(self, jogo):
+    def campeonato(self):
         """
-        Args:
-            jogo: (int) jogo (1-último, 2-penultimo, ...)
         Returns:
-            str: time do jogador
+            str: campeonato em que o jogador atua
         """
         
+        init = time.time()
+        
+        xpath = '//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/div/div[2]/div[1]'
         try:
-            response = self.web.find_element_by_xpath(self._x_path(1,jogo)).text
-        except:
-            try:
-                response = self.web.find_element_by_xpath(self._x_path(1,jogo,section=1)).text
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.time: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.time: Function executed successfully. <jogo>={jogo}")
+            response = self.web.find_element_by_xpath(xpath).text
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.campeonato: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.campeonato: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
         
         return response
-                
     
     def date(self, jogo):
         """
@@ -71,19 +78,23 @@ class UltimosCincoJogos(WebdriverChrome):
             str: data da partida 
         """
         
+        init = time.time()
+        
         try:
-            response = self.web.find_element_by_xpath(self._x_path(2,jogo)).text
-        except:
-            try:
-                response = self.web.find_element_by_xpath(self._x_path(2,jogo,section=1)).text
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.date: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.date: Function executed successfully. <jogo>={jogo}")
+            response = self.web.find_element_by_xpath(self._x_path(1,jogo)).text
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.date: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.date: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -95,28 +106,33 @@ class UltimosCincoJogos(WebdriverChrome):
             str: se o jogo foi em casa ou fora
         """
         
+        init = time.time()
+        
         try:
-            identificador = self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[0]
-        except:
-            try:
-                identificador = self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[0]
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            identificador = self.web.find_element_by_xpath(self._x_path(2,jogo)).text.split('\n')[0]
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.casa_fora: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)    
+            return
         
         if identificador == 'x':
             response = 'casa'
         elif identificador == 'em':
             response = 'fora'
         else:
-            logging.error(f"ERROR queries.jogador.UltimosCincoJogos.casa_fora: Unexpected error: "
-                          f"identificador not in (x, em). <jogo>={jogo}")  
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.casa_fora: Unexpected error: "
+                          f"identificador not in (x, em). <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")  
             return
         
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.casa_fora: Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.casa_fora: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -128,43 +144,23 @@ class UltimosCincoJogos(WebdriverChrome):
             str: time adversário
         """
         
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')[1]
-        except:
-            try:
-                response = self.web.find_element_by_xpath(self._x_path(3,jogo,section=1)).text.split('\n')[1]
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.adversario: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.adversario: Function executed successfully. <jogo>={jogo}")
-        
-        return response
-    
-    def campeonato(self, jogo):
-        """
-        Args:
-            jogo: (int) jogo (1-último, 2-penultimo, ...)
-        Returns:
-            str: campeonato
-        """
+        init = time.time()
         
         try:
-            response = self.web.find_element_by_xpath(self._x_path(4,jogo)).text
-        except:
-            try:
-                response = self.web.find_element_by_xpath(self._x_path(4,jogo,section=1)).text
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.campeonato: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.campeonato: Function executed successfully. <jogo>={jogo}")
+            response = self.web.find_element_by_xpath(self._x_path(2,jogo)).text.split('\n')[1]
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.adversario: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.adversario: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -173,54 +169,37 @@ class UltimosCincoJogos(WebdriverChrome):
         Args:
             jogo: (int) jogo (1-último, 2-penultimo, ...)
         Returns:
-            dict: resultado-(V, E, D), placar
+            dict: resultado (V, E, D), placar
         """
         
+        init = time.time()
+        
         try:
-            info = self.web.find_element_by_xpath(self._x_path(5,jogo)).text.split('\n')
-        except:
-            try:
-                info = self.web.find_element_by_xpath(self._x_path(5,jogo,section=1)).text.split('\n')
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.resultado: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            info = self.web.find_element_by_xpath(self._x_path(3,jogo)).text.split('\n')
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.resultado: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
         
         try:
             response = {'resultado': info[0], 'placar':info[1]}
-            logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.resultado: Function executed successfully. <jogo>={jogo}")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.resultado: Function executed successfully. "
+                         f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
             
             return response
         except:
-            logging.error(f"ERROR queries.jogador.UltimosCincoJogos.resultado: Unexpected error: split method. <jogo>={jogo}")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.resultado: Unexpected error: split method. "
+                          f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
             
             return
-    
-    def titular_reserva(self, jogo):
-        """
-        Args:
-            jogo: (int) jogo (1-último, 2-penultimo, ...)
-        Returns:
-            str: se o jogador foi titular ou reserva
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(6,jogo)).text
-        except:
-            try:
-                response = self.web.find_element_by_xpath(self._x_path(6,jogo,section=1)).text
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.titular_reserva: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.titular_reserva: Function executed successfully. <jogo>={jogo}")
-        
-        return response
     
     def gols(self, jogo):
         """
@@ -230,19 +209,23 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de gols marcados pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(7,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(7,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.gols: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.gols: Function executed successfully. <jogo>={jogo}")
+            response = int(self.web.find_element_by_xpath(self._x_path(4,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.gols: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.gols: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -254,19 +237,23 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de assistências feitas pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(8,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(8,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.assistencias: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.assistencias: Function executed successfully. <jogo>={jogo}")
+            response = int(self.web.find_element_by_xpath(self._x_path(5,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.assistencias: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.assistencias: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -278,19 +265,23 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de finalizações feitas pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(9,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(9,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes: Unexpected error: "
-                              f"Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(6,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.finalizacoes: Unexpected error: "
+                          f"Could not execute function. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.finalizacoes: Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.finalizacoes: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
         
@@ -302,19 +293,24 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de finalizações no gol, feitas pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(10,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.finalizacoes_no_gol: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
-            
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.finalizacoes_no_gol: Function executed successfully. <jogo>={jogo}")
+            response = int(self.web.find_element_by_xpath(self._x_path(7,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.finalizacoes_no_gol: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
+        
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.finalizacoes_no_gol: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -326,19 +322,24 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de faltas cometidas pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(11,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(11,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_cometidas: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(8,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.faltas_cometidas: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.faltas_cometidas: Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.faltas_cometidas: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -350,19 +351,24 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de faltas sofridas pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(12,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(12,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.faltas_sofridas: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(9,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.faltas_sofridas: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.faltas_sofridas: Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.faltas_sofridas: Function executed successfully. "
+                     f"<id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -374,20 +380,24 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de impedimentos do jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(13,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(13,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.impedimentos: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(10,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.impedimentos: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.impedimentos: "
-                     f"Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.impedimentos: "
+                     f"Function executed successfully. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -399,20 +409,24 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de cartões amarelos levados pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(14,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(14,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_amarelos: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(11,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.cartoes_amarelos: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_amarelos: "
-                     f"Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.cartoes_amarelos: "
+                     f"Function executed successfully. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
     
@@ -424,331 +438,26 @@ class UltimosCincoJogos(WebdriverChrome):
             int: quantidade de cartões vermelhos levados pelo jogador
         """
         
+        init = time.time()
+        
         try:
-            response = int(self.web.find_element_by_xpath(self._x_path(15,jogo)).text)
-        except:
-            try:
-                response = int(self.web.find_element_by_xpath(self._x_path(15,jogo,section=1)).text)
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.UltimosCincoJogos.cartoes_vermelhos: "
-                              f"Unexpected error: Could not execute function. <jogo>={jogo}")
-                logging.error(err)
-                
-                return
+            response = int(self.web.find_element_by_xpath(self._x_path(12,jogo)).text)
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.AtuacoesJogador.cartoes_vermelhos: "
+                          f"Unexpected error: Could not execute function. <id_jogador>={self.id_jogador}, "
+                          f"<jogo>={jogo}. runtime = {runtime_str}")
+            logging.error(err)
+
+            return
             
-        logging.info(f"SUCCESS queries.jogador.UltimosCincoJogos.cartoes_vermelhos: "
-                     f"Function executed successfully. <jogo>={jogo}")
+        end = time.time()
+        runtime_str = convert_str_var_time(init, end)
+        logging.info(f"SUCCESS queries.jogador.AtuacoesJogador.cartoes_vermelhos: "
+                     f"Function executed successfully. <id_jogador>={self.id_jogador}, <jogo>={jogo}. runtime = {runtime_str}")
         
         return response
-    
-class Estatisticas(WebdriverChrome):
-    """
-    Extrai informações estatísticas das últimas temporadas do jogador
-    
-    Args:
-        id_jogador: (str) completa o link https://www.espn.com.br/futebol/jogador/estatisticas/_/id/<id_jogador>.
-                          Ex <id_jogador>='199017/everton-ribeiro'
-        headless: (bool) se o navegador será mostrado ou não
-    """
-    
-    def __init__(self, id_jogador, headless=True):
-        super().__init__(headless=headless)
-        self.get_estatisticas_jogador(id_jogador)
-
-    def _x_path(self, pos_v, pos_h):
-        """
-        Método interno da classe.
-        Define o xpath do método find_element_by_xpath da biblioteca selenium, para a busca de uma informação em uma temporada
-        
-        .. figure:: ../../../imagens_doc/estatisticas.png
-        
-        Args:
-            pos_v: (int) posição horizontal da informação na tabela, referente a coluna (1-titular, 2-faltas_cometidas, ....)
-            pos_h: (int) posição vertical da informação na tabela, referente a temporada (1-último, 2-penultimo, ...)
-        Returns:
-            str: xpath 
-        """
-        
-        return (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
-                f'div/div[2]/div[2]/div/div[2]/table/tbody/tr[{pos_h}]/td[{pos_v}]')
-    
-    def campeonato(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            str: campeonato
-        """
-        
-        try:
-            x_path = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/div/div[2]/div[2]/table/tbody/tr[{temporada}]/td[1]'
-            response = self.web.find_element_by_xpath(x_path).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.campeonato: Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.campeonato: Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return
-    
-    def time(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            str: time do jogador
-        """
-        
-        try:
-            x_path = (f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/div[1]/section/'
-                      f'div/div[2]/div[2]/table/tbody/tr[{temporada}]/td[2]/div/a')
-            response = self.web.find_element_by_xpath(x_path).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.time: Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.time: Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return
-    
-    def titular(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            str: quantidade de vezes em que o jogador foi titular
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(1,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.titular: Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.titular: Unexpected error: "
-                          f"Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return
-            
-    def reserva(self, temporada):
-        """
-        Funciona apenas para a temporada atual
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            str: quantidade de vezes em que o jogador foi reserva
-        """
-        
-        if temporada == 1:
-            try:
-                x_path = '//*[@id="fittPageContainer"]/div[2]/div[1]/div/div/div[2]/aside/ul/li[1]/div/div[2]'
-                response = self.web.find_element_by_xpath(x_path).text.split(' ')[1]
-                response = response.replace('(','').replace(')','')
-                logging.info(f"SUCCESS queries.jogador.Estatisticas.reserva: Function executed successfully. <temporada>={temporada}")
-            
-                return response
-            except Exception as err:
-                logging.error(f"ERROR queries.jogador.Estatisticas.reserva: Unexpected error: "
-                              F"Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return
-        else:
-            logging.warning("WARNING queries.jogador.Estatisticas.reserva: "
-                            "Method works only for current season (<temporada>=1)")
-            return
-        
-    def faltas_cometidas(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de faltas cometidas pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(2,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_cometidas: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_cometidas: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def faltas_sofridas(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de faltas sofridas pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(3,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.faltas_sofridas: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.faltas_sofridas: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def cartoes_amarelos(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de cartões amarelos levados pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(4,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_amarelos: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_amarelos: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def cartoes_vermelhos(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de cartões vermelhos levados pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(5,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.cartoes_vermelhos: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.cartoes_vermelhos: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def gols(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de gols marcados pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(6,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.gols: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.gols: Unexpected error: "
-                          f"Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def assistencias(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de assistências feitas pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(7,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.assistencias: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.assistencias: Unexpected error: "
-                          f"Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def finalizacoes(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de finalizações feitas pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(8,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes: Unexpected error: "
-                          f"Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def finalizacoes_no_gol(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de finalizações no gol, feitas pelo jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(9,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.finalizacoes_no_gol: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.finalizacoes_no_gol: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
-    
-    def impedimentos(self, temporada):
-        """
-        Args:
-            temporada: (int) (1-atual, 2-passada, ...)
-        Returns:
-            int: quantidade de impedimentos do jogador
-        """
-        
-        try:
-            response = self.web.find_element_by_xpath(self._x_path(10,temporada)).text
-            logging.info(f"SUCCESS queries.jogador.Estatisticas.impedimentos: "
-                         f"Function executed successfully. <temporada>={temporada}")
-            
-            return response
-        except Exception as err:
-            logging.error(f"ERROR queries.jogador.Estatisticas.impedimentos: "
-                          f"Unexpected error: Could not execute function. <temporada>={temporada}")
-            logging.error(err)
-            
-            return 
     
 class Bio(WebdriverChrome):
     """
@@ -763,6 +472,7 @@ class Bio(WebdriverChrome):
     def __init__(self, id_jogador, headless=True):
         super().__init__(headless=headless)
         self.get_bio_jogador(id_jogador)
+        self.id_jogador = id_jogador
 
     def _x_path(self, pos):
         """
@@ -788,15 +498,23 @@ class Bio(WebdriverChrome):
             tuple: time do jogador, quantidade de temporadas
         """
         
+        init = time.time()
+        
         x_path_time = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/a[{pos}]/div/span[1]'
         x_path_temps = f'//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section[2]/div/a[{pos}]/div/span[2]'
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(x_path_time).text, self.web.find_element_by_xpath(x_path_temps).text
-            logging.info(f"SUCCESS queries.jogador.Bio.time: Function executed successfully. <pos>={pos}")
+            logging.info(f"SUCCESS queries.jogador.Bio.time: Function executed successfully. "
+                         f"<id_jogador>={self.id_jogador}, <pos>={pos}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.time: Unexpected error: Could not execute function. <pos>={pos}")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.time: Unexpected error: Could not execute function. "
+                          f"<id_jogador>={self.id_jogador}, <pos>={pos}. runtime = {runtime_str}")
             logging.error(err)
             
             return 
@@ -807,13 +525,21 @@ class Bio(WebdriverChrome):
             str: posição do jogador
         """
         
+        init = time.time()
+        
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(self._x_path(2)).text
-            logging.info(f"SUCCESS queries.jogador.Bio.posicao: Function executed successfully")
+            logging.info(f"SUCCESS queries.jogador.Bio.posicao: Function executed successfully. "
+                         f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.posicao: Unexpected error: Could not execute function")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.posicao: Unexpected error: Could not execute function. "
+                          f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             logging.error(err)
             
             return 
@@ -824,13 +550,21 @@ class Bio(WebdriverChrome):
             str: altura do jogador
         """
         
+        init = time.time()
+        
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(self._x_path(3)).text.split(', ')[0]
-            logging.info(f"SUCCESS queries.jogador.Bio.altura: Function executed successfully")
+            logging.info(f"SUCCESS queries.jogador.Bio.altura: Function executed successfully. "
+                         f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.altura: Unexpected error: Could not execute function")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.altura: Unexpected error: Could not execute function. "
+                          f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             logging.error(err)
             
             return 
@@ -841,13 +575,21 @@ class Bio(WebdriverChrome):
             str: massa do jogador
         """
         
+        init = time.time()
+        
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(self._x_path(3)).text.split(', ')[1]
-            logging.info(f"SUCCESS queries.jogador.Bio.massa: Function executed successfully")
+            logging.info(f"SUCCESS queries.jogador.Bio.massa: Function executed successfully. "
+                         f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.massa: Unexpected error: Could not execute function")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.massa: Unexpected error: Could not execute function "
+                          f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             logging.error(err)
             
             return 
@@ -858,13 +600,21 @@ class Bio(WebdriverChrome):
             str: data de nascimento do jogador
         """
         
+        init = time.time()
+        
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(self._x_path(4)).text.split(' (')[0]
-            logging.info(f"SUCCESS queries.jogador.Bio.data_nascimento: Function executed successfully")
+            logging.info(f"SUCCESS queries.jogador.Bio.data_nascimento: Function executed successfully "
+                         f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.data_nascimento: Unexpected error: Could not execute function")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.data_nascimento: Unexpected error: Could not execute function "
+                          f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             logging.error(err)
             
             return
@@ -875,13 +625,21 @@ class Bio(WebdriverChrome):
             str: nacionalidade do jogador
         """
         
+        init = time.time()
+        
         try:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
             response = self.web.find_element_by_xpath(self._x_path(5)).text.split(' (')[0]
-            logging.info(f"SUCCESS queries.jogador.Bio.nacionalidade: Function executed successfully")
+            logging.info(f"SUCCESS queries.jogador.Bio.nacionalidade: Function executed successfully "
+                         f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             
             return response
         except Exception as err:
-            logging.error(f"ERROR queries.jogador.Bio.nacionalidade: Unexpected error: Could not execute function")
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR queries.jogador.Bio.nacionalidade: Unexpected error: Could not execute function "
+                          f"<id_jogador>={self.id_jogador}. runtime = {runtime_str}")
             logging.error(err)
             
             return

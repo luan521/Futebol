@@ -101,7 +101,4 @@ Links e conteúdos relevantes para o projeto
 - [How to Install Apache Airflow to Run Different Executors](https://www.qubole.com/tech-blog/how-to-install-apache-airflow-to-run-different-executors/)
 
 ## Next steps
-- Verificar, informações aparentemente excluídas do site ESPN:
-    - [cafu.queries.jogador.UltimosCincoJogos](https://www.espn.com.br/futebol/jogador/_/id/252107/vinicius-junior) 
-    - [cafu.queries.jogador.Estatisticas](https://www.espn.com.br/futebol/jogador/estatisticas/_/id/252107/vinicius-junior)
 - etl para a construção do data lake, utilizar o airflow
