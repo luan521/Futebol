@@ -97,6 +97,8 @@ Links e conteúdos relevantes para o projeto
 - [Step-by-Step Python and Postgres Tutorial with psycopg2](https://www.youtube.com/watch?v=2PDkXviEMD0)
 - [Como iniciar um projeto Django com PostgreSQL e Docker - Dicas de Python](https://www.youtube.com/watch?v=xxjzwdtWozI)
 - [Data Science - PostgreSQL Database using Python Programming](https://www.youtube.com/watch?v=d1atQKLFHgY)
+- [TUDO O QUE VOCÊ PRECISA SABER PARA COMEÇAR COM DOCKER](https://www.youtube.com/watch?v=RE31GWJGkwA)
+- [How to Install Apache Airflow to Run Different Executors] (https://www.qubole.com/tech-blog/how-to-install-apache-airflow-to-run-different-executors/)
 
 ## Next steps
 - Verificar, informações aparentemente excluídas do site ESPN:
