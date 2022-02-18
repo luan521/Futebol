@@ -28,6 +28,15 @@ cafu.utils.loop\_try module
    :show-inheritance:
    :private-members:
 
+cafu.utils.open\_doc module
+---------------------------
+
+.. automodule:: cafu.utils.open_doc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 cafu.utils.string module
 ------------------------
 
