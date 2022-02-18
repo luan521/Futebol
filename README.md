@@ -1,7 +1,7 @@
 # Oracle cafu
 Serviço para aposta automática em partidas de futebol, no site [Dafabet](https://www.dafabet.com/pt/dfgoal/sports/240-football)
 
-1. Coleta de dados
+1. Coleta de dados &#9745;
 2. ETL (Data Lake e banco de dados)
 3. Cluster Analysis
 4. Streaming / Dashboard
