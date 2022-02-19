@@ -60,6 +60,11 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 │   └── sketch
 │       ├── example.txt
 │       └── Untitled.ipynb
+├── testes_py -> testes para a biblioteca cafu
+│   ├── jogador.py
+│   ├── jogos_id_campeonato.py
+│   ├── odds.py
+│   └── partida.py
 ├── README.md
 ├── requirements.txt 
 ├── run_doc.sh -> gerar documentação automática da biblioteca em docs.build.html.module
