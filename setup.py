@@ -19,10 +19,10 @@ setup(
     name='modules',
     version='0.0.0',
     description='Aposta automática Dafabet',
-    author='Luan Henrique ',
-    author_email='',
+    author='Luan Henrique',
+    author_email='oracle.cafu@example.com',
     url='',
-    packages=find_packages(exclude=('docs')),
+    packages=find_packages(exclude=('docs', 'testes_py')),
     entry_points='''
     ''',
     install_requires=install_requires,

@@ -104,6 +104,7 @@ Links e conteúdos relevantes para o projeto
 - [Data Science - PostgreSQL Database using Python Programming](https://www.youtube.com/watch?v=d1atQKLFHgY)
 - [TUDO O QUE VOCÊ PRECISA SABER PARA COMEÇAR COM DOCKER](https://www.youtube.com/watch?v=RE31GWJGkwA)
 - [How to Install Apache Airflow to Run Different Executors](https://www.qubole.com/tech-blog/how-to-install-apache-airflow-to-run-different-executors/)
+- [explain python entry points](https://stackoverflow.com/questions/774824/explain-python-entry-points)
 
 ## Next steps
 - etl para a construção do data lake, utilizar o airflow
