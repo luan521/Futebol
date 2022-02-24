@@ -107,4 +107,17 @@ Links e conteúdos relevantes para o projeto
 - [explain python entry points](https://stackoverflow.com/questions/774824/explain-python-entry-points)
 
 ## Next steps
-- etl para a construção do data lake, utilizar o airflow
+- etl para a construção do data lake
+    - tipos de arquivos:
+        - metadata: json
+        - jogos_ids: csv
+        - jogadores: parquet, versionado pelo delta lake
+        - partidas: parquet (por campeonato, por dia)
+        - odds: parquet (por campeonato, por dia)
+
+## Pendencies
+- incluir entry_points no setup.py
+- incluir spark e delta lake no projeto
+- completar campeonatos nos arquivos:
+    - cafu.metadata.campeonatos_espn
+    - cafu.metadata.campeonatos_dafabet

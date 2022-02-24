@@ -70,7 +70,9 @@
 <span></span><span class="n">paths</span> <span class="o">=</span> <span class="p">{</span>
          <span class="s1">&#39;initial_path&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/Futebol&#39;</span><span class="p">,</span>
          <span class="s1">&#39;credentials&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/credentials&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;logs_cafu&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/logs_cafu&#39;</span>
+         <span class="s1">&#39;logs_cafu&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/logs_cafu&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;dir_teste&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/testes&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;datalake&#39;</span><span class="p">:</span> <span class="s1">&#39;/home/luan/futebol/datalake&#39;</span>
         <span class="p">}</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -83,6 +85,10 @@
 <span class="sd">         - &#39;password&#39;: senha no site dafabet</span>
 
 <span class="sd">- logs_cafu: caminho local para o diretório onde o arquivo &#39;logs.txt&#39; será criado, os logs gerados pela execução das funções irão para este arquivo</span>
+
+<span class="sd">- dir_teste: caminho local para o diretório de teste, onde resultados dos testes automatizados (testes_py) serão salvos</span>
+
+<span class="sd">- datalake: caminho local para o datalake</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="path"><a class="viewcode-back" href="../../../module/cafu.metadata.html#cafu.metadata.paths.path">[docs]</a><span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>

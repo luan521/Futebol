@@ -99,18 +99,23 @@
                           <span class="p">}</span>
               <span class="p">}</span>
 
-<div class="viewcode-block" id="campeonato_espn"><a class="viewcode-back" href="../../../module/cafu.metadata.html#cafu.metadata.campeonatos_espn.campeonato_espn">[docs]</a><span class="k">def</span> <span class="nf">campeonato_espn</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">):</span>
+<div class="viewcode-block" id="campeonato_espn"><a class="viewcode-back" href="../../../module/cafu.metadata.html#cafu.metadata.campeonatos_espn.campeonato_espn">[docs]</a><span class="k">def</span> <span class="nf">campeonato_espn</span><span class="p">(</span><span class="n">pais_divisao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">temporada</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        pais_divisao: (str) chave primária do dicionário campeonatos</span>
 <span class="sd">        temporada: (str) chave secundária do dicionário campeonatos</span>
 <span class="sd">    Returns:</span>
-<span class="sd">        dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato</span>
+<span class="sd">        dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato, quantidade de jogos em uma rodada.</span>
+<span class="sd">        Se nenhum argumento é definido, retorna &lt;campeonatos&gt;.</span>
+<span class="sd">        Se apenas &lt;pais_divisao&gt; é definido, retorna a resposta para todas as temporadas definidas para &lt;pais_divisao&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">return</span> <span class="n">campeonatos</span><span class="p">[</span><span class="n">pais_divisao</span><span class="p">][</span><span class="n">temporada</span><span class="p">]</span></div>
-    
-    
+    <span class="n">response</span> <span class="o">=</span>  <span class="n">campeonatos</span>
+    <span class="k">if</span> <span class="n">pais_divisao</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="n">pais_divisao</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">temporada</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="n">temporada</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>
 
            </div>

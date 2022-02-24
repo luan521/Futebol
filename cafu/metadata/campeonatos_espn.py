@@ -30,15 +30,20 @@ campeonatos = {
                           }
               }
 
-def campeonato_espn(pais_divisao, temporada):
+def campeonato_espn(pais_divisao=None, temporada=None):
     """
     Args:
         pais_divisao: (str) chave primária do dicionário campeonatos
         temporada: (str) chave secundária do dicionário campeonatos
     Returns:
-        dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato
+        dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato, quantidade de jogos em uma rodada.
+        Se nenhum argumento é definido, retorna <campeonatos>.
+        Se apenas <pais_divisao> é definido, retorna a resposta para todas as temporadas definidas para <pais_divisao>
     """
     
-    return campeonatos[pais_divisao][temporada]
-    
-    
+    response =  campeonatos
+    if pais_divisao is not None:
+        response = response[pais_divisao]
+    if temporada is not None:
+        response = response[temporada]
+    return response
