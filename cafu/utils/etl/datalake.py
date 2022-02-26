@@ -1,7 +1,10 @@
 import os
 import json
+from cafu.metadata.campeonatos_espn import campeonato_espn
+from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.metadata.paths import path
 path_datalake = path('datalake')
+campeonatos = campeonato_espn()
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -30,10 +33,20 @@ def initialize_datalake():
             json.dump(metadata, fp)
 
         # criando diretórios
+        os.mkdir(path_datalake+f'/jogos_ids')
+        os.mkdir(path_datalake+f'/partidas')
+        os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
-        os.mkdir(path_datalake+'/jogos_ids')
-        os.mkdir(path_datalake+'/odds')
-        os.mkdir(path_datalake+'/partidas')
+        campeonatos = campeonato_espn()
+        campeonatos = list(campeonatos.keys())
+        for c in campeonatos:
+            os.mkdir(path_datalake+f'/jogos_ids/{c}')
+            os.mkdir(path_datalake+f'/partidas/{c}')
+        campeonatos = campeonato_dafabet()
+        campeonatos = list(campeonatos.keys())
+        campeonatos = set([c.split('-')[0] for c in campeonatos])
+        for c in campeonatos:
+            os.mkdir(path_datalake+f'/odds/{c}')
         
         logging.info("SUCCESS utils.etl.datalake.initialize_datalake: Function executed successfully")
     except Exception as err:

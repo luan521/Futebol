@@ -116,7 +116,7 @@ Links e conteúdos relevantes para o projeto
         - odds: parquet (por campeonato, por dia)
 
 ## Pendencies
-- incluir entry_points no setup.py, começar com funções em 
+- incluir entry_points no setup.py
 - incluir spark e delta lake no projeto
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn

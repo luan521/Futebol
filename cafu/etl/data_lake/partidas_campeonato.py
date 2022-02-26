@@ -106,7 +106,7 @@ def update_partidas_campeonato():
         pais_divisao, temporada = c[0], c[1]
         try:
             df = partidas_campeonato(pais_divisao, temporada)
-            path_save = path('datalake')+f'/jogos_ids/{pais_divisao}_{temporada}.csv'
+            path_save = path('datalake')+f'/jogos_ids/{pais_divisao}/{temporada}.csv'
             df.to_csv(path_save, index=False)
             metadata['jogos_ids'][pais_divisao][temporada] = 'evaluation'
             with open(path_datalake+'/metadata.json', 'w') as fp:
