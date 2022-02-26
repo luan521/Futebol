@@ -1,6 +1,5 @@
 import json
 from time import sleep
-from tqdm import tqdm
 from cafu.utils.loop_try import loop_try
 from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 

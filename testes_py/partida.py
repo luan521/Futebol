@@ -6,7 +6,7 @@ sys.path.append(path_project)
 import pandas as pd
 from cafu.queries import Partida
 from cafu.metadata import path
-path_save = path('dir_teste')
+path_save = path('dir_results')
 
 
 jogo_id = '614698'

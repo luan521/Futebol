@@ -10,6 +10,15 @@ cafu.utils.etl package
 Submodules
 ----------
 
+cafu.utils.etl.datalake module
+------------------------------
+
+.. automodule:: cafu.utils.etl.datalake
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 cafu.utils.etl.partidas\_campeonato module
 ------------------------------------------
 

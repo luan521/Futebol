@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 import time
 from cafu.utils.etl.partidas_campeonato import id_left_right
 from cafu.utils.string import convert_str_var_time
@@ -73,3 +74,51 @@ def partidas_campeonato(pais_divisao, temporada):
                       f"<qt_jogos_rodada>={qt_jogos_rodada}. runtime = {runtime_str}")
         logging.error(err)
         return
+    
+def update_partidas_campeonato():
+    """
+    Atualiza datalake.jogos_ids
+    """
+    
+    logging.info(f"INIT etl.data_lake.partidas_campeonato.update_partidas_campeonato")
+    
+    # buscando campeonatos definidos no projeto
+    campeonatos0 = campeonato_espn()
+    campeonatos = [
+                   [k1, k2] for k1 in list(campeonatos0.keys()) 
+                            for k2 in list(campeonatos0[k1].keys())
+                  ]
+    
+    # buscando campeonatos já atualizados
+    r = open(path('datalake')+'/metadata.json')
+    metadata = json.load(r)
+    campeonatos_atualizados = [
+                           [k1, k2] for k1 in list(metadata['jogos_ids'].keys()) 
+                                    for k2 in list(metadata['jogos_ids'][k1].keys())
+                                    if metadata['jogos_ids'][k1][k2] != 'failed'
+                          ]
+    
+    # removendo campeonatos já atualizados
+    for c in campeonatos_atualizados: campeonatos.remove(c)
+    
+    # atualizando campeonatos
+    for c in campeonatos:
+        pais_divisao, temporada = c[0], c[1]
+        try:
+            df = partidas_campeonato(pais_divisao, temporada)
+            path_save = path('datalake')+f'/jogos_ids/{pais_divisao}_{temporada}.csv'
+            df.to_csv(path_save, index=False)
+            metadata['jogos_ids'][pais_divisao][temporada] = 'evaluation'
+            with open(path_datalake+'/metadata.json', 'w') as fp:
+                json.dump(metadata, fp)
+            logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                         "Update league {pais_divisao} | {temporada}.")
+        except:
+            pass
+        
+    if len(campeonatos)>0:
+        logging.info("SUCCESS etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                     "Function executed successfully.")
+    else:     
+        logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                     "All leagues already up to date.")

@@ -6,7 +6,7 @@ sys.path.append(path_project)
 import pandas as pd
 from cafu.etl import partidas_campeonato
 from cafu.metadata import path
-path_save = path('dir_teste')
+path_save = path('dir_results')
 
 pais_divisao, temporada = 'brasil', '2020-2020'
 def f():

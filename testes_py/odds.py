@@ -6,7 +6,7 @@ sys.path.append(path_project)
 import json
 from cafu.queries import GetOdds
 from cafu.metadata import path
-path_save = path('dir_teste')
+path_save = path('dir_results')
 
 campeonato = 'franca'
 def f():
