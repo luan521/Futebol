@@ -97,7 +97,7 @@
     
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># criando arquivo metadata</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">:{}}</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
 

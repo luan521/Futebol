@@ -26,7 +26,7 @@ setup(
     entry_points={
     'console_scripts': [
         'initialize_datalake = cafu.utils.etl.datalake:initialize_datalake', 
-        'update_partidas_campeonato = cafu.etl.data_lake.partidas_campeonato:update_partidas_campeonato',
+        'update_partidas_campeonato = cafu.etl.data_lake.partidas_campeonato:update_partidas_campeonato'
     ],
 },
     install_requires=install_requires,

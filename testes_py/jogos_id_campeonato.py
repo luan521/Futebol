@@ -8,11 +8,23 @@ from cafu.etl import partidas_campeonato
 from cafu.metadata import path
 path_save = path('dir_results')
 
-pais_divisao, temporada = 'brasil', '2020-2020'
 def f():
-    df = partidas_campeonato(pais_divisao, temporada)
+    help_ = (
+             f"""
+             Args:
+                pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
+                temporada: (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn
+             Ex: espanha 2021-2022
+             Resultado salvo em: {path_save}/jogos_id_campeonato.csv
+             """
+            )
     
-    df.to_csv(path_save+'/jogos_id_campeonato.csv', index=False)
+    args = sys.argv[1:]
+    if len(args) == 0:
+        print(help_)
+    else:
+        df = partidas_campeonato(*args)
+        df.to_csv(path_save+'/jogos_id_campeonato.csv', index=False)
     
 if __name__=='__main__':
     f()
