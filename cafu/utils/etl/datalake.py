@@ -28,7 +28,7 @@ def initialize_datalake():
     
     try:
         # criando arquivo metadata
-        metadata = {}
+        metadata = {'jogos_ids':{}}
         with open(path_datalake+'/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
 

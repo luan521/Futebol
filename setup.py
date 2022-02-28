@@ -23,7 +23,11 @@ setup(
     author_email='oracle.cafu@example.com',
     url='',
     packages=find_packages(exclude=('docs', 'testes_py')),
-    entry_points='''
-    ''',
+    entry_points={
+    'console_scripts': [
+        'initialize_datalake = cafu.utils.etl.datalake:initialize_datalake', 
+        'update_partidas_campeonato = cafu.etl.data_lake.partidas_campeonato:update_partidas_campeonato',
+    ],
+},
     install_requires=install_requires,
 )

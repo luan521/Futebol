@@ -114,9 +114,9 @@ Links e conteúdos relevantes para o projeto
         - jogadores: parquet, versionado pelo delta lake
         - partidas: parquet (por campeonato, por dia)
         - odds: parquet (por campeonato, por dia)
+    - função que analisa os arquivos datalake.jogos_ids e retorna as datas dos próximos jogos, em cada campeonato, ou retorna se o campeonato já foi finalizado
 
 ## Pendencies
-- incluir entry_points no setup.py
 - incluir spark e delta lake no projeto
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
