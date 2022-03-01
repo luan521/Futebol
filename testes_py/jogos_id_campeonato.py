@@ -23,8 +23,16 @@ def f():
     if len(args) == 0:
         print(help_)
     else:
-        df = partidas_campeonato(*args)
+        pais_divisao = args[0]
+        temporada = args[1]
+        df = partidas_campeonato(pais_divisao, temporada)
         df.to_csv(path_save+'/jogos_id_campeonato.csv', index=False)
+        try:
+            id_jogador1 = id_jogador.replace('/','')
+            df.to_csv(path_save+f'/jogos_id_campeonato/pais_divisao={pais_divisao}_temporada={temporada}.csv')
+        except:
+            os.mkdir(path_save+'/jogos_id_campeonato')
+            df.to_csv(path_save+f'/jogos_id_campeonato/pais_divisao={pais_divisao}_temporada={temporada}.csv')
     
 if __name__=='__main__':
     f()

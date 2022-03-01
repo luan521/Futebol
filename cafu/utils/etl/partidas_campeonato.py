@@ -26,7 +26,7 @@ def dados_partida(id_, max_iterate=50):
         req = Partida(str(id_))
         campeonato = req.campeonato()
         times = req.nomes_times()
-        date = req.data()
+        date = req.date
         if (campeonato is not None) and (times is not None) and (date is not None):
             return True, [campeonato, times, date]
         else:

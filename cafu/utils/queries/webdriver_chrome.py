@@ -124,3 +124,29 @@ class WebdriverChrome():
                           f"Unexpected error: Could not execute function. <chave_campeonato>={chave_campeonato}. "
                           f"runtime = {runtime_str}")
             logging.error(err)
+    
+    def get_partida_espn(self, jogo_id):
+        """
+        Entra no link para o resumo da partida no site ESPN
+
+        Args:
+            jogo_id: (int or str) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=<jogo_id>. 
+        """
+        
+        init = time.time()
+        
+        try:
+            self.web.get(f'https://www.espn.com.br/futebol/partida/_/jogoId/{str(jogo_id)}')
+            
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.info(f"SUCCESS utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn: "
+                         f"Function executed successfully. <jogo_id>={jogo_id}. "
+                         f"runtime = {runtime_str}")
+        except Exception as err:
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.error(f"ERROR utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn: "
+                          f"Unexpected error: Could not execute function. <jogo_id>={jogo_id}. "
+                          f"runtime = {runtime_str}")
+            logging.error(err)

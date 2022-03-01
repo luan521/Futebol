@@ -26,9 +26,9 @@ def f():
         req = Partida(jogo_id)
     
         data = [
-                req.teste_jogo_finalizado(),
+                req.status,
                 req.campeonato(),
-                req.data(),
+                req.date,
                 req.nomes_times(),
                 req.formacao(),
                 req.jogadores(),
@@ -44,7 +44,7 @@ def f():
                 req.defesas()
                ]
         index = [
-                 'teste_jogo_finalizado',
+                 'status',
                  'campeonato',
                  'data',
                  'nomes_times',
@@ -62,11 +62,19 @@ def f():
                  'defesas'
                 ]
         df = pd.DataFrame(data=data, index=index)
-        df.to_csv(path_save+'/partida.csv')
+        try:
+            df.to_csv(path_save+f'/partida/jogo_id={jogo_id}.csv')
+        except:
+            os.mkdir(path_save+'/partida')
+            df.to_csv(path_save+f'/partida/jogo_id={jogo_id}.csv')
 
         minuto_a_minuto = req.minuto_a_minuto()
         df = pd.DataFrame(minuto_a_minuto)
-        df.to_csv(path_save+'/descricao_partida.csv', index=False)
+        try:
+            df.to_csv(path_save+f'/descricao_partida/jogo_id={jogo_id}.csv', index=False)
+        except:
+            os.mkdir(path_save+'/descricao_partida')
+            df.to_csv(path_save+f'/descricao_partida/jogo_id={jogo_id}.csv', index=False)
     
 if __name__=='__main__':
     f()

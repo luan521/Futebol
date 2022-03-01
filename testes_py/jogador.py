@@ -65,7 +65,12 @@ def f():
                 ]
 
         df = pd.DataFrame(data=data, index=index)
-        df.to_csv(path_save+'/atuacoes_jogador.csv')
+        try:
+            id_jogador1 = id_jogador.replace('/','')
+            df.to_csv(path_save+f'/atuacoes_jogador/id_jogador={id_jogador1}_jogo={jogo}.csv')
+        except:
+            os.mkdir(path_save+'/atuacoes_jogador')
+            df.to_csv(path_save+f'/atuacoes_jogador/id_jogador={id_jogador1}_jogo={jogo}.csv')
 
         query = Bio(id_jogador)
 
@@ -93,6 +98,12 @@ def f():
 
         df = pd.DataFrame(data=data, index=index)
         df.to_csv(path_save+'/bio_jogador.csv')
+        try:
+            id_jogador1 = id_jogador.replace('/','')
+            df.to_csv(path_save+f'/bio_jogador/id_jogador={id_jogador1}_jogo={jogo}.csv')
+        except:
+            os.mkdir(path_save+'/bio_jogador')
+            df.to_csv(path_save+f'/bio_jogador/id_jogador={id_jogador1}_jogo={jogo}.csv')
     
 if __name__=='__main__':
     f()

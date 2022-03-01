@@ -117,7 +117,8 @@ Links e conteúdos relevantes para o projeto
     - função que analisa os arquivos datalake.jogos_ids e retorna as datas dos próximos jogos, em cada campeonato, ou retorna se o campeonato já foi finalizado
 
 ## Pendencies
-- incluir spark e delta lake no projeto
+- identificar status 'Em_Andamento' em cafu.queries.partida.Partida
+- Executar as funções da classe cafu.queries.partida.Partida apenas quando status = ('Em_Andamento', 'Finalizado')
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet

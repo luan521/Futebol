@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import datetime
 import time
 from cafu.utils.string import convert_str_var_time
+from cafu.utils.queries.webdriver_chrome import WebdriverChrome
 from cafu.utils.queries.partida import (sem_espaco, padrao, padrao_inicio_fim, mes,
                                         jogadores_inscritos, teste_gols, gols_casa_visitante)
 
@@ -17,7 +18,7 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-class Partida():
+class Partida(WebdriverChrome):
     """
     Retorna informações sobre uma partida de futebol, buscando no site da ESPN
     
@@ -27,39 +28,77 @@ class Partida():
 
     def __init__(self, jogo_id):
         
-        self.jogo_id = str(jogo_id)
-    
-    def teste_jogo_finalizado(self):
-        """
-        Returns:
-            bool: Se o jogo foi finalizado
-        """
-        
         init = time.time()
         
+        super().__init__()
+        self.jogo_id = str(jogo_id)
+        
+        self.get_partida_espn(self.jogo_id)
+        # buscando a data da partida
         try:
-            req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
-            soup=BeautifulSoup(req.content, 'html.parser')
-            st=soup.prettify()
-            abt=sem_espaco(st)
-
-            ind_jogo_finalizado=padrao_inicio_fim(['class="game-time">\n'],['</span>\n'],abt)
-            if len(ind_jogo_finalizado)>0:
-                response = True
-            else:
-                response = False
-            
-            end = time.time()
-            runtime_str = convert_str_var_time(init, end)
-            logging.info(f"SUCCESS queries.Partida.teste_jogo_finalizado: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
-            return response
+            xpath = '//*[@id="gamepackage-game-information"]/article/div/ul[2]/li/div/span/span[2]'
+            text = self.web.find_element_by_xpath(xpath).text
+            year = int(text.split(', ')[1])
+            day_month = text.split(', ')[0]
+            day = int(day_month.split(' de ')[0])
+            month = mes(day_month.split(' de ')[1])
+            xpath = '//*[@id="gamepackage-game-information"]/article/div/ul[2]/li/div/span/span[1]'
+            hour_minute = self.web.find_element_by_xpath(xpath).text
+            hour = int(hour_minute.split(':')[0])
+            minute = int(hour_minute.split(':')[1])
+            self.date = datetime.datetime(year, month, day, hour, minute)
+        except Exception as err:
+            self.date = None
+            logging.error("ERROR queries.Partida.__init__: Unexpected error: "
+                          f"Could find date by method find_element_by_xpath of selenium. "
+                          f"<jogo_id>={self.jogo_id}. runtime = {runtime_str}")
+            logging.error(err)
+        # retornando status da partida
+        try:
+            xpath = '//*[@id="gamepackage-matchup-wrap--soccer"]/div[2]/div[2]/span[1]'
+            status = self.web.find_element_by_xpath(xpath).text
+            self.web.close()
         except Exception as err:
             end = time.time()
             runtime_str = convert_str_var_time(init, end)
-            logging.error(f"ERROR queries.Partida.teste_jogo_finalizado: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
+            logging.error("ERROR queries.Partida.__init__: Unexpected error: "
+                          f"Could find status by method find_element_by_xpath of selenium. "
+                          f"<jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+        if status == 'Finalizado':
+            self.status = status
+            print(f'status da partida: {status}')
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.info(f"SUCCESS queries.Partida.__init__: "
+                         f"status da partida: {status}. <jogo_id>={self.jogo_id}. "
+                         f"runtime = {runtime_str}")
+        elif status == 'Cancelado':
+            self.status = status
+            print(f'status da partida: {status}')
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.info(f"WARNING queries.Partida.__init__: "
+                         f"status da partida: {status}. <jogo_id>={self.jogo_id}. "
+                         f"runtime = {runtime_str}")
+        else:
+            try:
+                test_format_status = status.split('\n')
+                self.status = 'Nao_Finalizado'
+                print(f'partida ocorrerá na data: {self.date}')
+                end = time.time()
+                runtime_str = convert_str_var_time(init, end)
+                logging.info(f"INFO queries.Partida.__init__: "
+                             f"partida ocorrerá na data: {self.date}. <jogo_id>={self.jogo_id}. "
+                             f"runtime = {runtime_str}")
+            except Exception as err:
+                self.status = None
+                end = time.time()
+                runtime_str = convert_str_var_time(init, end)
+                logging.error(f"ERROR queries.Partida.__init__: Unexpected error: "
+                              f"status in unexpected format, return status={status}. "
+                              f"<jogo_id>={self.jogo_id}. runtime = {runtime_str}")
+                logging.error(err)
             
     def campeonato(self):
         """
@@ -92,46 +131,6 @@ class Partida():
             end = time.time()
             runtime_str = convert_str_var_time(init, end)
             logging.error(f"ERROR queries.Partida.campeonato: "
-                          f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
-            logging.error(err)
-            
-    def data(self):
-        """
-        Returns:
-            datetime: data da partida
-        """
-        
-        init = time.time()
-        
-        try:
-            req = r.get("https://www.espn.com.br/futebol/escalacoes?jogoId="+self.jogo_id)
-            soup = BeautifulSoup(req.content, 'html.parser')
-            st = soup.prettify()
-            abt = sem_espaco(st)
-
-            ind = padrao_inicio_fim(['<title>\n'],['</title>\n'],abt)
-
-            abt1 = abt[ind[0][0]:ind[0][1]]
-            ind_date = padrao_inicio_fim(['partida'],['ESPN\n'],abt1)[0][0]+2
-
-            date = abt1[ind_date:ind_date+3]
-            month = date[1][:-1]
-
-            day = int(date[0])
-            month = mes(month)
-            year = int(date[2])
-
-            response = datetime.datetime(year, month, day)
-            
-            end = time.time()
-            runtime_str = convert_str_var_time(init, end)
-            logging.info(f"SUCCESS queries.Partida.data: "
-                         f"Function executed successfully. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
-            return response
-        except Exception as err:
-            end = time.time()
-            runtime_str = convert_str_var_time(init, end)
-            logging.error(f"ERROR queries.Partida.data: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
             
@@ -193,8 +192,11 @@ class Partida():
             soup = BeautifulSoup(req.content, 'html.parser')
             st = soup.prettify()
             abt = sem_espaco(st)
-
-            teste = self.teste_jogo_finalizado()
+            
+            if self.status == 'Finalizado':
+                teste = True
+            else:
+                teste = False
             if teste:
                 ind_formacao_casa = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[0][0]+1
                 ind_formacao_visitante = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[1][0]+1

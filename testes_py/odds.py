@@ -33,9 +33,14 @@ def f():
         odds = query.get_odds()
 
         query.web.close() # encerra a sessão
-
-        with open(path_save+'/odds.json', 'w') as fp:
-            json.dump(odds, fp)
+        
+        try:
+            with open(path_save+f'odds/campeonato={campeonato}_index={index}.json', 'w') as fp:
+                json.dump(odds, fp)
+        except:
+            os.mkdir(path_save+'/odds')
+            with open(path_save+f'odds/campeonato={campeonato}_index={index}.json', 'w') as fp:
+                json.dump(odds, fp)
         
 if __name__=='__main__':
     f()
