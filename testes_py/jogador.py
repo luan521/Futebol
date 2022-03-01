@@ -97,7 +97,6 @@ def f():
                  ]
 
         df = pd.DataFrame(data=data, index=index)
-        df.to_csv(path_save+'/bio_jogador.csv')
         try:
             id_jogador1 = id_jogador.replace('/','')
             df.to_csv(path_save+f'/bio_jogador/id_jogador={id_jogador1}_jogo={jogo}.csv')

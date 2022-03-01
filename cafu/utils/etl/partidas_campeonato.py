@@ -23,10 +23,10 @@ def dados_partida(id_, max_iterate=50):
     """
     
     def _try_dados_partida():
-        req = Partida(str(id_))
+        req = Partida(str(id_), check_status=False)
         campeonato = req.campeonato()
         times = req.nomes_times()
-        date = req.date
+        date = req.day()
         if (campeonato is not None) and (times is not None) and (date is not None):
             return True, [campeonato, times, date]
         else:
