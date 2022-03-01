@@ -24,6 +24,9 @@ def partidas_campeonato(pais_divisao, temporada):
          pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante
     """
     
+    logging.info(f"INFO etl.data_lake.partidas_campeonato.partidas_campeonato: "
+                 f"Function started. <pais_divisao>={pais_divisao}, <temporada>={temporada}")
+    
     init = time.time()
     
     dados_campeonato = campeonato_espn(pais_divisao, temporada) 
@@ -80,7 +83,8 @@ def update_partidas_campeonato():
     Atualiza datalake.jogos_ids
     """
     
-    logging.info(f"INIT etl.data_lake.partidas_campeonato.update_partidas_campeonato")
+    logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                 "Function started")
     
     # buscando campeonatos definidos no projeto
     campeonatos0 = campeonato_espn()
@@ -103,22 +107,22 @@ def update_partidas_campeonato():
     
     # atualizando campeonatos
     for c in campeonatos:
-        pais_divisao, temporada = c[0], c[1]
         try:
+            pais_divisao, temporada = c[0], c[1]
             df = partidas_campeonato(pais_divisao, temporada)
             path_save = path('datalake')+f'/jogos_ids/{pais_divisao}/{temporada}.csv'
             df.to_csv(path_save, index=False)
             metadata['jogos_ids'][pais_divisao][temporada] = 'evaluation'
-            with open(path_datalake+'/metadata.json', 'w') as fp:
+            with open(path('datalake')+'/metadata.json', 'w') as fp:
                 json.dump(metadata, fp)
-            logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
-                         "Update league {pais_divisao} | {temporada}.")
-        except:
-            pass
+            logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                         f"Update league {pais_divisao} | {temporada}.")
+        except Exception as err:
+            logging.error("ERROR etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+                          f"Could not update league {pais_divisao} | {temporada}")
+            logging.error(err)
+            return
         
-    if len(campeonatos)>0:
-        logging.info("SUCCESS etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
-                     "Function executed successfully.")
-    else:     
+    if len(campeonatos)==0:    
         logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
                      "All leagues already up to date.")

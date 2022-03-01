@@ -118,7 +118,6 @@ Links e conteúdos relevantes para o projeto
 
 ## Pendencies
 - identificar status 'Em_Andamento' em cafu.queries.partida.Partida
-- Executar as funções da classe cafu.queries.partida.Partida apenas quando status = ('Em_Andamento', 'Finalizado')
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet

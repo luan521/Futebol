@@ -4,7 +4,6 @@ from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.metadata.paths import path
 path_datalake = path('datalake')
-campeonatos = campeonato_espn()
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -26,9 +25,10 @@ def initialize_datalake():
     ```
     """
     
+    campeonatos = campeonato_espn()
     try:
         # criando arquivo metadata
-        metadata = {'jogos_ids':{}}
+        metadata = {'jogos_ids':{c: {} for c in campeonatos}}
         with open(path_datalake+'/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
 
@@ -37,7 +37,6 @@ def initialize_datalake():
         os.mkdir(path_datalake+f'/partidas')
         os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
-        campeonatos = campeonato_espn()
         campeonatos = list(campeonatos.keys())
         for c in campeonatos:
             os.mkdir(path_datalake+f'/jogos_ids/{c}')
