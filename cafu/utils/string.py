@@ -35,6 +35,9 @@ def identify_string_in_list(string, list_strings):
     if min_dist > 0:
         logging.warning(f"WARNING utils.string.identify_string_in_list: distance(string_input={string}, "
                         f"string_found={list_strings[index_string_in_list]}) = {min_dist}")
+    else:
+        logging.info(f"SUCCESS utils.string.identify_string_in_list: "
+                     f"Function executed successfully. <string>={string}")
     
     return index_string_in_list
 

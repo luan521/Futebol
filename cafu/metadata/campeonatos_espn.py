@@ -117,10 +117,10 @@ campeonatos = {
                           }
               }
 
-def campeonato_espn(pais_divisao=None, temporada=None):
+def campeonato_espn(campeonato=None, temporada=None):
     """
     Args:
-        pais_divisao: (str) chave primária do dicionário campeonatos
+        campeonato: (str) chave primária do dicionário campeonatos
         temporada: (str) chave secundária do dicionário campeonatos
     Returns:
         dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato, quantidade de jogos em uma rodada.

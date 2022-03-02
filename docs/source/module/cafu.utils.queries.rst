@@ -19,6 +19,15 @@ cafu.utils.queries.dafabet module
    :show-inheritance:
    :private-members:
 
+cafu.utils.queries.find\_jogo\_id module
+----------------------------------------
+
+.. automodule:: cafu.utils.queries.find_jogo_id
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 cafu.utils.queries.partida module
 ---------------------------------
 

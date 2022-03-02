@@ -92,6 +92,13 @@
 <section id="module-cafu.utils.etl.datalake">
 <span id="cafu-utils-etl-datalake-module"></span><h2>cafu.utils.etl.datalake module<a class="headerlink" href="#module-cafu.utils.etl.datalake" title="Permalink to this headline"></a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.datalake._check_evaluation_status_datalake">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.datalake.</span></span><span class="sig-name descname"><span class="pre">_check_evaluation_status_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/datalake.html#_check_evaluation_status_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.datalake._check_evaluation_status_datalake" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da biblioteca.
+Checa se existem atualizações do data lake em estado de avaliação</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="cafu.utils.etl.datalake.initialize_datalake">
 <span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.datalake.</span></span><span class="sig-name descname"><span class="pre">initialize_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/datalake.html#initialize_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.datalake.initialize_datalake" title="Permalink to this definition"></a></dt>
 <dd><p>Prepara o diretório do datalake</p>
@@ -149,6 +156,23 @@ Busca os dados da partida, entra em loop até que os dados sejam retornados</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cafu.utils.etl.validate">
+<span id="cafu-utils-etl-validate-module"></span><h2>cafu.utils.etl.validate module<a class="headerlink" href="#module-cafu.utils.etl.validate" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.validate.validate_datalake">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">validate_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#validate_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.validate_datalake" title="Permalink to this definition"></a></dt>
+<dd><p>Valida as atualizações no arquivo datalake/metadata.json, com status evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option1</strong> – Chaves do dicionário datalake/metadata.json, que serão validadas</p></li>
+<li><p><strong>option2</strong> – Quando nenhum argumento é passado, todas as atualizações são validadas</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

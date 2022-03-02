@@ -27,3 +27,12 @@ cafu.utils.etl.partidas\_campeonato module
    :undoc-members:
    :show-inheritance:
    :private-members:
+
+cafu.utils.etl.validate module
+------------------------------
+
+.. automodule:: cafu.utils.etl.validate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

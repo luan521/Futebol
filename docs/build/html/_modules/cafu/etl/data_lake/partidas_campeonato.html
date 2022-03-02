@@ -82,20 +82,23 @@
                     <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %I:%M:%S %p&#39;</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
-<div class="viewcode-block" id="partidas_campeonato"><a class="viewcode-back" href="../../../../module/cafu.etl.data_lake.html#cafu.etl.data_lake.partidas_campeonato.partidas_campeonato">[docs]</a><span class="k">def</span> <span class="nf">partidas_campeonato</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">):</span>
+<div class="viewcode-block" id="partidas_campeonato"><a class="viewcode-back" href="../../../../module/cafu.etl.data_lake.html#cafu.etl.data_lake.partidas_campeonato.partidas_campeonato">[docs]</a><span class="k">def</span> <span class="nf">partidas_campeonato</span><span class="p">(</span><span class="n">campeonato</span><span class="p">,</span> <span class="n">temporada</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Busca as partidas do campeonato, no site da ESPN</span>
 <span class="sd">        </span>
 <span class="sd">    Args:</span>
-<span class="sd">        pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn</span>
+<span class="sd">        campeonato: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn</span>
 <span class="sd">        temporada: (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn</span>
 <span class="sd">    Returns:</span>
 <span class="sd">         pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO etl.data_lake.partidas_campeonato.partidas_campeonato: &quot;</span>
+                 <span class="sa">f</span><span class="s2">&quot;Function started. &lt;pais_divisao&gt;=</span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
     <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
-    <span class="n">dados_campeonato</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">)</span> 
+    <span class="n">dados_campeonato</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">(</span><span class="n">campeonato</span><span class="p">,</span> <span class="n">temporada</span><span class="p">)</span> 
     <span class="n">campeonato</span> <span class="o">=</span> <span class="n">dados_campeonato</span><span class="p">[</span><span class="s1">&#39;nome&#39;</span><span class="p">]</span>
     <span class="n">id_inicial</span> <span class="o">=</span><span class="n">dados_campeonato</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">qt_jogos_rodada</span> <span class="o">=</span> <span class="n">dados_campeonato</span><span class="p">[</span><span class="s1">&#39;qt_jogos_rodada&#39;</span><span class="p">]</span>
@@ -149,7 +152,8 @@
 <span class="sd">    Atualiza datalake.jogos_ids</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INIT etl.data_lake.partidas_campeonato.update_partidas_campeonato&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
+                 <span class="s2">&quot;Function started&quot;</span><span class="p">)</span>
     
     <span class="c1"># buscando campeonatos definidos no projeto</span>
     <span class="n">campeonatos0</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">()</span>
@@ -172,23 +176,23 @@
     
     <span class="c1"># atualizando campeonatos</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">campeonatos</span><span class="p">:</span>
-        <span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">partidas_campeonato</span><span class="p">(</span><span class="n">pais_divisao</span><span class="p">,</span> <span class="n">temporada</span><span class="p">)</span>
             <span class="n">path_save</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;datalake&#39;</span><span class="p">)</span><span class="o">+</span><span class="sa">f</span><span class="s1">&#39;/jogos_ids/</span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s1">.csv&#39;</span>
             <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">pais_divisao</span><span class="p">][</span><span class="n">temporada</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;evaluation&#39;</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">(</span><span class="s1">&#39;datalake&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
                 <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
-                         <span class="s2">&quot;Update league </span><span class="si">{pais_divisao}</span><span class="s2"> | </span><span class="si">{temporada}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">pass</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;Update league </span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot;Could not update league </span><span class="si">{</span><span class="n">pais_divisao</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">temporada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="k">return</span>
         
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">campeonatos</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;SUCCESS etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
-                     <span class="s2">&quot;Function executed successfully.&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>     
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">campeonatos</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>    
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: &quot;</span>
                      <span class="s2">&quot;All leagues already up to date.&quot;</span><span class="p">)</span></div>
 </pre></div>

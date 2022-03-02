@@ -192,6 +192,32 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.queries.webdriver_chrome.WebdriverChrome.get_campeonato_dafabet: &quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;chave_campeonato&gt;=</span><span class="si">{</span><span class="n">chave_campeonato</span><span class="si">}</span><span class="s2">. &quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="WebdriverChrome.get_partida_espn"><a class="viewcode-back" href="../../../../module/cafu.utils.queries.html#cafu.utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn">[docs]</a>    <span class="k">def</span> <span class="nf">get_partida_espn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jogo_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Entra no link para o resumo da partida no site ESPN</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            jogo_id: (int or str) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=&lt;jogo_id&gt;. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://www.espn.com.br/futebol/partida/_/jogoId/</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">jogo_id</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn: &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn: &quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                          <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div></div>
 </pre></div>
 

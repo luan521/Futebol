@@ -73,7 +73,6 @@
 <span class="kn">from</span> <span class="nn">cafu.metadata.campeonatos_dafabet</span> <span class="kn">import</span> <span class="n">campeonato_dafabet</span>
 <span class="kn">from</span> <span class="nn">cafu.metadata.paths</span> <span class="kn">import</span> <span class="n">path</span>
 <span class="n">path_datalake</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;datalake&#39;</span><span class="p">)</span>
-<span class="n">campeonatos</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;logs_cafu&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/logs.txt&#39;</span>
@@ -95,9 +94,10 @@
 <span class="sd">    ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="n">campeonatos</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># criando arquivo metadata</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">:{}}</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">:{</span><span class="n">c</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">campeonatos</span><span class="p">}}</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
 
@@ -106,7 +106,6 @@
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="sa">f</span><span class="s1">&#39;/partidas&#39;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="sa">f</span><span class="s1">&#39;/odds&#39;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="s1">&#39;/jogadores&#39;</span><span class="p">)</span>
-        <span class="n">campeonatos</span> <span class="o">=</span> <span class="n">campeonato_espn</span><span class="p">()</span>
         <span class="n">campeonatos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">campeonatos</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">campeonatos</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="sa">f</span><span class="s1">&#39;/jogos_ids/</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -122,6 +121,28 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR utils.etl.datalake.initialize_datalake: Unexpected error: &quot;</span>
                       <span class="s2">&quot;Could not execute function&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="_check_evaluation_status_datalake"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.datalake._check_evaluation_status_datalake">[docs]</a><span class="k">def</span> <span class="nf">_check_evaluation_status_datalake</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Método interno da biblioteca.</span>
+<span class="sd">    Checa se existem atualizações do data lake em estado de avaliação</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">path_metadata</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s1">&#39;datalake&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_metadata</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    
+    <span class="n">count_evaluation</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1"># check jogos_ids</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;evaluation&#39;</span><span class="p">:</span>
+                <span class="n">count_evaluation</span><span class="o">+=</span><span class="mi">1</span>
+                
+    <span class="k">if</span> <span class="n">count_evaluation</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING utils.etl.datalake._check_evaluation_status_datalake: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">count_evaluation</span><span class="si">}</span><span class="s2"> evaluation status on datalake&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

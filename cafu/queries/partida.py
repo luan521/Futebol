@@ -236,22 +236,10 @@ class Partida(WebdriverChrome):
             st = soup.prettify()
             abt = sem_espaco(st)
             
-            if self.status == 'Finalizado':
-                teste = True
-            else:
-                teste = False
-            if teste:
-                ind_formacao_casa = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[0][0]+1
-                ind_formacao_visitante = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[1][0]+1
-                formacao_casa = abt[ind_formacao_casa][:-1] 
-                formacao_visitante = abt[ind_formacao_visitante][:-1]
-            else:
-                end = time.time()
-                runtime_str = convert_str_var_time(init, end)
-                logging.error(f"ERROR queries.Partida.formacao: "
-                              f"Could not execute function because the match hasn't happened yet. <jogo_id>={self.jogo_id}. "
-                              f"runtime = {runtime_str}")
-                return
+            ind_formacao_casa = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[0][0]+1
+            ind_formacao_visitante = padrao_inicio_fim(['class="formations__text">\n'],['</div>\n'],abt)[1][0]+1
+            formacao_casa = abt[ind_formacao_casa][:-1] 
+            formacao_visitante = abt[ind_formacao_visitante][:-1]
             
             response = formacao_casa, formacao_visitante
             

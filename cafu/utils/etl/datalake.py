@@ -52,3 +52,25 @@ def initialize_datalake():
         logging.error("ERROR utils.etl.datalake.initialize_datalake: Unexpected error: "
                       "Could not execute function")
         logging.error(err)
+        
+def _check_evaluation_status_datalake():
+    """
+    Método interno da biblioteca.
+    Checa se existem atualizações do data lake em estado de avaliação
+    """
+    
+    path_metadata = path('datalake')+'/metadata.json'
+    r = open(path_metadata, 'r')
+    metadata = json.load(r)
+    
+    count_evaluation = 0
+    
+    # check jogos_ids
+    for c in metadata['jogos_ids']:
+        for t in metadata['jogos_ids'][c]:
+            if metadata['jogos_ids'][c][t]=='evaluation':
+                count_evaluation+=1
+                
+    if count_evaluation>0:
+        logging.warning("WARNING utils.etl.datalake._check_evaluation_status_datalake: "
+                        f"{count_evaluation} evaluation status on datalake")

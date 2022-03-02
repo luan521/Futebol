@@ -74,6 +74,7 @@
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.string</span> <span class="kn">import</span> <span class="n">convert_str_var_time</span>
+<span class="kn">from</span> <span class="nn">cafu.utils.queries.webdriver_chrome</span> <span class="kn">import</span> <span class="n">WebdriverChrome</span>
 <span class="kn">from</span> <span class="nn">cafu.utils.queries.partida</span> <span class="kn">import</span> <span class="p">(</span><span class="n">sem_espaco</span><span class="p">,</span> <span class="n">padrao</span><span class="p">,</span> <span class="n">padrao_inicio_fim</span><span class="p">,</span> <span class="n">mes</span><span class="p">,</span>
                                         <span class="n">jogadores_inscritos</span><span class="p">,</span> <span class="n">teste_gols</span><span class="p">,</span> <span class="n">gols_casa_visitante</span><span class="p">)</span>
 
@@ -86,49 +87,90 @@
                     <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %I:%M:%S %p&#39;</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Partida"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida">[docs]</a><span class="k">class</span> <span class="nc">Partida</span><span class="p">():</span>
+<div class="viewcode-block" id="Partida"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida">[docs]</a><span class="k">class</span> <span class="nc">Partida</span><span class="p">(</span><span class="n">WebdriverChrome</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retorna informações sobre uma partida de futebol, buscando no site da ESPN</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
 <span class="sd">        jogo_id: (int or str) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=&lt;jogo_id&gt;. </span>
+<span class="sd">        check_status: (bool) se o status da partida será buscado ou não, ao iniciar a classe</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jogo_id</span><span class="p">):</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jogo_id</span><span class="p">)</span>
-    
-<div class="viewcode-block" id="Partida.teste_jogo_finalizado"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.teste_jogo_finalizado">[docs]</a>    <span class="k">def</span> <span class="nf">teste_jogo_finalizado</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: Se o jogo foi finalizado</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jogo_id</span><span class="p">,</span> <span class="n">check_status</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         
         <span class="n">init</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">req</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.espn.com.br/futebol/escalacoes?jogoId=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
-            <span class="n">soup</span><span class="o">=</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
-            <span class="n">st</span><span class="o">=</span><span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
-            <span class="n">abt</span><span class="o">=</span><span class="n">sem_espaco</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
-
-            <span class="n">ind_jogo_finalizado</span><span class="o">=</span><span class="n">padrao_inicio_fim</span><span class="p">([</span><span class="s1">&#39;class=&quot;game-time&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],[</span><span class="s1">&#39;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="n">abt</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind_jogo_finalizado</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jogo_id</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">check_status</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_partida_espn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="p">)</span>
+            <span class="c1"># buscando a data da partida</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;gamepackage-game-information&quot;]/article/div/ul[2]/li/div/span/span[2]&#39;</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">day_month</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">day</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">day_month</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; de &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">month</span> <span class="o">=</span> <span class="n">mes</span><span class="p">(</span><span class="n">day_month</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; de &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;gamepackage-game-information&quot;]/article/div/ul[2]/li/div/span/span[1]&#39;</span>
+                <span class="n">hour_minute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">hour</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hour_minute</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">minute</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hour_minute</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.Partida.__init__: Unexpected error: &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;Could find date by method find_element_by_xpath of selenium. &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;&lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="c1"># retornando status da partida</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;gamepackage-matchup-wrap--soccer&quot;]/div[2]/div[2]/span[1]&#39;</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.Partida.__init__: Unexpected error: &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;Could find status by method find_element_by_xpath of selenium. &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;&lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;Finalizado&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.__init__: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;status da partida: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;Cancelado&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARNING queries.Partida.__init__: &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;status da partida: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="kc">False</span>
-            
-            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.teste_jogo_finalizado: &quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">response</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.teste_jogo_finalizado: &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">test_format_status</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Nao_Finalizado&#39;</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO queries.Partida.__init__: &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;partida ocorrerá na data: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="s2">. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.__init__: Unexpected error: &quot;</span>
+                                  <span class="sa">f</span><span class="s2">&quot;status in unexpected format, return status=</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">. &quot;</span>
+                                  <span class="sa">f</span><span class="s2">&quot;&lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
             
 <div class="viewcode-block" id="Partida.campeonato"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.campeonato">[docs]</a>    <span class="k">def</span> <span class="nf">campeonato</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -164,7 +206,7 @@
                           <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
-<div class="viewcode-block" id="Partida.data"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.data">[docs]</a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Partida.day"><a class="viewcode-back" href="../../../module/cafu.queries.html#cafu.queries.partida.Partida.day">[docs]</a>    <span class="k">def</span> <span class="nf">day</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            datetime: data da partida</span>
@@ -194,13 +236,13 @@
             
             <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.data: &quot;</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS queries.Partida.day: &quot;</span>
                          <span class="sa">f</span><span class="s2">&quot;Function executed successfully. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">response</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.data: &quot;</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.day: &quot;</span>
                           <span class="sa">f</span><span class="s2">&quot;Unexpected error: Could not execute function. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
             
@@ -262,20 +304,11 @@
             <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
             <span class="n">st</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
             <span class="n">abt</span> <span class="o">=</span> <span class="n">sem_espaco</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
-
-            <span class="n">teste</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">teste_jogo_finalizado</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">teste</span><span class="p">:</span>
-                <span class="n">ind_formacao_casa</span> <span class="o">=</span> <span class="n">padrao_inicio_fim</span><span class="p">([</span><span class="s1">&#39;class=&quot;formations__text&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],[</span><span class="s1">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="n">abt</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
-                <span class="n">ind_formacao_visitante</span> <span class="o">=</span> <span class="n">padrao_inicio_fim</span><span class="p">([</span><span class="s1">&#39;class=&quot;formations__text&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],[</span><span class="s1">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="n">abt</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
-                <span class="n">formacao_casa</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_casa</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
-                <span class="n">formacao_visitante</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_visitante</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.Partida.formacao: &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;Could not execute function because the match hasn&#39;t happened yet. &lt;jogo_id&gt;=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">. &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">return</span>
+            
+            <span class="n">ind_formacao_casa</span> <span class="o">=</span> <span class="n">padrao_inicio_fim</span><span class="p">([</span><span class="s1">&#39;class=&quot;formations__text&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],[</span><span class="s1">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="n">abt</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ind_formacao_visitante</span> <span class="o">=</span> <span class="n">padrao_inicio_fim</span><span class="p">([</span><span class="s1">&#39;class=&quot;formations__text&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],[</span><span class="s1">&#39;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="n">abt</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">formacao_casa</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_casa</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
+            <span class="n">formacao_visitante</span> <span class="o">=</span> <span class="n">abt</span><span class="p">[</span><span class="n">ind_formacao_visitante</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             
             <span class="n">response</span> <span class="o">=</span> <span class="n">formacao_casa</span><span class="p">,</span> <span class="n">formacao_visitante</span>
             

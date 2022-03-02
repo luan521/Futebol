@@ -4,6 +4,7 @@ import sys
 sys.path.append(path_project)
 
 import pandas as pd
+from cafu.utils import find_jogo_id
 from cafu.queries import Partida
 from cafu.metadata import path
 path_save = path('dir_results')
@@ -11,8 +12,15 @@ path_save = path('dir_results')
 def f():
     help_ = (
              f"""
-             Args:
-                jogo_id: (int or str) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=<jogo_id>. 
+             There are two possibilities for args:
+             Args1:
+                time_casa0: (str) time da casa
+                time_visitante0: (str) time visitante
+                campeonato: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
+                temporada: (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn 
+             Ex: palmeiras fluminense brasil 2021-2021
+             Args2:
+                jogo_id: (int or str) completa o link https://www.espn.com.br/futebol/escalacoes?jogoId=<jogo_id>
              Ex: 614698
              Resultados salvos em: {path_save}/partida.csv, {path_save}/descricao_partida.csv
              """
@@ -22,7 +30,10 @@ def f():
     if len(args) == 0:
         print(help_)
     else:
-        jogo_id = args[0]
+        if len(args) == 1:
+            jogo_id = args[0]
+        else:
+            jogo_id = find_jogo_id(*args)
         req = Partida(jogo_id)
     
         data = [

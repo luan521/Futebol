@@ -13,12 +13,12 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-def partidas_campeonato(pais_divisao, temporada):
+def partidas_campeonato(campeonato, temporada):
     """
     Busca as partidas do campeonato, no site da ESPN
         
     Args:
-        pais_divisao: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
+        campeonato: (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn
         temporada: (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn
     Returns:
          pandas dataframe: jogo_id, dates, rodada, time_casa, time_visitante
@@ -29,7 +29,7 @@ def partidas_campeonato(pais_divisao, temporada):
     
     init = time.time()
     
-    dados_campeonato = campeonato_espn(pais_divisao, temporada) 
+    dados_campeonato = campeonato_espn(campeonato, temporada) 
     campeonato = dados_campeonato['nome']
     id_inicial =dados_campeonato['id']
     qt_jogos_rodada = dados_campeonato['qt_jogos_rodada']

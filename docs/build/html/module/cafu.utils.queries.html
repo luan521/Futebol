@@ -161,6 +161,32 @@ Barra de progresso para a quantidade de tentativas, em relação à quantidade m
 </dd></dl>
 
 </section>
+<section id="module-cafu.utils.queries.find_jogo_id">
+<span id="cafu-utils-queries-find-jogo-id-module"></span><h2>cafu.utils.queries.find_jogo_id module<a class="headerlink" href="#module-cafu.utils.queries.find_jogo_id" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.queries.find_jogo_id.find_jogo_id">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.queries.find_jogo_id.</span></span><span class="sig-name descname"><span class="pre">find_jogo_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_casa0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_visitante0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">campeonato</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporada</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/find_jogo_id.html#find_jogo_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.find_jogo_id.find_jogo_id" title="Permalink to this definition"></a></dt>
+<dd><p>Encontra o id da partida &lt;time_casa0&gt; vs &lt;time_visitante0&gt;,
+em datalake/jogos_ids/&lt;campeonato&gt;/&lt;temporada&gt;.csv</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_casa0</strong> – (str) time da casa</p></li>
+<li><p><strong>time_visitante0</strong> – (str) time visitante</p></li>
+<li><p><strong>campeonato</strong> – (str) chave primária do dicionário campeonatos, caminho metadata/campeonatos_espn</p></li>
+<li><p><strong>temporada</strong> – (str) chave secundária do dicionário campeonatos, caminho metadata/campeonatos_espn</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id da partida no site ESPN</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-cafu.utils.queries.partida">
 <span id="cafu-utils-queries-partida-module"></span><h2>cafu.utils.queries.partida module<a class="headerlink" href="#module-cafu.utils.queries.partida" title="Permalink to this headline"></a></h2>
 <dl class="py function">
@@ -251,6 +277,17 @@ Ex &lt;id_jogador&gt;=’199017/everton-ribeiro’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>chave_campeonato</strong> – (str) chave do dicionário dict_id_campeonato, caminho metadata/campeonatos_dafabet</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn">
+<span class="sig-name descname"><span class="pre">get_partida_espn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jogo_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/queries/webdriver_chrome.html#WebdriverChrome.get_partida_espn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.queries.webdriver_chrome.WebdriverChrome.get_partida_espn" title="Permalink to this definition"></a></dt>
+<dd><p>Entra no link para o resumo da partida no site ESPN</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jogo_id</strong> – (int or str) completa o link <a class="reference external" href="https://www.espn.com.br/futebol/escalacoes">https://www.espn.com.br/futebol/escalacoes</a>?jogoId=&lt;jogo_id&gt;.</p>
 </dd>
 </dl>
 </dd></dl>
