@@ -129,7 +129,7 @@ def campeonato_espn(campeonato=None, temporada=None):
     """
     
     response =  campeonatos
-    if pais_divisao is not None:
+    if campeonato is not None:
         response = response[pais_divisao]
     if temporada is not None:
         response = response[temporada]
