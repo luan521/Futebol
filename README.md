@@ -115,6 +115,9 @@ Links e conteúdos relevantes para o projeto
         - partidas: parquet (por campeonato, por dia)
         - odds: parquet (por campeonato, por dia)
     - função que analisa os arquivos datalake.jogos_ids e retorna as datas dos próximos jogos, em cada campeonato, ou retorna se o campeonato já foi finalizado
+    - criar um metadata para as partidas, com base nos arquivos datalake.jogos_ids
+    - um metadata para cada campeonato, dia de um registro no datalake.partidas
+    - um metadata para cada campeonato, dia de um registro no datalake.odds
 
 ## Pendencies
 - completar campeonatos nos arquivos:

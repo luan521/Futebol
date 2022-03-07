@@ -41,23 +41,6 @@ campeonatos = {
                                         'qt_jogos_rodada': 10
                                        }
                          },
-               'franca': {
-                          '2021-2022': {
-                                        'nome': '2021-22 Ligue 1',
-                                        'id':  609280,
-                                        'qt_jogos_rodada': 10
-                                       },
-                          '2020-2021': {
-                                        'nome': '2020-21 Ligue 1',
-                                        'id':  572924,
-                                        'qt_jogos_rodada': 10
-                                       },
-                          '2019-2020': {
-                                        'nome': 'Temporada regular',
-                                        'id':  541893,
-                                        'qt_jogos_rodada': 10
-                                       }
-                         },
                'espanha': {
                            '2021-2022': {
                                          'nome': '2021-22 LaLiga',
@@ -114,7 +97,24 @@ campeonatos = {
                                          'id': 323700,
                                          'qt_jogos_rodada': 10
                                         }
-                          }
+                          },
+               'franca': {
+                          '2021-2022': {
+                                        'nome': '2021-22 Ligue 1',
+                                        'id':  609280,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2020-2021': {
+                                        'nome': '2020-21 Ligue 1',
+                                        'id':  572924,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2019-2020': {
+                                        'nome': 'Temporada regular',
+                                        'id':  541893,
+                                        'qt_jogos_rodada': 10
+                                       }
+                         }
               }
 
 def campeonato_espn(campeonato=None, temporada=None):
