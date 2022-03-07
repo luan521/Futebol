@@ -125,12 +125,12 @@ def campeonato_espn(campeonato=None, temporada=None):
     Returns:
         dict: nome do campeonato no site ESPN, id de um jogo qualquer do campeonato, quantidade de jogos em uma rodada.
         Se nenhum argumento é definido, retorna <campeonatos>.
-        Se apenas <pais_divisao> é definido, retorna a resposta para todas as temporadas definidas para <pais_divisao>
+        Se apenas <campeonato> é definido, retorna a resposta para todas as temporadas definidas para <campeonato>
     """
     
     response =  campeonatos
     if campeonato is not None:
-        response = response[pais_divisao]
+        response = response[campeonato]
     if temporada is not None:
         response = response[temporada]
     return response

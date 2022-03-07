@@ -25,8 +25,8 @@ def partidas_campeonato(campeonato, temporada):
     """
     
     logging.info(f"INFO etl.data_lake.partidas_campeonato.partidas_campeonato: "
-                 f"Function started. <pais_divisao>={pais_divisao}, <temporada>={temporada}")
-    
+                 f"Function started. <campeonato>={campeonato}, <temporada>={temporada}")
+
     init = time.time()
     
     dados_campeonato = campeonato_espn(campeonato, temporada) 
@@ -66,14 +66,14 @@ def partidas_campeonato(campeonato, temporada):
         end = time.time()
         runtime_str = convert_str_var_time(init, end)
         logging.info(f"SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. "
-                     f"<pais_divisao>={pais_divisao}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                     f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
                      f"runtime = {runtime_str}")
         return df
     except Exception as err:
         end = time.time()
         runtime_str = convert_str_var_time(init, end)
         logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: Unexpected error: "
-                      f"Could not execute function. <pais_divisao>={pais_divisao}, <temporada>={temporada}, "
+                      f"Could not execute function. <campeonato>={campeonato}, <temporada>={temporada}, "
                       f"<qt_jogos_rodada>={qt_jogos_rodada}. runtime = {runtime_str}")
         logging.error(err)
         return
@@ -107,19 +107,19 @@ def update_partidas_campeonato():
     
     # atualizando campeonatos
     for c in campeonatos:
+        camp, temporada = c[0], c[1]
         try:
-            pais_divisao, temporada = c[0], c[1]
-            df = partidas_campeonato(pais_divisao, temporada)
-            path_save = path('datalake')+f'/jogos_ids/{pais_divisao}/{temporada}.csv'
+            df = partidas_campeonato(camp, temporada)           
+            path_save = path('datalake')+f'/jogos_ids/{camp}/{temporada}.csv'
             df.to_csv(path_save, index=False)
-            metadata['jogos_ids'][pais_divisao][temporada] = 'evaluation'
+            metadata['jogos_ids'][camp][temporada] = 'evaluation'
             with open(path('datalake')+'/metadata.json', 'w') as fp:
                 json.dump(metadata, fp)
             logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
-                         f"Update league {pais_divisao} | {temporada}.")
+                         f"Update league {camp} | {temporada}.")
         except Exception as err:
             logging.error("ERROR etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
-                          f"Could not update league {pais_divisao} | {temporada}")
+                          f"Could not update league {camp} | {temporada}")
             logging.error(err)
             return
         
