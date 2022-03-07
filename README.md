@@ -117,7 +117,6 @@ Links e conteúdos relevantes para o projeto
     - função que analisa os arquivos datalake.jogos_ids e retorna as datas dos próximos jogos, em cada campeonato, ou retorna se o campeonato já foi finalizado
 
 ## Pendencies
-- identificar status 'Em_Andamento' em cafu.queries.partida.Partida
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
