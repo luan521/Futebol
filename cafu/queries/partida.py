@@ -89,12 +89,13 @@ class Partida(WebdriverChrome):
                 logging.info(f"WARNING queries.Partida.__init__: "
                              f"status da partida: {status}. <jogo_id>={self.jogo_id}. "
                              f"runtime = {runtime_str}")
-            elif '\'' in status:
+            # case: jogo em andamento
+            elif ('\'' in status) or (status == 'INT'):
                 self.status = 'Em_andamento'
                 self.minuto = status
                 end = time.time()
                 runtime_str = convert_str_var_time(init, end)
-                logging.info(f"WARNING queries.Partida.__init__: "
+                logging.info(f"INFO queries.Partida.__init__: "
                              f"status da partida: {self.status}, minuto: {status}. <jogo_id>={self.jogo_id}. "
                              f"runtime = {runtime_str}")
             else:

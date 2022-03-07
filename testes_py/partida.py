@@ -35,9 +35,15 @@ def f():
         else:
             jogo_id = find_jogo_id(*args)
         req = Partida(jogo_id)
+        
+        try:
+            minuto = req.minuto
+        except:
+            minuto = 90
     
         data = [
                 req.status,
+                minuto,
                 req.campeonato(),
                 req.date,
                 req.nomes_times(),
@@ -56,6 +62,7 @@ def f():
                ]
         index = [
                  'status',
+                 'minuto',
                  'campeonato',
                  'data',
                  'nomes_times',
