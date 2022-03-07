@@ -57,10 +57,14 @@ class Partida(WebdriverChrome):
                               f"Could find date by method find_element_by_xpath of selenium. "
                               f"<jogo_id>={self.jogo_id}. runtime = {runtime_str}")
                 logging.error(err)
-            # retornando status da partida
+            # buscando status da partida
             try:
                 xpath = '//*[@id="gamepackage-matchup-wrap--soccer"]/div[2]/div[2]/span[1]'
                 status = self.web.find_element_by_xpath(xpath).text
+                # case: jogo em andamento
+                if status == '':
+                    xpath = '//*[@id="gamepackage-matchup-wrap--soccer"]/div[2]/div[2]/span[2]'
+                    status = self.web.find_element_by_xpath(xpath).text
                 self.web.close()
             except Exception as err:
                 self.web.close()
@@ -85,9 +89,17 @@ class Partida(WebdriverChrome):
                 logging.info(f"WARNING queries.Partida.__init__: "
                              f"status da partida: {status}. <jogo_id>={self.jogo_id}. "
                              f"runtime = {runtime_str}")
+            elif '\'' in status:
+                self.status = 'Em_andamento'
+                self.minuto = status
+                end = time.time()
+                runtime_str = convert_str_var_time(init, end)
+                logging.info(f"WARNING queries.Partida.__init__: "
+                             f"status da partida: {self.status}, minuto: {status}. <jogo_id>={self.jogo_id}. "
+                             f"runtime = {runtime_str}")
             else:
                 try:
-                    test_format_status = status.split('\n')
+                    test_format_status = status.split('\n')[1]
                     self.status = 'Nao_Finalizado'
                     end = time.time()
                     runtime_str = convert_str_var_time(init, end)
