@@ -164,14 +164,47 @@ Busca os dados da partida, entra em loop até que os dados sejam retornados</p>
 <section id="module-cafu.utils.etl.validate">
 <span id="cafu-utils-etl-validate-module"></span><h2>cafu.utils.etl.validate module<a class="headerlink" href="#module-cafu.utils.etl.validate" title="Permalink to this headline"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="cafu.utils.etl.validate.validate_datalake">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">validate_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#validate_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.validate_datalake" title="Permalink to this definition"></a></dt>
-<dd><p>Valida as atualizações no arquivo datalake/metadata.json, com status evaluation</p>
+<dt class="sig sig-object py" id="cafu.utils.etl.validate._validate_invalidate_datalake">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">_validate_invalidate_datalake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">success_failed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#_validate_invalidate_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate._validate_invalidate_datalake" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da biblioteca cafu.
+Valida ou invalida as atualizações no arquivo datalake/metadata.json.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>option1</strong> – Chaves do dicionário datalake/metadata.json, que serão validadas</p></li>
-<li><p><strong>option2</strong> – Quando nenhum argumento é passado, todas as atualizações são validadas</p></li>
+<li><p><strong>success_failed</strong> – (bool) success or failed</p></li>
+<li><p><strong>args</strong> – (list)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.validate.invalidate_datalake">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">invalidate_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#invalidate_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.invalidate_datalake" title="Permalink to this definition"></a></dt>
+<dd><p>Invalida as atualizações no arquivo datalake/metadata.json. Quando todas as chaves
+do dicionário são passadas, a atualização sempre ocorre, caso contrário a atualização
+ocorre apenas no status “evaluation”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option1</strong> – Chaves do dicionário datalake/metadata.json, que serão verificadas</p></li>
+<li><p><strong>option2</strong> – Quando nenhum argumento é passado, todas as atualizações são verificadas</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.validate.validate_datalake">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">validate_datalake</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#validate_datalake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.validate_datalake" title="Permalink to this definition"></a></dt>
+<dd><p>Valida as atualizações no arquivo datalake/metadata.json. Quando todas as chaves
+do dicionário são passadas, a validação sempre ocorre, caso contrário a atualização
+ocorre apenas no status “evaluation”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>option1</strong> – Chaves do dicionário datalake/metadata.json, que serão verificadas</p></li>
+<li><p><strong>option2</strong> – Quando nenhum argumento é passado, todas as atualizações são verificadas</p></li>
 </ul>
 </dd>
 </dl>

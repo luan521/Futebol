@@ -1,3 +1,6 @@
+import os
+from datetime import date
+
 paths = {
          'initial_path': '/home/luan/futebol/Futebol',
          'credentials': '/home/luan/futebol/credentials',
@@ -30,4 +33,14 @@ def path(key):
         str: caminho 
     """
     
-    return paths[key]
+    response = paths[key]
+    
+    if key=='logs_cafu':
+        today = date.today()
+        response = response+f'/{str(today)}'
+        try:
+            os.mkdir(response)
+        except:
+            pass
+    
+    return response

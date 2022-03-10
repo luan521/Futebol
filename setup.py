@@ -29,7 +29,8 @@ setup(
         'update_partidas_campeonato = cafu.etl.data_lake.partidas_campeonato:update_partidas_campeonato',
         'validate_datalake = cafu.utils.etl.validate:validate_datalake',
         'invalidate_datalake = cafu.utils.etl.validate:invalidate_datalake',
-        'campeonatos_espn = cafu.metadata.campeonatos_espn:campeonato_espn'
+        'campeonatos_espn = cafu.metadata.campeonatos_espn:campeonato_espn',
+        'proximas_partidas = cafu.utils.etl.datalake:proximas_partidas'
     ],
 },
     install_requires=install_requires,

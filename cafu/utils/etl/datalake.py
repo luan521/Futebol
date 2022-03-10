@@ -1,5 +1,7 @@
 import os
+import pandas as pd
 import json
+from datetime import date
 from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.metadata.paths import path
@@ -53,6 +55,36 @@ def initialize_datalake():
         logging.error("ERROR utils.etl.datalake.initialize_datalake: "
                       "Could not execute function")
         logging.error(err)
+        
+def proximas_partidas():
+    """
+    Análisa datalake.jogos_ids, e retorna as datas das próximas partidas dos campeonatos em aberto,
+    ou se o campeonato já foi finalizado
+        
+    Returns:
+        dict: campeonato, temporada - se já foi finalizado ou data da próxima partida
+    """
+    
+    today = date.today()
+    
+    r = open(path_datalake+'/metadata.json', 'r')
+    metadata_datalake = json.load(r)
+    
+    campeonatos = [
+                   [k1, k2] for k1 in list(metadata_datalake['jogos_ids'].keys()) 
+                            for k2 in list(metadata_datalake['jogos_ids'][k1].keys())
+                            if metadata_datalake['jogos_ids'][k1][k2] != 'failed'
+                  ]
+    
+    response = {c:{} for c in metadata_datalake['jogos_ids']}
+    for c in campeonatos:
+        df = pd.read_csv(path_datalake+f'/jogos_ids/{c[0]}/{c[1]}.csv')
+        if len(df[df['dates']>=str(today)]['dates'])==0:
+            response[c[0]][c[1]] = 'finalizado'
+        else:
+            response[c[0]][c[1]] = min(df[df['dates']>=str(today)]['dates'])
+    
+    return response
         
 def _check_evaluation_status_datalake():
     """

@@ -79,39 +79,45 @@
                     <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %I:%M:%S %p&#39;</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
-<div class="viewcode-block" id="validate_datalake"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.validate.validate_datalake">[docs]</a><span class="k">def</span> <span class="nf">validate_datalake</span><span class="p">():</span>
+<div class="viewcode-block" id="_validate_invalidate_datalake"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.validate._validate_invalidate_datalake">[docs]</a><span class="k">def</span> <span class="nf">_validate_invalidate_datalake</span><span class="p">(</span><span class="n">success_failed</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Valida as atualizações no arquivo datalake/metadata.json, com status evaluation</span>
+<span class="sd">    Método interno da biblioteca cafu.</span>
+<span class="sd">    Valida ou invalida as atualizações no arquivo datalake/metadata.json. </span>
 <span class="sd">        </span>
 <span class="sd">    Args:</span>
-<span class="sd">        option1: Chaves do dicionário datalake/metadata.json, que serão validadas </span>
-<span class="sd">        option2: Quando nenhum argumento é passado, todas as atualizações são validadas</span>
+<span class="sd">        success_failed: (bool) success or failed</span>
+<span class="sd">        args: (list)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
     
     <span class="k">def</span> <span class="nf">_update_jogos_ids</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">]:</span>
                 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">]:</span>
-                    <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;success&#39;</span>
+                    <span class="k">if</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;evaluation&#39;</span><span class="p">:</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">success_failed</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">]:</span>
-                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;success&#39;</span>
+                <span class="k">if</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;evaluation&#39;</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">success_failed</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;success&#39;</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">success_failed</span>
     
     <span class="k">def</span> <span class="nf">_update_all</span><span class="p">():</span>
         <span class="n">_update_jogos_ids</span><span class="p">()</span>
+        
+    <span class="k">if</span> <span class="n">success_failed</span><span class="o">==</span><span class="s1">&#39;success&#39;</span><span class="p">:</span>
+        <span class="n">function</span> <span class="o">=</span> <span class="s1">&#39;validate_datalake&#39;</span>
+    <span class="k">elif</span> <span class="n">success_failed</span><span class="o">==</span><span class="s1">&#39;failed&#39;</span><span class="p">:</span>
+        <span class="n">function</span> <span class="o">=</span> <span class="s1">&#39;invalidate_datalake&#39;</span>
             
     <span class="k">try</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_metadata</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR utils.etl.validate.validate_datalake: &quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.etl.validate.</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s2">: &quot;</span>
                       <span class="s2">&quot;Could not import datalake/metadata.json&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span>
@@ -122,13 +128,49 @@
         <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">:</span>
             <span class="n">_update_jogos_ids</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR utils.etl.validate.validate_datalake: &quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.etl.validate.</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s2">: &quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;Could not update metadata. &lt;args&gt;=</span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span>
         
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_metadata</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_metadata</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.etl.validate.</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s2">: &quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;Could not save metadata. &lt;args&gt;=</span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="validate_datalake"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.validate.validate_datalake">[docs]</a><span class="k">def</span> <span class="nf">validate_datalake</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Valida as atualizações no arquivo datalake/metadata.json. Quando todas as chaves</span>
+<span class="sd">    do dicionário são passadas, a validação sempre ocorre, caso contrário a atualização</span>
+<span class="sd">    ocorre apenas no status &quot;evaluation&quot;</span>
+<span class="sd">        </span>
+<span class="sd">    Args:</span>
+<span class="sd">        option1: Chaves do dicionário datalake/metadata.json, que serão verificadas </span>
+<span class="sd">        option2: Quando nenhum argumento é passado, todas as atualizações são verificadas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">_validate_invalidate_datalake</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span></div>
+    
+   
+        
+<div class="viewcode-block" id="invalidate_datalake"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.validate.invalidate_datalake">[docs]</a><span class="k">def</span> <span class="nf">invalidate_datalake</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Invalida as atualizações no arquivo datalake/metadata.json. Quando todas as chaves</span>
+<span class="sd">    do dicionário são passadas, a atualização sempre ocorre, caso contrário a atualização</span>
+<span class="sd">    ocorre apenas no status &quot;evaluation&quot;</span>
+<span class="sd">        </span>
+<span class="sd">    Args:</span>
+<span class="sd">        option1: Chaves do dicionário datalake/metadata.json, que serão verificadas </span>
+<span class="sd">        option2: Quando nenhum argumento é passado, todas as atualizações são verificadas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">_validate_invalidate_datalake</span><span class="p">(</span><span class="s1">&#39;failed&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

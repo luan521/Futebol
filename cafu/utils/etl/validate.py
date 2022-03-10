@@ -34,7 +34,12 @@ def _validate_invalidate_datalake(success_failed, args):
         elif len(args)==3:
             c = args[1]
             t = args[2]
-            metadata['jogos_ids'][c][t]=success_failed
+            try:
+                metadata['jogos_ids'][c][t]
+                metadata['jogos_ids'][c][t]=success_failed
+            except:
+                logging.error(f"ERROR utils.etl.validate.{function}: "
+                              f"{c}.{t} doesn't exist in metadata['jogos_ids']")
     
     def _update_all():
         _update_jogos_ids()
