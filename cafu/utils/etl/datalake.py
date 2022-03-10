@@ -29,10 +29,10 @@ def initialize_datalake():
     
     campeonatos = campeonato_espn()
     try:
-
         # criando diretórios
         os.mkdir(path_datalake+f'/jogos_ids')
         os.mkdir(path_datalake+f'/partidas')
+        os.mkdir(path_datalake+f'/descricoes_partidas')
         os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
         campeonatos = list(campeonatos.keys())
@@ -46,7 +46,12 @@ def initialize_datalake():
             os.mkdir(path_datalake+f'/odds/{c}')
             
         # criando arquivo metadata
-        metadata = {'jogos_ids':{c: {} for c in campeonatos}}
+        campeonatos = campeonato_espn()
+        metadata = {'jogos_ids':{c: {} for c in campeonatos}, 
+                    'partidas': {c: {} for c in campeonatos}}
+        for c in campeonatos:
+            for t in campeonatos[c]:
+                metadata['partidas'][c][t] = {}
         with open(path_datalake+'/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
         
@@ -85,6 +90,45 @@ def proximas_partidas():
             response[c[0]][c[1]] = min(df[df['dates']>=str(today)]['dates'])
     
     return response
+
+def partidas_desatualizadas():
+    """
+    Análisa datalake.jogos_ids e datalake.metadata, e retorna os jogos desatualizados em 
+    datalake.partidas, datalake.descricoes_partidas
+        
+    Returns:
+        dict: campeonato, temporada - lista de jogos desatualizados
+    """
+    
+    today = date.today()
+
+    r = open(path_datalake+'/metadata.json', 'r')
+    metadata_datalake = json.load(r)
+
+    campeonatos = [
+                   [k1, k2] for k1 in list(metadata_datalake['jogos_ids'].keys()) 
+                            for k2 in list(metadata_datalake['jogos_ids'][k1].keys())
+                            if metadata_datalake['jogos_ids'][k1][k2] != 'failed'
+                  ]
+
+    jogos_desatualizados = {}
+    for c in campeonatos:
+        df = pd.read_csv(path_datalake+f'/jogos_ids/{c[0]}/{c[1]}.csv')
+        jogos_ocorridos = df[df['dates']<str(today)]['jogo_id']
+        jogos_atualizados = []
+        for j in metadata_datalake['partidas'][c[0]][c[1]]:
+            if metadata_datalake['partidas'][c[0]][c[1]][j]['status'] != 'failed':
+                jogos_atualizados.append(j)
+
+        jogos_desatualizados_c =  list(set(jogos_ocorridos).difference(jogos_atualizados))
+        if len(jogos_desatualizados_c)>0:
+            try:
+                jogos_desatualizados[c[0]][c[1]] = jogos_desatualizados_c
+            except:
+                jogos_desatualizados[c[0]] = {}
+                jogos_desatualizados[c[0]][c[1]] = jogos_desatualizados_c
+                
+    return jogos_desatualizados
         
 def _check_evaluation_status_datalake():
     """

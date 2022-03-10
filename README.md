@@ -113,7 +113,9 @@ Links e conteúdos relevantes para o projeto
         - jogos_ids: csv &#9745;
         - jogadores: parquet, versionado pelo delta lake
         - partidas: parquet (por campeonato, por dia)
+        utilizar método append ao salvar o parquet
         - odds: parquet (por campeonato, por dia)
+        utilizar método append ao salvar o parquet
     - criar um metadata para as partidas, com base nos arquivos datalake.jogos_ids
     - um metadata para cada campeonato, dia de um registro no datalake.partidas
     - um metadata para cada campeonato, dia de um registro no datalake.odds
@@ -122,3 +124,4 @@ Links e conteúdos relevantes para o projeto
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
+- verificar função cafu.utils.etl.datalake.partidas_desatualizadas
