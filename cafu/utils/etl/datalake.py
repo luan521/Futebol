@@ -27,10 +27,6 @@ def initialize_datalake():
     
     campeonatos = campeonato_espn()
     try:
-        # criando arquivo metadata
-        metadata = {'jogos_ids':{c: {} for c in campeonatos}}
-        with open(path_datalake+'/metadata.json', 'w') as fp:
-            json.dump(metadata, fp)
 
         # criando diretórios
         os.mkdir(path_datalake+f'/jogos_ids')
@@ -46,10 +42,15 @@ def initialize_datalake():
         campeonatos = set([c.split('-')[0] for c in campeonatos])
         for c in campeonatos:
             os.mkdir(path_datalake+f'/odds/{c}')
+            
+        # criando arquivo metadata
+        metadata = {'jogos_ids':{c: {} for c in campeonatos}}
+        with open(path_datalake+'/metadata.json', 'w') as fp:
+            json.dump(metadata, fp)
         
         logging.info("SUCCESS utils.etl.datalake.initialize_datalake: Function executed successfully")
     except Exception as err:
-        logging.error("ERROR utils.etl.datalake.initialize_datalake: Unexpected error: "
+        logging.error("ERROR utils.etl.datalake.initialize_datalake: "
                       "Could not execute function")
         logging.error(err)
         

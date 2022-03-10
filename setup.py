@@ -27,7 +27,9 @@ setup(
     'console_scripts': [
         'initialize_datalake = cafu.utils.etl.datalake:initialize_datalake', 
         'update_partidas_campeonato = cafu.etl.data_lake.partidas_campeonato:update_partidas_campeonato',
-        'validate_datalake = cafu.utils.etl.validate:validate_datalake'
+        'validate_datalake = cafu.utils.etl.validate:validate_datalake',
+        'invalidate_datalake = cafu.utils.etl.validate:invalidate_datalake',
+        'campeonatos_espn = cafu.metadata.campeonatos_espn:campeonato_espn'
     ],
 },
     install_requires=install_requires,

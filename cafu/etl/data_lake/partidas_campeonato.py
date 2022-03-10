@@ -13,6 +13,53 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
+def _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, ids, excedentes, campeonato, temporada, runtime_str):
+    """
+    Método interno da biblioteca cafu.
+    Testa as condições de sucesso da função partidas_campeonato
+    """
+    
+    times = list(df['time_casa'].append(df['time_visitante']).drop_duplicates().sort_values())
+    jogos_faltantes = {}
+    for i, t in enumerate(times):
+        index_filter = df['time_casa']==t
+        times_enfrentados = list(df[index_filter]['time_visitante'].drop_duplicates().sort_values())
+        times_copy = times[:i]+times[(i+1):]
+        f = list(set(times_copy).difference(times_enfrentados))
+        if len(f) > 0:
+            jogos_faltantes[t] = f
+    
+    success = True
+    if df.shape[0] != qt_partidas_campeonato:
+        success = False
+        logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: "
+                      f"Unexpected number of lines in returned dataframe (expected amount of league matches): "
+                      f"<returned>={df.shape[0]}, <expected>={qt_partidas_campeonato}. "
+                      f"Return <min_id_campeonato>={min(ids)}, <max_id_campeonato>={max(ids)}, <excedentes>={excedentes}. "
+                      f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                      f"runtime = {runtime_str}")
+    if len(times)!=2*qt_jogos_rodada:
+        success = False
+        logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: "
+                      f"Unexpected number of teams: "
+                      f"<returned>={len(times)} <expected>={2*qt_jogos_rodada}. "
+                      f"Return <min_id_campeonato>={min(ids)}, <max_id_campeonato>={max(ids)}, <excedentes>={excedentes}. "
+                      f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                      f"runtime = {runtime_str}")
+    if len(jogos_faltantes)>0:
+        success = False
+        logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: "
+                      f"Not all returned teams faced each other: "
+                      f"<jogos_faltantes>={jogos_faltantes}. "
+                      f"Return <min_id_campeonato>={min(ids)}, <max_id_campeonato>={max(ids)}, <excedentes>={excedentes}. "
+                      f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                      f"runtime = {runtime_str}")
+    if success:
+        logging.info(f"SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. "
+                 f"Return <min_id_campeonato>={min(ids)}, <max_id_campeonato>={max(ids)}. "
+                 f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
+                 f"runtime = {runtime_str}")
+
 def partidas_campeonato(campeonato, temporada):
     """
     Busca as partidas do campeonato, no site da ESPN
@@ -29,7 +76,7 @@ def partidas_campeonato(campeonato, temporada):
 
     init = time.time()
     
-    dados_campeonato = campeonato_espn(campeonato, temporada) 
+    dados_campeonato = campeonato_espn(campeonato, temporada)
     campeonato = dados_campeonato['nome']
     id_inicial =dados_campeonato['id']
     qt_jogos_rodada = dados_campeonato['qt_jogos_rodada']
@@ -40,24 +87,23 @@ def partidas_campeonato(campeonato, temporada):
     
     try:
         data = []
-        for i in range(len(partidas)):
+        excedentes = len(partidas)%qt_jogos_rodada
+        for i in range(len(partidas)-excedentes):
             data.append([ids[i], dates[i], partidas[i]])
         df = pd.DataFrame(data, columns=['jogo_id', 'dates', 'partida']).sort_values('jogo_id')
         df.index = range(df.shape[0])
 
+        # criando coluna "rodada"
         dates = []
         for i in range(0,df.shape[0], qt_jogos_rodada):
-            median_date = df.iloc[i:i+qt_jogos_rodada].sort_values('dates')['dates'][i+int(qt_jogos_rodada/2)]
+            median_date = df.iloc[i:i+qt_jogos_rodada]['dates'].median()
             dates_0 = [median_date for i in range(qt_jogos_rodada)]
             dates = dates+dates_0
-
-        df['median_dates'] = dates
-
+        df['median_dates'] = dates[:df.shape[0]]
         df = df.sort_values(['median_dates'])
         rodadas = [i for i in range(1,(qt_jogos_rodada*2-1)*2+1) for j in range(qt_jogos_rodada)]
-        df['rodada'] = rodadas
+        df['rodada'] = rodadas[:df.shape[0]]
         df = df.drop('median_dates',axis=1)
-
         df = df.sort_values(['jogo_id'])
 
         df[['time_casa','time_visitante']] = pd.DataFrame(df['partida'].values.tolist(), index= df.index)
@@ -65,15 +111,15 @@ def partidas_campeonato(campeonato, temporada):
         
         end = time.time()
         runtime_str = convert_str_var_time(init, end)
-        logging.info(f"SUCCESS etl.data_lake.partidas_campeonato.partidas_campeonato: Function executed successfully. "
-                     f"<campeonato>={campeonato}, <temporada>={temporada}, <qt_jogos_rodada>={qt_jogos_rodada}. "
-                     f"runtime = {runtime_str}")
+        _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, ids, excedentes, campeonato, temporada, runtime_str)
+        
         return df
     except Exception as err:
         end = time.time()
         runtime_str = convert_str_var_time(init, end)
         logging.error(f"ERROR etl.data_lake.partidas_campeonato.partidas_campeonato: Unexpected error: "
-                      f"Could not execute function. <campeonato>={campeonato}, <temporada>={temporada}, "
+                      f"Could not execute function. Return <min_id_campeonato>={min(ids)}, "
+                      f"<max_id_campeonato>={max(ids)}. <campeonato>={campeonato}, <temporada>={temporada}, "
                       f"<qt_jogos_rodada>={qt_jogos_rodada}. runtime = {runtime_str}")
         logging.error(err)
         return
