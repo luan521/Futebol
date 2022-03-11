@@ -124,7 +124,7 @@ def partidas_campeonato(campeonato, temporada):
         logging.error(err)
         return
     
-def update_partidas_campeonato():
+def update_jogos_ids():
     """
     Atualiza datalake.jogos_ids
     """
