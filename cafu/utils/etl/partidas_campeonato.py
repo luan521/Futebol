@@ -30,14 +30,10 @@ def dados_partida(id_, max_iterate=50):
         if (campeonato is not None) and (times is not None) and (date is not None):
             return True, [campeonato, times, date]
         else:
-            return False, None
+            return False, (None, None, None)
     success, response = loop_try(_try_dados_partida, max_iterate, time_sleep=1)
     
-    if success:
-        campeonato, times, date = response[0], response[1], response[2]
-        return campeonato, times, date
-    else:
-        return
+    return response
 
 def id_left_right(id_inicial, campeonato_fix, qt_partidas_campeonato, left=True, partidas=None, dates=None, ids=None):
     """
@@ -91,8 +87,7 @@ def id_left_right(id_inicial, campeonato_fix, qt_partidas_campeonato, left=True,
                 if len(set(partidas)) < len(partidas):
                     break
                 barra_progresso.update(1)
-
-        id_ = id_ - fator
+        
         partidas = partidas[:-1]
         dates = dates[:-1]
         ids = ids[:-1]

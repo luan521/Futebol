@@ -119,9 +119,10 @@ Links e conteúdos relevantes para o projeto
     - criar um metadata para as partidas, com base nos arquivos datalake.jogos_ids
     - um metadata para cada campeonato, dia de um registro no datalake.partidas
     - um metadata para cada campeonato, dia de um registro no datalake.odds
+    - função update_partidas: notebooks/requisicao/sketch/partida-Copy1.ipynb
 
 ## Pendencies
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
-- verificar função cafu.utils.etl.datalake.partidas_desatualizadas
+- spark não esta funcionando

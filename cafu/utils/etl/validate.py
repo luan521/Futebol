@@ -40,14 +40,13 @@ def _validate_invalidate_datalake(success_failed, args):
             except:
                 logging.error(f"ERROR utils.etl.validate.{function}: "
                               f"{c}.{t} doesn't exist in metadata['jogos_ids']")
-    
-    def _update_all():
-        _update_jogos_ids()
         
     if success_failed=='success':
         function = 'validate_datalake'
+        complement_help = 'Valida'
     elif success_failed=='failed':
         function = 'invalidate_datalake'
+        complement_help = 'Invalida'
             
     try:
         r = open(path_metadata, 'r')
@@ -57,10 +56,20 @@ def _validate_invalidate_datalake(success_failed, args):
                       "Could not import datalake/metadata.json")
         logging.error(err)
         return
+    
+    help_ = f"""
+             {complement_help} as atualizações no arquivo datalake/metadata.json. Quando todas as chaves
+             do dicionário são passadas, a atualização sempre ocorre, caso contrário a atualização
+             ocorre apenas no status "evaluation"
+
+             Args:
+                 option1: Chaves do dicionário datalake/metadata.json, que serão verificadas 
+                 option2: Quando nenhum argumento é passado, todas as atualizações são verificadas
+             """
 
     try:
         if len(args)==0:
-            _update_all()
+            print(help_)
         elif args[0]=='jogos_ids':
             _update_jogos_ids()
     except Exception as err:
