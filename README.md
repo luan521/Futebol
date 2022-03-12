@@ -112,13 +112,10 @@ Links e conteúdos relevantes para o projeto
         - metadata: json &#9745;
         - jogos_ids: csv &#9745;
         - jogadores: parquet, versionado pelo delta lake
-        - partidas: parquet (por campeonato, por dia)
+        - partidas: parquet (por campeonato.temporada)
         utilizar método append ao salvar o parquet
-        - odds: parquet (por campeonato, por dia)
+        - odds: parquet (por campeonato.temporada.dia)
         utilizar método append ao salvar o parquet
-    - criar um metadata para as partidas, com base nos arquivos datalake.jogos_ids
-    - um metadata para cada campeonato, dia de um registro no datalake.partidas
-    - um metadata para cada campeonato, dia de um registro no datalake.odds
     - função update_partidas: notebooks/requisicao/sketch/partida-Copy1.ipynb
 
 ## Pendencies
@@ -126,3 +123,4 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - spark não esta funcionando
+- rever datalake.metadata["partidas"], a estrutura por temporada não pode ser inicializada na função initialize_datalake
