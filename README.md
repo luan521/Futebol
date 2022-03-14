@@ -122,5 +122,4 @@ Links e conteúdos relevantes para o projeto
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
-- spark não esta funcionando
 - rever datalake.metadata["partidas"], a estrutura por temporada não pode ser inicializada na função initialize_datalake
