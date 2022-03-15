@@ -1,2 +1,2 @@
-from .partidas_campeonato import partidas_campeonato, update_jogos_ids
+from .partidas_campeonato import partidas_campeonato, update_jogos_ids, update_partidas
 from .jogadores_partida import find_id_jogadores

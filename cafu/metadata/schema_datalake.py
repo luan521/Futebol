@@ -1,5 +1,6 @@
 from pyspark.sql.types import (StructType, StructField, 
-                               StringType, DateType, IntegerType, FloatType)
+                               StringType, DateType, TimestampType, 
+                               IntegerType, FloatType)
 from cafu.metadata.paths import path
 path_datalake = path('datalake')
 
@@ -12,7 +13,6 @@ schema_datalake = {
                                         StructField("formacao_time_casa",StringType(),True), 
                                         StructField("formacao_time_visitante", StringType(), True), 
                                         StructField("jogo_id", IntegerType(), True), 
-                                        StructField("rodada", IntegerType(), True),
                                         StructField("time_casa", StringType(), True), 
                                         StructField("time_casa_cartoes_amarelos", IntegerType(), True),
                                         StructField("time_casa_cartoes_vermelhos", IntegerType(), True), 
@@ -34,7 +34,8 @@ schema_datalake = {
                                         StructField("time_visitante_faltas_cometidas", IntegerType(), True),
                                         StructField("time_visitante_gols_feitos", IntegerType(), True),
                                         StructField("time_visitante_impedimentos", IntegerType(), True),
-                                        StructField("time_visitante_posse", FloatType(), True)
+                                        StructField("time_visitante_posse", FloatType(), True),
+                                        StructField("date_update", TimestampType(), True)
                                       ]),
                    'partidas_jogadores_minutagens': StructType([ 
                                                         StructField("camisa", IntegerType(), True),
@@ -42,8 +43,29 @@ schema_datalake = {
                                                         StructField("inicio_jogando", IntegerType(), True),
                                                         StructField("nome", StringType(), True),
                                                         StructField("casa_visitante", StringType(), True),
-                                                        StructField("jogo_id", IntegerType(), True)
-                                                      ])
+                                                        StructField("jogo_id", IntegerType(), True),
+                                                        StructField("date_update", TimestampType(), True)
+                                                      ]),
+                   'partidas_gols': StructType([ 
+                             StructField("jogador", StringType(), True),
+                             StructField("casa_visitante", StringType(), True),
+                             StructField("jogo_id", IntegerType(), True),
+                             StructField("minuto_gol", IntegerType(), True),
+                             StructField("date_update", TimestampType(), True)
+                           ]),
+                   'partidas_descricoes': StructType([ 
+                             StructField("descricao", StringType(), True),
+                             StructField("tempo", IntegerType(), True),
+                             StructField("jogo_id", IntegerType(), True),
+                             StructField("date_update", TimestampType(), True)
+                           ]),
+                   'partidas_canceladas': StructType([ 
+                                             StructField("jogo_id",IntegerType(),True), 
+                                             StructField("campeonato",StringType(),True), 
+                                             StructField("campeonato_metadata",StringType(),True), 
+                                             StructField("temporada_metadata",StringType(),True), 
+                                             StructField("date_update", TimestampType(), True)
+                                           ])
                   }
 
 f"""
@@ -56,6 +78,8 @@ Local paths of databases in <schema_datalake>:
 - partidas_gols: {path_datalake}/partidas/gols
 
 - partidas_jogadores_minutagens: {path_datalake}/partidas/jogadores_minutagens
+
+- partidas_canceladas: {path_datalake}/partidas/partidas_canceladas
 """
 
 def get_schema(database):

@@ -38,6 +38,7 @@ def initialize_datalake():
         os.mkdir(path_datalake+f'/partidas/descricoes')
         os.mkdir(path_datalake+f'/partidas/gols')
         os.mkdir(path_datalake+f'/partidas/jogadores_minutagens')
+        os.mkdir(path_datalake+f'/partidas/partidas_canceladas')
         os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
         campeonatos = list(campeonatos.keys())
@@ -58,8 +59,24 @@ def initialize_datalake():
         spark = get_spark(1)
         schema = get_schema('partidas_resumo')
         df_resumo = spark.createDataFrame(data=[], schema=schema)
+        schema = get_schema('partidas_jogadores_minutagens')
+        df_jogadores = spark.createDataFrame(data=[], schema=schema)
+        schema = get_schema('partidas_gols')
+        df_gols = spark.createDataFrame(data=[], schema=schema)
+        schema = get_schema('partidas_descricoes')
+        df_minuto_a_minuto = spark.createDataFrame(data=[], schema=schema)
         for c in campeonatos:
-            df_resumo.write.parquet(path_datalake+f'/partidas/resumo/{c}/df_resumo')
+            df_resumo.write.parquet(path_datalake+
+                                    f'/partidas/resumo/{c}/df_resumo')
+            df_jogadores.write.parquet(path_datalake+
+                                       f'/partidas/jogadores_minutagens/{c}/df_jogadores')
+            df_gols.write.parquet(path_datalake+
+                                  f'/partidas/gols/{c}/df_gols')
+            df_minuto_a_minuto.write.parquet(path_datalake+
+                                             f'/partidas/descricoes/{c}/df_minuto_a_minuto')
+        schema = get_schema('partidas_canceladas')
+        df_partidas_canceladas = spark.createDataFrame(data=[], schema=schema)
+        df_partidas_canceladas.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas')
             
         # criando arquivo metadata
         campeonatos = campeonato_espn()
@@ -129,10 +146,12 @@ def partidas_desatualizadas():
         df = pd.read_csv(path_datalake+f'/jogos_ids/{c[0]}/{c[1]}.csv')
         jogos_ocorridos = df[df['dates']<str(today)]['jogo_id']
         jogos_atualizados = []
-        if len(metadata_datalake['partidas'][c[0]])>0:
+        try:
             for j in metadata_datalake['partidas'][c[0]][c[1]]:
-                if metadata_datalake['partidas'][c[0]][c[1]][j]['status'] != 'failed':
-                    jogos_atualizados.append(j)
+                if metadata_datalake['partidas'][c[0]][c[1]][str(j)]['status'] != 'failed':
+                    jogos_atualizados.append(int(j))
+        except:
+            pass
 
         jogos_desatualizados_c =  list(set(jogos_ocorridos).difference(jogos_atualizados))
         if len(jogos_desatualizados_c)>0:

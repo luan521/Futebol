@@ -1,10 +1,18 @@
 import pandas as pd
+import pyspark.sql.functions as F
 import json
+from tqdm import tqdm
 import time
+from datetime import datetime
+from cafu.utils.etl.datalake import partidas_desatualizadas
+from cafu.utils import get_spark
 from cafu.utils.etl.partidas_campeonato import id_left_right
 from cafu.utils.string import convert_str_var_time
 from cafu.metadata.campeonatos_espn import campeonato_espn
+from cafu.metadata import get_schema
+from cafu.queries.partida import Partida
 from cafu.metadata.paths import path
+path_datalake = path('datalake')
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -129,7 +137,7 @@ def update_jogos_ids():
     Atualiza datalake.jogos_ids
     """
     
-    logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+    logging.info("INFO etl.data_lake.partidas_campeonato.update_jogos_ids: "
                  "Function started")
     
     # buscando campeonatos definidos no projeto
@@ -172,3 +180,219 @@ def update_jogos_ids():
     if len(campeonatos)==0:    
         logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
                      "All leagues already up to date.")
+        
+def update_partidas(spark):
+    """
+    Atualiza datalake.partidas
+    
+    Args:
+        spark: (spark session) 
+    """
+    
+    logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas: "
+                 "Function started")
+    
+    partidas = partidas_desatualizadas()
+    for c in partidas:
+        for t in partidas[c]:
+            init = time.time()
+            for jogo_id in tqdm(partidas[c][t]):
+                req = Partida(jogo_id, check_status = False)
+                try:
+                    # dataframe df_resumo
+                    campeonato = req.campeonato()
+                    date = req.day()
+                    time_casa, time_visitante = req.nomes_times()
+                    formacao_time_casa, formacao_time_visitante = req.formacao()
+                    time_casa_gols_feitos, time_visitante_gols_feitos = req.placar()
+                    time_casa_posse, time_visitante_posse = req.posse()
+                    chutes_fora_nogol = req.chutes_fora_nogol()
+                    time_casa_faltas_cometidas, time_visitante_faltas_cometidas = req.faltas()
+                    time_casa_cartoes_amarelos, time_visitante_cartoes_amarelos = req.cartoes_amarelos()
+                    time_casa_cartoes_vermelhos, time_visitante_cartoes_vermelhos = req.cartoes_vermelhos()
+                    time_casa_impedimentos, time_visitante_impedimentos = req.impedimentos()
+                    time_casa_escanteios, time_visitante_escanteios = req.escanteios()
+                    time_casa_defesas, time_visitante_defesas = req.defesas()
+
+                    data = [
+                            {
+                             'jogo_id': jogo_id,   
+                             'campeonato': campeonato,
+                             'campeonato_metadata': c,
+                             'temporada_metadata': t, 
+                             'date': date,
+                             'time_casa': time_casa,
+                             'time_visitante': time_visitante,
+                             'formacao_time_casa': formacao_time_casa,
+                             'formacao_time_visitante': formacao_time_visitante,
+                             'time_casa_gols_feitos': time_casa_gols_feitos,
+                             'time_visitante_gols_feitos': time_visitante_gols_feitos,
+                             'time_casa_posse': time_casa_posse,
+                             'time_visitante_posse': time_visitante_posse,
+                             'time_casa_chutes_fora': chutes_fora_nogol[0][0],
+                             'time_casa_chutes_nogol': chutes_fora_nogol[0][1],
+                             'time_visitante_chutes_fora': chutes_fora_nogol[1][0],
+                             'time_visitante_chutes_nogol': chutes_fora_nogol[1][1],
+                             'time_casa_faltas_cometidas': time_casa_faltas_cometidas,
+                             'time_visitante_faltas_cometidas': time_visitante_faltas_cometidas,
+                             'time_casa_cartoes_amarelos': time_casa_cartoes_amarelos,
+                             'time_visitante_cartoes_amarelos': time_visitante_cartoes_amarelos,
+                             'time_casa_cartoes_vermelhos': time_casa_cartoes_vermelhos,
+                             'time_visitante_cartoes_vermelhos': time_visitante_cartoes_vermelhos,
+                             'time_casa_impedimentos': time_casa_impedimentos,
+                             'time_visitante_impedimentos': time_visitante_impedimentos,   
+                             'time_casa_escanteios': time_casa_escanteios,   
+                             'time_visitante_escanteios': time_visitante_escanteios,   
+                             'time_casa_defesas': time_casa_defesas,   
+                             'time_visitante_defesas': time_visitante_defesas,   
+                             'date_update':  datetime.now()
+                            }
+                           ]
+
+                    schema = get_schema('partidas_resumo')
+                    df_resumo = spark.createDataFrame(data, schema=schema)
+                    
+                    # dataframe df_jogadores
+                    jogadores = req.jogadores()
+                    jogadores_casa = (
+                                         spark.createDataFrame(jogadores[0])
+                                         .withColumn('casa_visitante', F.lit('casa'))
+                                         .withColumn('jogo_id', F.lit(jogo_id))
+                                     )
+                    jogadores_visitante = (
+                                              spark.createDataFrame(jogadores[1])
+                                              .withColumn('casa_visitante', F.lit('visitante'))
+                                              .withColumn('jogo_id', F.lit(jogo_id))
+                                          )
+                    df_jogadores = (
+                                       jogadores_casa
+                                       .unionByName(jogadores_visitante)
+                                       .withColumn('date_update', F.lit(datetime.now()))
+                                   )
+
+                    schema = get_schema('partidas_jogadores_minutagens')
+                    df_jogadores = spark.createDataFrame(df_jogadores.collect(), schema=schema)
+                    
+                    # dataframe df_gols
+                    gols = req.gols()
+                    if gols[0] is not None:
+                        gols_casa = (
+                                         spark.createDataFrame(gols[0])
+                                         .withColumn('casa_visitante', F.lit('casa'))
+                                         .withColumn('jogo_id', F.lit(jogo_id))
+                                    )
+                    if gols[1] is not None:
+                        gols_visitante = (
+                                              spark.createDataFrame(gols[1])
+                                              .withColumn('casa_visitante', F.lit('visitante'))
+                                              .withColumn('jogo_id', F.lit(jogo_id))
+                                         )
+                    if (gols[0] is not None) and (gols[1] is not None):
+                        df_gols = (
+                                      gols_casa
+                                      .unionByName(gols_visitante)
+                                      .withColumn('minuto_gol', F.explode('minutos_gols'))
+                                      .drop('minutos_gols')
+                                      .withColumn('date_update', F.lit(datetime.now()))
+                                  )
+                    elif gols[0] is not None:
+                        df_gols = (
+                                      gols_casa
+                                      .withColumn('minuto_gol', F.explode('minutos_gols'))
+                                      .drop('minutos_gols')
+                                      .withColumn('date_update', F.lit(datetime.now()))
+                                  )
+                    else:
+                        df_gols = (
+                                      gols_visitante
+                                      .withColumn('minuto_gol', F.explode('minutos_gols'))
+                                      .drop('minutos_gols')
+                                      .withColumn('date_update', F.lit(datetime.now()))
+                                  )
+
+                    if (gols[0] is not None) or (gols[1] is not None):
+                        schema = get_schema('partidas_gols')
+                        df_gols = spark.createDataFrame(df_gols.collect(), schema=schema)
+                    else:
+                        df_gols = None
+                    
+                    # dataframe df_minuto_a_minuto
+                    minuto_a_minuto = req.minuto_a_minuto()
+                    df_minuto_a_minuto = (
+                                             spark.createDataFrame(minuto_a_minuto)
+                                             .withColumnRenamed('descrição', 'descricao')
+                                             .withColumn('jogo_id', F.lit(jogo_id))
+                                             .withColumn('date_update', F.lit(datetime.now()))
+                                         )
+
+                    schema = get_schema('partidas_descricoes')
+                    df_minuto_a_minuto = spark.createDataFrame(df_minuto_a_minuto.collect(), schema=schema)
+                    
+                    status = 'Finalizado'
+                except Exception as err:
+                    # checkando se o erro foi ocasionando 
+                    # por conta do cancelamento da partida
+                    req = Partida(jogo_id)
+                    status = req.status
+                    if status=='Cancelado':
+                        data = [{
+                                 'jogo_id': jogo_id,   
+                                 'campeonato': campeonato,
+                                 'campeonato_metadata': c,
+                                 'temporada_metadata': t,
+                                 'date_update': datetime.now()
+                               }]
+                        schema = get_schema('partidas_canceladas')
+                        df_cancelada = spark.createDataFrame(data, schema = schema)
+                        df_cancelada.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas')
+                        logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas: "
+                                      f"Canceled match, info updated in "
+                                      f"{path_datalake}/partidas/partidas_canceladas/df_canceladas. "
+                                      f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    else:
+                        logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                      f"Unexpected error: Could not execute update "
+                                      f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                        logging.error(err)
+                        return
+                if status == 'Finalizado':
+                    try:
+                        df_resumo.write.parquet(path_datalake+
+                                                f'/partidas/resumo/{c}/df_resumo', 
+                                                mode='append')
+                        df_jogadores.write.parquet(path_datalake+
+                                                   f'/partidas/jogadores_minutagens/{c}/df_jogadores',
+                                                   mode='append')
+                        if df_gols is not None:
+                            df_gols.write.parquet(path_datalake+
+                                                  f'/partidas/gols/{c}/df_gols', 
+                                                  mode='append')
+                        df_minuto_a_minuto.write.parquet(path_datalake+
+                                                         f'/partidas/descricoes/{c}/df_minuto_a_minuto', 
+                                                         mode='append')
+                    except Exception as err:
+                        logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                      f"Unexpected error: Could not execute append data. "
+                                      f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                        logging.error(err)
+                        return
+                # atualizando datalake/metadata.json
+                r = open(path_datalake+'/metadata.json')
+                metadata = json.load(r) 
+                try:
+                    metadata['partidas'][c][t][jogo_id] = {
+                                                           'status': 'evaluation', 
+                                                           'status_partida': status
+                                                          }
+                except:
+                    metadata['partidas'][c][t] = {}
+                    metadata['partidas'][c][t][jogo_id] = {
+                                                           'status': 'evaluation', 
+                                                           'status_partida': status
+                                                          }
+                with open(path_datalake+'/metadata.json', 'w') as fp:
+                    json.dump(metadata, fp)
+            end = time.time()
+            runtime_str = convert_str_var_time(init, end)
+            logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas: "
+                         f"Update league {c} | {t}. runtime = {runtime_str}")
