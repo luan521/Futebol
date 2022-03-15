@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import json
 from datetime import date
+from cafu.utils.spark_delta import get_spark
+from cafu.metadata.schema_datalake import get_schema
 from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.metadata.paths import path
@@ -32,26 +34,37 @@ def initialize_datalake():
         # criando diretórios
         os.mkdir(path_datalake+f'/jogos_ids')
         os.mkdir(path_datalake+f'/partidas')
-        os.mkdir(path_datalake+f'/descricoes_partidas')
+        os.mkdir(path_datalake+f'/partidas/resumo')
+        os.mkdir(path_datalake+f'/partidas/descricoes')
+        os.mkdir(path_datalake+f'/partidas/gols')
+        os.mkdir(path_datalake+f'/partidas/jogadores_minutagens')
         os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
         campeonatos = list(campeonatos.keys())
         for c in campeonatos:
             os.mkdir(path_datalake+f'/jogos_ids/{c}')
-            os.mkdir(path_datalake+f'/partidas/{c}')
+            os.mkdir(path_datalake+f'/partidas/resumo/{c}')
+            os.mkdir(path_datalake+f'/partidas/descricoes/{c}')
+            os.mkdir(path_datalake+f'/partidas/gols/{c}')
+            os.mkdir(path_datalake+f'/partidas/jogadores_minutagens/{c}')
         campeonatos = campeonato_dafabet()
         campeonatos = list(campeonatos.keys())
         campeonatos = set([c.split('-')[0] for c in campeonatos])
         for c in campeonatos:
             os.mkdir(path_datalake+f'/odds/{c}')
             
+        # criando spark dataframes bases
+        campeonatos = campeonato_espn()
+        spark = get_spark(1)
+        schema = get_schema('partidas_resumo')
+        df_resumo = spark.createDataFrame(data=[], schema=schema)
+        for c in campeonatos:
+            df_resumo.write.parquet(path_datalake+f'/partidas/resumo/{c}/df_resumo')
+            
         # criando arquivo metadata
         campeonatos = campeonato_espn()
         metadata = {'jogos_ids':{c: {} for c in campeonatos}, 
                     'partidas': {c: {} for c in campeonatos}}
-        for c in campeonatos:
-            for t in campeonatos[c]:
-                metadata['partidas'][c][t] = {}
         with open(path_datalake+'/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
         
@@ -116,9 +129,10 @@ def partidas_desatualizadas():
         df = pd.read_csv(path_datalake+f'/jogos_ids/{c[0]}/{c[1]}.csv')
         jogos_ocorridos = df[df['dates']<str(today)]['jogo_id']
         jogos_atualizados = []
-        for j in metadata_datalake['partidas'][c[0]][c[1]]:
-            if metadata_datalake['partidas'][c[0]][c[1]][j]['status'] != 'failed':
-                jogos_atualizados.append(j)
+        if len(metadata_datalake['partidas'][c[0]])>0:
+            for j in metadata_datalake['partidas'][c[0]][c[1]]:
+                if metadata_datalake['partidas'][c[0]][c[1]][j]['status'] != 'failed':
+                    jogos_atualizados.append(j)
 
         jogos_desatualizados_c =  list(set(jogos_ocorridos).difference(jogos_atualizados))
         if len(jogos_desatualizados_c)>0:
