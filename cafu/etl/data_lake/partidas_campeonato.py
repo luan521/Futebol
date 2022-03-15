@@ -302,7 +302,7 @@ def update_partidas(spark):
                                       .drop('minutos_gols')
                                       .withColumn('date_update', F.lit(datetime.now()))
                                   )
-                    else:
+                    elif gols[1] is not None:
                         df_gols = (
                                       gols_visitante
                                       .withColumn('minuto_gol', F.explode('minutos_gols'))

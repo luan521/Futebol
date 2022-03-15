@@ -29,6 +29,8 @@ def get_spark(memory, delta = False):
         
         .getOrCreate()
     )
+    
+    spark.sparkContext.setLogLevel("ERROR")
 
     if delta:
         from delta.tables import DeltaTable
