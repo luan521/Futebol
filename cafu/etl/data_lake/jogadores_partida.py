@@ -1,8 +1,12 @@
 import re
 import time
+from datetime import datetime
+from tqdm import tqdm
 from cafu.utils import WebdriverChrome
+from cafu.utils.etl.datalake import jogos_ids_jogadores_desatualizados
 from cafu.utils.string import convert_str_var_time
 from cafu.metadata.paths import path
+from cafu.queries.jogador import Bio
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -59,3 +63,80 @@ def find_id_jogadores(jogo_id):
                       f"{len(ids_jogadores)} players were found. <jogo_id>={jogo_id}. runtime = {runtime_str}")
         return
     return ids_jogadores
+
+def update_jogadores(spark):
+    """
+    Atualiza datalake.jogadores
+    
+    Args:
+        spark: (spark session) 
+    """
+    
+    logging.info("INFO etl.data_lake.jogadores_partida.update_jogadores: "
+                 "Function started")
+    
+    partidas = jogos_ids_jogadores_desatualizados()
+    if len(partidas)==0:
+        logging.info("INFO etl.data_lake.jogadores_partida.update_jogadores: "
+                     "Already updated.")
+    for c in partidas:
+        for t in partidas[c]:
+            init = time.time()
+            for jogo_id in tqdm(partidas[c][t]):
+                ids_jogadores = find_id_jogadores(jogo_id)
+                for id_ in ids_jogadores:
+                    jogador_id = f"{id_['id_part1']}/{id_['id_part2']}"
+                    query = Bio(jogador_id)
+                    
+                    try:
+                        time_temporadas = query.time(1)
+                        time = time_temporadas[0]
+                        qt_temporadas = int(time_temporadas[1].replace(' TEMPORADA', ''))
+                    except Exception as err:
+                        time = None
+                        qt_temporadas = None
+                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                                      f"Info (time, temporadas) with unexpected format. <jogador_id>={jogador_id}")
+                        logging.error(err)
+                    posicao = query.posicao()
+                    try:
+                        altura = float(query.altura().replace(' m', ''))
+                    except Exception as err:
+                        altura = None
+                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                                      f"Info (altura) with unexpected format. <jogador_id>={jogador_id}")
+                        logging.error(err)
+                    try:
+                        massa = float(query.massa().replace(' kg', ''))
+                    except Exception as err:
+                        massa = None
+                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                                      f"Info (massa) with unexpected format. <jogador_id>={jogador_id}")
+                        logging.error(err)
+                    data_nascimento = query.data_nascimento()
+                    try:
+                        data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y').date()
+                    except Exception as err:
+                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                                      f"Info (data_nascimento) with unexpected format. <jogador_id>={jogador_id}")
+                        logging.error(err)
+                    nacionalidade = query.nacionalidade()
+
+                    massa = None
+                    qt_temporadas = None
+                    data = [
+                            {
+                             'jogador_id': jogador_id,
+                             'time': time,
+                             'qt_temporadas': qt_temporadas,
+                             'posicao': posicao,
+                             'altura': altura,
+                             'massa': massa,
+                             'data_nascimento': data_nascimento,
+                             'nacionalidade': nacionalidade,
+                             'date_update': datetime.now()
+                            }
+                           ]
+
+                    query.web.close()
+                

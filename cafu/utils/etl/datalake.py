@@ -77,11 +77,17 @@ def initialize_datalake():
         schema = get_schema('partidas_canceladas')
         df_partidas_canceladas = spark.createDataFrame(data=[], schema=schema)
         df_partidas_canceladas.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas')
+        schema = get_schema('jogadores')
+        df_jogadores = spark.createDataFrame(data=[], schema=schema)
+        df_jogadores.write.parquet(path_datalake+'/jogadores/df_jogadores')
             
         # criando arquivo metadata
         campeonatos = campeonato_espn()
-        metadata = {'jogos_ids':{c: {} for c in campeonatos}, 
-                    'partidas': {c: {} for c in campeonatos}}
+        metadata = {
+                    'jogos_ids':{c: {} for c in campeonatos}, 
+                    'partidas': {c: {} for c in campeonatos},
+                    'jogadores': {c: {} for c in campeonatos}
+                   }
         with open(path_datalake+'/metadata.json', 'w') as fp:
             json.dump(metadata, fp)
         
@@ -160,6 +166,45 @@ def partidas_desatualizadas():
             except:
                 jogos_desatualizados[c[0]] = {}
                 jogos_desatualizados[c[0]][c[1]] = jogos_desatualizados_c
+                
+    return jogos_desatualizados
+
+def jogos_ids_jogadores_desatualizados():
+    """
+    Análisa datalake.metadata['partidas'] e datalake.metadata['jogadores'], para 
+    retornar os jogos ids dos jogos em que os jogadores não foram buscados para
+    atualizar datalake.jogadores
+        
+    Returns:
+        dict: campeonato, temporada - lista dos jogos_ids
+    """
+
+    r = open(path_datalake+'/metadata.json', 'r')
+    metadata_datalake = json.load(r)
+
+    jogos_desatualizados = {}
+    for c in metadata_datalake['partidas']:
+        for t in metadata_datalake['partidas'][c]:
+            try:
+                metadata_datalake['jogadores'][c][t]
+                temporada_definida = True
+            except:
+                temporada_definida = False
+            jogos_desatualizados_ct = []
+            jogos_ocorridos = [j for j in metadata_datalake['partidas'][c][t] 
+                                       if metadata_datalake['partidas'][c][t][j] != 'failed']
+            if temporada_definida:
+                jogos_atualizados = [j for j in metadata_datalake['jogadores'][c][t] 
+                                             if metadata_datalake['jogadores'][c][t][j] != 'failed']
+                jogos_desatualizados_ct = list(set(jogos_ocorridos).difference(jogos_atualizados))
+            else:
+                jogos_desatualizados_ct = jogos_ocorridos
+            if len(jogos_desatualizados_ct)>0:
+                try:
+                    jogos_desatualizados[c][t] = jogos_desatualizados_ct
+                except:
+                    jogos_desatualizados[c] = {}
+                    jogos_desatualizados[c][t] = jogos_desatualizados_ct
                 
     return jogos_desatualizados
         

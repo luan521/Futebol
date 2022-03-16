@@ -65,7 +65,18 @@ schema_datalake = {
                                              StructField("campeonato_metadata",StringType(),True), 
                                              StructField("temporada_metadata",StringType(),True), 
                                              StructField("date_update", TimestampType(), True)
-                                           ])
+                                           ]),
+                   'jogadores': StructType([ 
+                                     StructField("jogador_id",StringType(),True), 
+                                     StructField("time",StringType(),True), 
+                                     StructField("qt_temporadas",IntegerType(),True), 
+                                     StructField("posicao",StringType(),True), 
+                                     StructField("altura",FloatType(),True), 
+                                     StructField("massa",FloatType(),True), 
+                                     StructField("data_nascimento",DateType(),True), 
+                                     StructField("nacionalidade",StringType(),True), 
+                                     StructField("date_update", TimestampType(), True)
+                                          ])
                   }
 
 f"""

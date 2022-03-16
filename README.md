@@ -2,9 +2,11 @@
 Serviço para aposta automática em partidas de futebol, no site [Dafabet](https://www.dafabet.com/pt/dfgoal/sports/240-football)
 
 1. Coleta de dados &#9745;
-2. ETL (Data Lake e banco de dados)
+2. ETL 
+    - Data Lake
+    - banco de dados
 3. Cluster Analysis
-4. Streaming / Dashboard
+4. Streaming | Dashboard
 5. Modelagem
 6. Aposta automática
 
@@ -122,4 +124,3 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
-- retirar divisão por campeonato em datalake/partidas

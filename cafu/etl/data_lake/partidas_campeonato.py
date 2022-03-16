@@ -193,11 +193,15 @@ def update_partidas(spark):
                  "Function started")
     
     partidas = partidas_desatualizadas()
+    if len(partidas)==0:
+        logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas: "
+                     "Already updated.")
     for c in partidas:
         for t in partidas[c]:
             init = time.time()
             for jogo_id in tqdm(partidas[c][t]):
                 req = Partida(jogo_id, check_status = False)
+                failed = []
                 try:
                     # dataframe df_resumo
                     campeonato = req.campeonato()
@@ -251,7 +255,13 @@ def update_partidas(spark):
 
                     schema = get_schema('partidas_resumo')
                     df_resumo = spark.createDataFrame(data, schema=schema)
-                    
+                except Exception as err:
+                    logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                  f"Could not create dataframe df_resumo. "
+                                  f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    logging.error(err)
+                    failed.append('df_resumo')
+                try:
                     # dataframe df_jogadores
                     jogadores = req.jogadores()
                     jogadores_casa = (
@@ -272,7 +282,13 @@ def update_partidas(spark):
 
                     schema = get_schema('partidas_jogadores_minutagens')
                     df_jogadores = spark.createDataFrame(df_jogadores.collect(), schema=schema)
-                    
+                except Exception as err:
+                    logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                  f"Could not create dataframe df_jogadores. "
+                                  f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    logging.error(err)
+                    failed.append('df_jogadores')
+                try:
                     # dataframe df_gols
                     gols = req.gols()
                     if gols[0] is not None:
@@ -315,7 +331,13 @@ def update_partidas(spark):
                         df_gols = spark.createDataFrame(df_gols.collect(), schema=schema)
                     else:
                         df_gols = None
-                    
+                except Exception as err:
+                    logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                  f"Could not create dataframe df_gols. "
+                                  f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    logging.error(err)
+                    failed.append('df_gols')
+                try:
                     # dataframe df_minuto_a_minuto
                     minuto_a_minuto = req.minuto_a_minuto()
                     df_minuto_a_minuto = (
@@ -327,9 +349,14 @@ def update_partidas(spark):
 
                     schema = get_schema('partidas_descricoes')
                     df_minuto_a_minuto = spark.createDataFrame(df_minuto_a_minuto.collect(), schema=schema)
-                    
-                    status = 'Finalizado'
                 except Exception as err:
+                    logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                  f"Could not create dataframe df_minuto_a_minuto. "
+                                  f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    logging.error(err)
+                    failed.append('df_minuto_a_minuto')
+                status = 'Finalizado'
+                if len(failed)>0:
                     # checkando se o erro foi ocasionando 
                     # por conta do cancelamento da partida
                     req = Partida(jogo_id)
@@ -349,46 +376,44 @@ def update_partidas(spark):
                                       f"Canceled match, info updated in "
                                       f"{path_datalake}/partidas/partidas_canceladas/df_canceladas. "
                                       f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
-                    else:
-                        logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
-                                      f"Unexpected error: Could not execute update "
-                                      f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
-                        logging.error(err)
-                        return
-                if status == 'Finalizado':
-                    try:
+                try:
+                    if 'df_resumo' not in failed:
                         df_resumo.write.parquet(path_datalake+
                                                 f'/partidas/resumo/{c}/df_resumo', 
                                                 mode='append')
+                    if 'df_jogadores' not in failed:
                         df_jogadores.write.parquet(path_datalake+
                                                    f'/partidas/jogadores_minutagens/{c}/df_jogadores',
                                                    mode='append')
-                        if df_gols is not None:
-                            df_gols.write.parquet(path_datalake+
-                                                  f'/partidas/gols/{c}/df_gols', 
-                                                  mode='append')
+                    if ('df_gols' not in failed) and (df_gols is not None):
+                        df_gols.write.parquet(path_datalake+
+                                              f'/partidas/gols/{c}/df_gols', 
+                                              mode='append')
+                    if 'df_minuto_a_minuto' not in failed:
                         df_minuto_a_minuto.write.parquet(path_datalake+
                                                          f'/partidas/descricoes/{c}/df_minuto_a_minuto', 
                                                          mode='append')
-                    except Exception as err:
-                        logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
-                                      f"Unexpected error: Could not execute append data. "
-                                      f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
-                        logging.error(err)
-                        return
+                except Exception as err:
+                    logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
+                                  f"Unexpected error: Could not execute append data. "
+                                  f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
+                    logging.error(err)
+                    return
                 # atualizando datalake/metadata.json
                 r = open(path_datalake+'/metadata.json')
                 metadata = json.load(r) 
                 try:
                     metadata['partidas'][c][t][jogo_id] = {
                                                            'status': 'evaluation', 
-                                                           'status_partida': status
+                                                           'status_partida': status,
+                                                           'failed': failed
                                                           }
                 except:
                     metadata['partidas'][c][t] = {}
                     metadata['partidas'][c][t][jogo_id] = {
                                                            'status': 'evaluation', 
-                                                           'status_partida': status
+                                                           'status_partida': status,
+                                                           'failed': failed
                                                           }
                 with open(path_datalake+'/metadata.json', 'w') as fp:
                     json.dump(metadata, fp)
