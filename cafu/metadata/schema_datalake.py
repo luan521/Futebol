@@ -91,6 +91,8 @@ Local paths of databases in <schema_datalake>:
 - partidas_jogadores_minutagens: {path_datalake}/partidas/jogadores_minutagens
 
 - partidas_canceladas: {path_datalake}/partidas/partidas_canceladas
+
+- jogadores: {path_datalake}/jogadores
 """
 
 def get_schema(database):

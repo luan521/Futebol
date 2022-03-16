@@ -5,6 +5,7 @@ from tqdm import tqdm
 from cafu.utils import WebdriverChrome
 from cafu.utils.etl.datalake import jogos_ids_jogadores_desatualizados
 from cafu.utils.string import convert_str_var_time
+from cafu.metadata import get_schema
 from cafu.metadata.paths import path
 from cafu.queries.jogador import Bio
 
@@ -78,7 +79,7 @@ def update_jogadores(spark):
     partidas = jogos_ids_jogadores_desatualizados()
     if len(partidas)==0:
         logging.info("INFO etl.data_lake.jogadores_partida.update_jogadores: "
-                     "Already updated.")
+                     "Already up to date")
     for c in partidas:
         for t in partidas[c]:
             init = time.time()
@@ -121,9 +122,9 @@ def update_jogadores(spark):
                                       f"Info (data_nascimento) with unexpected format. <jogador_id>={jogador_id}")
                         logging.error(err)
                     nacionalidade = query.nacionalidade()
+                    
+                    query.web.close()
 
-                    massa = None
-                    qt_temporadas = None
                     data = [
                             {
                              'jogador_id': jogador_id,
@@ -137,6 +138,5 @@ def update_jogadores(spark):
                              'date_update': datetime.now()
                             }
                            ]
-
-                    query.web.close()
-                
+                    schema = get_schema('jogadores')
+                    df_jogador = spark.createDataFrame(data, schema=schema)

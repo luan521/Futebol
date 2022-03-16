@@ -5,7 +5,6 @@ from tqdm import tqdm
 import time
 from datetime import datetime
 from cafu.utils.etl.datalake import partidas_desatualizadas
-from cafu.utils import get_spark
 from cafu.utils.etl.partidas_campeonato import id_left_right
 from cafu.utils.string import convert_str_var_time
 from cafu.metadata.campeonatos_espn import campeonato_espn
@@ -21,7 +20,8 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
-def _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, ids, excedentes, campeonato, temporada, runtime_str):
+def _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, 
+                               ids, excedentes, campeonato, temporada, runtime_str):
     """
     Método interno da biblioteca cafu.
     Testa as condições de sucesso da função partidas_campeonato
@@ -179,7 +179,7 @@ def update_jogos_ids():
         
     if len(campeonatos)==0:    
         logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
-                     "All leagues already up to date.")
+                     "All leagues already up to date")
         
 def update_partidas(spark):
     """
@@ -195,7 +195,7 @@ def update_partidas(spark):
     partidas = partidas_desatualizadas()
     if len(partidas)==0:
         logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas: "
-                     "Already updated.")
+                     "Already up to date")
     for c in partidas:
         for t in partidas[c]:
             init = time.time()

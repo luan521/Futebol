@@ -124,3 +124,5 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
+- cafu.etl.datalake.jogadores_partida:update_jogadores
+- delta lake não esta funcionando
