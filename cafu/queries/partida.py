@@ -234,6 +234,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.nomes_times: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def formacao(self):
         """
@@ -267,6 +268,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.formacao: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def jogadores(self):
         """
@@ -331,6 +333,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.jogadores: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def gols(self):
         """
@@ -368,6 +371,8 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.gols: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
+            
             
     def placar(self):
         """
@@ -406,6 +411,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.placar: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def posse(self):
         """
@@ -441,6 +447,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.posse: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def chutes_fora_nogol(self):
         """
@@ -481,7 +488,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.chutes_fora_nogol: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
-        
+            return None, None
 
     def faltas(self):
         """
@@ -516,6 +523,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.faltas: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def cartoes_amarelos(self):
         """
@@ -550,6 +558,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.cartoes_amarelos: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
 
     def cartoes_vermelhos(self):
         """
@@ -584,6 +593,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.cartoes_vermelhos: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def impedimentos(self):
         """
@@ -618,6 +628,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.impedimentos: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
 
     def escanteios(self):
         """
@@ -652,6 +663,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.escanteios: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
 
     def defesas(self):
         
@@ -681,6 +693,7 @@ class Partida(WebdriverChrome):
             logging.error(f"ERROR queries.Partida.defesas: "
                           f"Unexpected error: Could not execute function. <jogo_id>={self.jogo_id}. runtime = {runtime_str}")
             logging.error(err)
+            return None, None
             
     def minuto_a_minuto(self):
         """

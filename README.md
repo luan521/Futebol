@@ -121,3 +121,5 @@ Links e conteúdos relevantes para o projeto
 - completar campeonatos nos arquivos:
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
+- análise automática logs
+- retirar divisão por campeonato em datalake/partidas
