@@ -150,6 +150,97 @@
 </dd></dl>
 
 </section>
+<section id="module-cafu.utils.spark_delta">
+<span id="cafu-utils-spark-delta-module"></span><h2>cafu.utils.spark_delta module<a class="headerlink" href="#module-cafu.utils.spark_delta" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.spark_delta.get_spark">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.spark_delta.</span></span><span class="sig-name descname"><span class="pre">get_spark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/spark_delta.html#get_spark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.spark_delta.get_spark" title="Permalink to this definition"></a></dt>
+<dd><p>Cria uma sessão do spark e uma sessão do delta lake</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory</strong> – (int) valor da memória do driver e executor</p></li>
+<li><p><strong>delta</strong> – (bool) flag para definir o uso do delta lake</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(spark session), (delta lake session, optional)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.spark_delta.read_delta">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.spark_delta.</span></span><span class="sig-name descname"><span class="pre">read_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datapath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/spark_delta.html#read_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.spark_delta.read_delta" title="Permalink to this definition"></a></dt>
+<dd><p>Ler dados em formato delta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – (spark session) spark session</p></li>
+<li><p><strong>datapath</strong> – (str) caminho dos arquivos a serem lidos</p></li>
+<li><p><strong>version</strong> – (int) versão que será lida do delta lake</p></li>
+<li><p><strong>timestamp</strong> – (timestamp) timestamp da versão que será lida do delta lake</p></li>
+<li><p><strong>filter</strong> – (str) filtro que será aplicado antes de retornar o dataframe</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(spark dataframe)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.spark_delta.restore_delta_to_version">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.spark_delta.</span></span><span class="sig-name descname"><span class="pre">restore_delta_to_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datapath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/spark_delta.html#restore_delta_to_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.spark_delta.restore_delta_to_version" title="Permalink to this definition"></a></dt>
+<dd><p>Restaura a versão do delta, ou para a version=&lt;version&gt; ou para timestamp=&lt;timestamp&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – (spark session) spark session</p></li>
+<li><p><strong>datapath</strong> – (str) caminho do dataframe em formato delta, que será atualizado</p></li>
+<li><p><strong>version</strong> – (int) versão do delta que será restaurada</p></li>
+<li><p><strong>timestamp</strong> – (timestamp) timestamp do delta que será restaurada</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.spark_delta.save_delta">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.spark_delta.</span></span><span class="sig-name descname"><span class="pre">save_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datapath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/spark_delta.html#save_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.spark_delta.save_delta" title="Permalink to this definition"></a></dt>
+<dd><p>Salva o data frame em formato delta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – (spark dataframe) dataframe a ser salvo</p></li>
+<li><p><strong>datapath</strong> – (str) caminho onde o dataframe será salvo</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.spark_delta.update_historical_delta">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.spark_delta.</span></span><span class="sig-name descname"><span class="pre">update_historical_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DeltaTable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_historical_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_unique_update_historical_delta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/spark_delta.html#update_historical_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.spark_delta.update_historical_delta" title="Permalink to this definition"></a></dt>
+<dd><p>Atualiza os dados históricos, em formato delta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – (spark session) spark session</p></li>
+<li><p><strong>DeltaTable</strong> – (DeltaTable) DeltaTable session</p></li>
+<li><p><strong>path_historical_data</strong> – (str) caminho do dataframe em formato delta, que será atualizado</p></li>
+<li><p><strong>df_new</strong> – (spark dataframe) dataframe novo, contendo os novos dados, em relação aos dados históricos</p></li>
+<li><p><strong>columns_unique_update_historical_delta</strong> – (list) colunas chaves, cujos valores não se duplicam na tabela</p></li>
+<li><p><strong>filter_update</strong> – (str) Filtro na linguagem SQL. Insere uma condição a mais para atualizar os dados,
+quando as colunas &lt;columns_unique&gt; do dataframe histórico, possuem os mesmos valores em &lt;df_new&gt;</p></li>
+<li><p><strong>columns_update</strong> – (list) colunas que serão atualizadas quando as condições forem satisfeitas.
+&lt;columns_update&gt; = ‘all’: Todas as colunas serão atualizadas</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-cafu.utils.string">
 <span id="cafu-utils-string-module"></span><h2>cafu.utils.string module<a class="headerlink" href="#module-cafu.utils.string" title="Permalink to this headline"></a></h2>
 <dl class="py function">

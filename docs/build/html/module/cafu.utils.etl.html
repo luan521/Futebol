@@ -111,6 +111,52 @@ Checa se existem atualizações do data lake em estado de avaliação</p>
 <span class="pre">`</span></code></p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.datalake.jogos_ids_jogadores_desatualizados">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.datalake.</span></span><span class="sig-name descname"><span class="pre">jogos_ids_jogadores_desatualizados</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/datalake.html#jogos_ids_jogadores_desatualizados"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.datalake.jogos_ids_jogadores_desatualizados" title="Permalink to this definition"></a></dt>
+<dd><p>Análisa datalake.metadata[‘partidas’] e datalake.metadata[‘jogadores’], para
+retornar os jogos ids dos jogos em que os jogadores não foram buscados para
+atualizar datalake.jogadores</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>campeonato, temporada - lista dos jogos_ids</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.datalake.partidas_desatualizadas">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.datalake.</span></span><span class="sig-name descname"><span class="pre">partidas_desatualizadas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/datalake.html#partidas_desatualizadas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.datalake.partidas_desatualizadas" title="Permalink to this definition"></a></dt>
+<dd><p>Análisa datalake.jogos_ids e datalake.metadata, e retorna os jogos desatualizados em
+datalake.partidas, datalake.descricoes_partidas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>campeonato, temporada - lista de jogos desatualizados</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.etl.datalake.proximas_partidas">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.datalake.</span></span><span class="sig-name descname"><span class="pre">proximas_partidas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/datalake.html#proximas_partidas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.datalake.proximas_partidas" title="Permalink to this definition"></a></dt>
+<dd><p>Análisa datalake.jogos_ids, e retorna as datas das próximas partidas dos campeonatos em aberto,
+ou se o campeonato já foi finalizado</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>campeonato, temporada - se já foi finalizado ou data da próxima partida</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-cafu.utils.etl.partidas_campeonato">
 <span id="cafu-utils-etl-partidas-campeonato-module"></span><h2>cafu.utils.etl.partidas_campeonato module<a class="headerlink" href="#module-cafu.utils.etl.partidas_campeonato" title="Permalink to this headline"></a></h2>

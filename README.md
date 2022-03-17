@@ -115,9 +115,7 @@ Links e conteúdos relevantes para o projeto
         - jogos_ids: csv &#9745;
         - jogadores: parquet, versionado pelo delta lake
         - partidas: parquet (por campeonato.temporada) &#9745;
-        utilizar método append ao salvar o parquet
-        - odds: parquet (por campeonato.temporada.dia)
-        utilizar método append ao salvar o parquet
+        - odds: parquet (por campeonato.temporada)
 
 ## Pendencies
 - completar campeonatos nos arquivos:
@@ -126,3 +124,5 @@ Links e conteúdos relevantes para o projeto
 - análise automática logs
 - cafu.etl.datalake.jogadores_partida:update_jogadores
 - delta lake não esta funcionando
+- cafu.notebooks.etl.sketch.Untitled2: célula 28 - função update odds
+- valores nulos na coluna campeonato: datalake/partidas/resumo/brasil/df_resumo

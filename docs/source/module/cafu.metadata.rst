@@ -36,3 +36,12 @@ cafu.metadata.paths module
    :undoc-members:
    :show-inheritance:
    :private-members:
+
+cafu.metadata.schema\_datalake module
+-------------------------------------
+
+.. automodule:: cafu.metadata.schema_datalake
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

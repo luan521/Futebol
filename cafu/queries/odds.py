@@ -126,13 +126,15 @@ class GetOdds(TrafficOddsPartida):
                             xpath = '//*[@id="centre"]/div[7]/div[1]/span[2]'
                             self.web.find_element_by_xpath(xpath).click()
                         except:
-                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <evento>, part-1")
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: "
+                                            "Could not fix method to find <evento>, part-1")
                             return False, None
                         try:
                             sleep(1)
                             e.click()
                         except:
-                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <evento>, part-2")
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: "
+                                            "Could not fix method to find <evento>, part-2")
                         return False, None
                 def _find_tipo_aposta():
                     try:
@@ -147,27 +149,31 @@ class GetOdds(TrafficOddsPartida):
                             xpath = '//*[@id="centre"]/div[7]/div[1]/span[2]'
                             self.web.find_element_by_xpath(xpath).click()
                         except:
-                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <tipo_aposta>, part-1")
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: "
+                                            "Could not fix method to find <tipo_aposta>, part-1")
                             return False, None
                         try:
                             sleep(1)
                             e.click()
                         except:
-                            logging.warning("WARNING queries.odds.GetOdds.get_odds: Could not fix method to find <tipo_aposta>, part-2")
+                            logging.warning("WARNING queries.odds.GetOdds.get_odds: "
+                                            "Could not fix method to find <tipo_aposta>, part-2")
                         return False, None
                 max_iterate, time_sleep = 10, 2
                 success, evento = loop_try(_find_evento, max_iterate, time_sleep)
                 if not success:
                     end = time.time()
                     runtime_str = convert_str_var_time(init, end)
-                    logging.error(f"ERROR queries.odds.GetOdds.get_odds: Could not find <evento> by method find_elements_by_class_name. "
+                    logging.error(f"ERROR queries.odds.GetOdds.get_odds: "
+                                  "Could not find <evento> by method find_elements_by_class_name. "
                                   f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
                     return response, count
                 success, tipo_aposta = loop_try(_find_tipo_aposta, max_iterate, time_sleep)
                 if not success:
                     end = time.time()
                     runtime_str = convert_str_var_time(init, end)
-                    logging.error("ERROR queries.odds.GetOdds.get_odds: Could not find <tipo_aposta> by method find_elements_by_class_name. "
+                    logging.error("ERROR queries.odds.GetOdds.get_odds: "
+                                  "Could not find <tipo_aposta> by method find_elements_by_class_name. "
                                   f"<qt_desconsiderar>={qt_desconsiderar}. runtime = {runtime_str}")
                     return response, count
                 logging.info(f"INFO queries.odds.GetOdds.get_odds: Complete {tipo_aposta} | {evento} | {odds}")

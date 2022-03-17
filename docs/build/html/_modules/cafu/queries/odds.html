@@ -195,13 +195,15 @@
                             <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;centre&quot;]/div[7]/div[1]/span[2]&#39;</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
                         <span class="k">except</span><span class="p">:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: Could not fix method to find &lt;evento&gt;, part-1&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: &quot;</span>
+                                            <span class="s2">&quot;Could not fix method to find &lt;evento&gt;, part-1&quot;</span><span class="p">)</span>
                             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
                         <span class="k">try</span><span class="p">:</span>
                             <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
                         <span class="k">except</span><span class="p">:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: Could not fix method to find &lt;evento&gt;, part-2&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: &quot;</span>
+                                            <span class="s2">&quot;Could not fix method to find &lt;evento&gt;, part-2&quot;</span><span class="p">)</span>
                         <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
                 <span class="k">def</span> <span class="nf">_find_tipo_aposta</span><span class="p">():</span>
                     <span class="k">try</span><span class="p">:</span>
@@ -216,27 +218,31 @@
                             <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;centre&quot;]/div[7]/div[1]/span[2]&#39;</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
                         <span class="k">except</span><span class="p">:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: Could not fix method to find &lt;tipo_aposta&gt;, part-1&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: &quot;</span>
+                                            <span class="s2">&quot;Could not fix method to find &lt;tipo_aposta&gt;, part-1&quot;</span><span class="p">)</span>
                             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
                         <span class="k">try</span><span class="p">:</span>
                             <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
                         <span class="k">except</span><span class="p">:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: Could not fix method to find &lt;tipo_aposta&gt;, part-2&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;WARNING queries.odds.GetOdds.get_odds: &quot;</span>
+                                            <span class="s2">&quot;Could not fix method to find &lt;tipo_aposta&gt;, part-2&quot;</span><span class="p">)</span>
                         <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
                 <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span>
                 <span class="n">success</span><span class="p">,</span> <span class="n">evento</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_find_evento</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
                     <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                     <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;evento&gt; by method find_elements_by_class_name. &quot;</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: &quot;</span>
+                                  <span class="s2">&quot;Could not find &lt;evento&gt; by method find_elements_by_class_name. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">count</span>
                 <span class="n">success</span><span class="p">,</span> <span class="n">tipo_aposta</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_find_tipo_aposta</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
                     <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                     <span class="n">runtime_str</span> <span class="o">=</span> <span class="n">convert_str_var_time</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: Could not find &lt;tipo_aposta&gt; by method find_elements_by_class_name. &quot;</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR queries.odds.GetOdds.get_odds: &quot;</span>
+                                  <span class="s2">&quot;Could not find &lt;tipo_aposta&gt; by method find_elements_by_class_name. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;qt_desconsiderar&gt;=</span><span class="si">{</span><span class="n">qt_desconsiderar</span><span class="si">}</span><span class="s2">. runtime = </span><span class="si">{</span><span class="n">runtime_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">count</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;INFO queries.odds.GetOdds.get_odds: Complete </span><span class="si">{</span><span class="n">tipo_aposta</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">evento</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">odds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

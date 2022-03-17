@@ -71,7 +71,7 @@ class Partida(WebdriverChrome):
                 end = time.time()
                 runtime_str = convert_str_var_time(init, end)
                 logging.error("ERROR queries.Partida.__init__: Unexpected error: "
-                              f"Could find status by method find_element_by_xpath of selenium. "
+                              f"Could not find status by method find_element_by_xpath of selenium. "
                               f"<jogo_id>={self.jogo_id}. runtime = {runtime_str}")
                 logging.error(err)
                 return

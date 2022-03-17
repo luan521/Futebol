@@ -371,7 +371,8 @@ def update_partidas(spark):
                                }]
                         schema = get_schema('partidas_canceladas')
                         df_cancelada = spark.createDataFrame(data, schema = schema)
-                        df_cancelada.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas')
+                        df_cancelada.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas',
+                                                   mode='append')
                         logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas: "
                                       f"Canceled match, info updated in "
                                       f"{path_datalake}/partidas/partidas_canceladas/df_canceladas. "

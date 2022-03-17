@@ -103,15 +103,19 @@
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">t</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">success_failed</span>
-    
-    <span class="k">def</span> <span class="nf">_update_all</span><span class="p">():</span>
-        <span class="n">_update_jogos_ids</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span><span class="o">=</span><span class="n">success_failed</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR utils.etl.validate.</span><span class="si">{</span><span class="n">function</span><span class="si">}</span><span class="s2">: &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> doesn&#39;t exist in metadata[&#39;jogos_ids&#39;]&quot;</span><span class="p">)</span>
         
     <span class="k">if</span> <span class="n">success_failed</span><span class="o">==</span><span class="s1">&#39;success&#39;</span><span class="p">:</span>
         <span class="n">function</span> <span class="o">=</span> <span class="s1">&#39;validate_datalake&#39;</span>
+        <span class="n">complement_help</span> <span class="o">=</span> <span class="s1">&#39;Valida&#39;</span>
     <span class="k">elif</span> <span class="n">success_failed</span><span class="o">==</span><span class="s1">&#39;failed&#39;</span><span class="p">:</span>
         <span class="n">function</span> <span class="o">=</span> <span class="s1">&#39;invalidate_datalake&#39;</span>
+        <span class="n">complement_help</span> <span class="o">=</span> <span class="s1">&#39;Invalida&#39;</span>
             
     <span class="k">try</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_metadata</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -121,10 +125,20 @@
                       <span class="s2">&quot;Could not import datalake/metadata.json&quot;</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span>
+    
+    <span class="n">help_</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">             </span><span class="si">{</span><span class="n">complement_help</span><span class="si">}</span><span class="s2"> as atualizações no arquivo datalake/metadata.json. Quando todas as chaves</span>
+<span class="s2">             do dicionário são passadas, a atualização sempre ocorre, caso contrário a atualização</span>
+<span class="s2">             ocorre apenas no status &quot;evaluation&quot;</span>
+
+<span class="s2">             Args:</span>
+<span class="s2">                 option1: Chaves do dicionário datalake/metadata.json, que serão verificadas </span>
+<span class="s2">                 option2: Quando nenhum argumento é passado, todas as atualizações são verificadas</span>
+<span class="s2">             &quot;&quot;&quot;</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-            <span class="n">_update_all</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">help_</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;jogos_ids&#39;</span><span class="p">:</span>
             <span class="n">_update_jogos_ids</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>

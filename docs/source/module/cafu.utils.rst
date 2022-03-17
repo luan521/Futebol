@@ -37,6 +37,15 @@ cafu.utils.open\_doc module
    :show-inheritance:
    :private-members:
 
+cafu.utils.spark\_delta module
+------------------------------
+
+.. automodule:: cafu.utils.spark_delta
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 cafu.utils.string module
 ------------------------
 

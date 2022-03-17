@@ -139,3 +139,4 @@ class TrafficOddsPartida(Login):
             logging.error(f"ERROR utils.queries.dafabet.TrafficOddsPartida.join_link_odds_partida: "
                           f"Unexpected error: Could not execute function with default max_iterate. "
                           f"<index>={index}, <max_iterate>={max_iterate}")
+        return descricao_partida

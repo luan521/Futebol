@@ -99,14 +99,10 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">campeonato</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">times</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[</span><span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">success</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">loop_try</span><span class="p">(</span><span class="n">_try_dados_partida</span><span class="p">,</span> <span class="n">max_iterate</span><span class="p">,</span> <span class="n">time_sleep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-        <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">campeonato</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">date</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span></div>
+    <span class="k">return</span> <span class="n">response</span></div>
 
 <div class="viewcode-block" id="id_left_right"><a class="viewcode-back" href="../../../../module/cafu.utils.etl.html#cafu.utils.etl.partidas_campeonato.id_left_right">[docs]</a><span class="k">def</span> <span class="nf">id_left_right</span><span class="p">(</span><span class="n">id_inicial</span><span class="p">,</span> <span class="n">campeonato_fix</span><span class="p">,</span> <span class="n">qt_partidas_campeonato</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">partidas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -160,8 +156,7 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">partidas</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">partidas</span><span class="p">):</span>
                     <span class="k">break</span>
                 <span class="n">barra_progresso</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="n">id_</span> <span class="o">=</span> <span class="n">id_</span> <span class="o">-</span> <span class="n">fator</span>
+        
         <span class="n">partidas</span> <span class="o">=</span> <span class="n">partidas</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">dates</span> <span class="o">=</span> <span class="n">dates</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
