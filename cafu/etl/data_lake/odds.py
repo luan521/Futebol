@@ -1,6 +1,7 @@
 from datetime import datetime, date, timedelta
 from unidecode import unidecode
 from tqdm import tqdm
+import pyspark.sql.functions as F
 from cafu.utils.etl.datalake import proximas_partidas
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.queries.odds import GetOdds
@@ -20,6 +21,9 @@ def update_odds(spark):
     Args:
         spark: (spark session) 
     """
+    
+    logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas: "
+                 "Function started")
     
     # campeonatos que terão jogos, hoje ou amanhã
     pr_part = proximas_partidas()

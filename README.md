@@ -113,9 +113,9 @@ Links e conteúdos relevantes para o projeto
     - tipos de arquivos:
         - metadata: json &#9745;
         - jogos_ids: csv &#9745;
-        - jogadores: parquet, versionado pelo delta lake
+        - jogadores: parquet &#9745;
         - partidas: parquet (por campeonato.temporada) &#9745;
-        - odds: parquet (por campeonato.temporada)
+        - odds: parquet (por campeonato.temporada) 
 
 ## Pendencies
 - completar campeonatos nos arquivos:
@@ -123,6 +123,5 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
     - notebooks.etl.sketch.Untled3: valores nulos gerados, identificar na análise automática do log
-- cafu.etl.datalake.jogadores_partida:update_jogadores
-- delta lake não esta funcionando
+    - update_jogadores, check null values in datalake
 - verificar cafu.etl.datalake.odds:update_odds
