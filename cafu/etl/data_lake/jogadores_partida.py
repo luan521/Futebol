@@ -1,13 +1,15 @@
 import re
 import time
+import json
 from datetime import datetime
 from tqdm import tqdm
 from cafu.utils import WebdriverChrome
 from cafu.utils.etl.datalake import jogos_ids_jogadores_desatualizados
 from cafu.utils.string import convert_str_var_time
+from cafu.queries.jogador import Bio
 from cafu.metadata import get_schema
 from cafu.metadata.paths import path
-from cafu.queries.jogador import Bio
+path_datalake = path('datalake')
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -82,10 +84,9 @@ def update_jogadores(spark):
                      "Already up to date")
     for c in partidas:
         for t in partidas[c]:
-            init = time.time()
-            for jogo_id in tqdm(partidas[c][t]):
+            for jogo_id in partidas[c][t]:
                 ids_jogadores = find_id_jogadores(jogo_id)
-                for id_ in ids_jogadores:
+                for id_ in tqdm(ids_jogadores):
                     jogador_id = f"{id_['id_part1']}/{id_['id_part2']}"
                     query = Bio(jogador_id)
                     
@@ -96,7 +97,7 @@ def update_jogadores(spark):
                     except Exception as err:
                         time = None
                         qt_temporadas = None
-                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                        logging.error(f"ERROR etl.data_lake.jogadores_partida.update_jogadores: "
                                       f"Info (time, temporadas) with unexpected format. <jogador_id>={jogador_id}")
                         logging.error(err)
                     posicao = query.posicao()
@@ -104,21 +105,21 @@ def update_jogadores(spark):
                         altura = float(query.altura().replace(' m', ''))
                     except Exception as err:
                         altura = None
-                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                        logging.error(f"ERROR etl.data_lake.jogadores_partida.update_jogadores: "
                                       f"Info (altura) with unexpected format. <jogador_id>={jogador_id}")
                         logging.error(err)
                     try:
                         massa = float(query.massa().replace(' kg', ''))
                     except Exception as err:
                         massa = None
-                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                        logging.error(f"ERROR etl.data_lake.jogadores_partida.update_jogadores: "
                                       f"Info (massa) with unexpected format. <jogador_id>={jogador_id}")
                         logging.error(err)
                     data_nascimento = query.data_nascimento()
                     try:
                         data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y').date()
                     except Exception as err:
-                        logging.error(f"ERROR tl.data_lake.jogadores_partida.update_jogadores: "
+                        logging.error(f"ERROR etl.data_lake.jogadores_partida.update_jogadores: "
                                       f"Info (data_nascimento) with unexpected format. <jogador_id>={jogador_id}")
                         logging.error(err)
                     nacionalidade = query.nacionalidade()
@@ -127,6 +128,7 @@ def update_jogadores(spark):
 
                     data = [
                             {
+                             'jogo_id': int(jogo_id),
                              'jogador_id': jogador_id,
                              'time': time,
                              'qt_temporadas': qt_temporadas,
@@ -140,3 +142,18 @@ def update_jogadores(spark):
                            ]
                     schema = get_schema('jogadores')
                     df_jogador = spark.createDataFrame(data, schema=schema)
+                    df_jogador.write.parquet(path_datalake+
+                                             f'/jogadores/df_jogador', 
+                                             mode='append')
+                # atualizando datalake/metadata.json
+                r = open(path_datalake+'/metadata.json')
+                metadata = json.load(r) 
+                try:
+                    metadata['jogadores'][c][t][jogo_id] = 'evaluation'
+                except:
+                    metadata['jogadores'][c][t] = {}
+                    metadata['jogadores'][c][t][jogo_id] = 'evaluation'
+                with open(path_datalake+'/metadata.json', 'w') as fp:
+                    json.dump(metadata, fp)
+            logging.info(f"INFO etl.data_lake.jogadores_partida.update_jogadores: "
+                         f"Updated <c>={c}, <t>={t}, <jogo_id>={jogo_id}")

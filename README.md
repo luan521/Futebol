@@ -125,4 +125,4 @@ Links e conteúdos relevantes para o projeto
     - notebooks.etl.sketch.Untled3: valores nulos gerados, identificar na análise automática do log
 - cafu.etl.datalake.jogadores_partida:update_jogadores
 - delta lake não esta funcionando
-- notebooks.etl.sketch.Untitled2: célula 28 - função update odds
+- verificar cafu.etl.datalake.odds:update_odds

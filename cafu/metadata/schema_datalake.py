@@ -67,6 +67,7 @@ schema_datalake = {
                                              StructField("date_update", TimestampType(), True)
                                            ]),
                    'jogadores': StructType([ 
+                                     StructField("jogo_id",IntegerType(),True), 
                                      StructField("jogador_id",StringType(),True), 
                                      StructField("time",StringType(),True), 
                                      StructField("qt_temporadas",IntegerType(),True), 
