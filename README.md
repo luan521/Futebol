@@ -122,7 +122,7 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
+    - notebooks.etl.sketch.Untled3: valores nulos gerados, identificar na análise automática do log
 - cafu.etl.datalake.jogadores_partida:update_jogadores
 - delta lake não esta funcionando
-- cafu.notebooks.etl.sketch.Untitled2: célula 28 - função update odds
-- valores nulos na coluna campeonato: datalake/partidas/resumo/brasil/df_resumo
+- notebooks.etl.sketch.Untitled2: célula 28 - função update odds
