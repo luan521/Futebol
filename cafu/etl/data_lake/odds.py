@@ -6,6 +6,7 @@ from cafu.utils.etl.datalake import proximas_partidas
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
 from cafu.queries.odds import GetOdds
 from cafu.metadata.paths import path
+path_datalake = path('datalake')
 
 import logging
 filename = path('logs_cafu')+'/logs.txt'
@@ -45,11 +46,11 @@ def update_odds(spark):
         return
     
     # atualizando
-    query = GetOdds()
     for c in campeonatos:
         stop = False
         index = 0
         while not stop:
+            query = GetOdds()
             query.get_campeonato_dafabet(c[0])
             descricao_partida = query.join_link_odds_partida(index)
             if descricao_partida is not None:
@@ -72,17 +73,17 @@ def update_odds(spark):
                                      .withColumn('time_casa', F.lit(descricao_partida['time_casa']))
                                      .withColumn('time_visitante', F.lit(descricao_partida['time_visitante']))
                                      .withColumn('horario', F.lit(descricao_partida['horario']))
-                                     .withColumn('campeonato_metadata', F.lit(c))
-                                     .withColumn('temporada_metadata', F.lit(t))
+                                     .withColumn('campeonato_metadata', F.lit(c[0]))
+                                     .withColumn('temporada_metadata', F.lit(c[1]))
                                      .withColumn('date_update', F.lit(datetime.now()))
                                  )
-                            for c in df.columns:
-                                df = df.withColumnRenamed(c, (c.replace(' ','_')
-                                                               .replace(',','_'))
+                            for col in df.columns:
+                                df = df.withColumnRenamed(col, (col.replace(' ','_')
+                                                                   .replace(',','_'))
                                                          )
                             dir_ = k1.replace('/','-')
                             dir_ = unidecode(dir_.lower())
-                            df.write.parquet(f'teste/{dir_}', mode='append')
+                            df.write.parquet(f'{path_datalake}/odds/{c[0]}/{dir_}', mode='append')
                             logging.info(f"INFO etl.data_lake.odds.update_odds: "
                                          f"Updated {c}.{descricao_partida['time_casa']} vs "
                                          f"{descricao_partida['time_visitante']}.{k1}")
@@ -95,5 +96,5 @@ def update_odds(spark):
                     stop = True
             else:
                 stop = True
+            query.web.close() # encerra a sessão
             index+=1
-    query.web.close() # encerra a sessão
