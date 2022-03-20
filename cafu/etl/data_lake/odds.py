@@ -1,6 +1,7 @@
+import os
 from datetime import datetime, date, timedelta
 from unidecode import unidecode
-from tqdm import tqdm
+import json
 import pyspark.sql.functions as F
 from cafu.utils.etl.datalake import proximas_partidas
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
@@ -62,37 +63,36 @@ def update_odds(spark):
                     odds = query.get_odds()
                     if len(odds)==2: # garantido que a coleta foi bem sucedida
                         return
-                    for k1 in odds:
-                        for k2 in odds[k1]:
-                            odds[k1][k2] = float(odds[k1][k2])
-                    for k1 in tqdm(odds):
-                        try:
-                            df = spark.createDataFrame([odds[k1]])
-                            df = (
-                                     df
-                                     .withColumn('time_casa', F.lit(descricao_partida['time_casa']))
-                                     .withColumn('time_visitante', F.lit(descricao_partida['time_visitante']))
-                                     .withColumn('horario', F.lit(descricao_partida['horario']))
-                                     .withColumn('campeonato_metadata', F.lit(c[0]))
-                                     .withColumn('temporada_metadata', F.lit(c[1]))
-                                     .withColumn('date_update', F.lit(datetime.now()))
-                                 )
-                            for col in df.columns:
-                                df = df.withColumnRenamed(col, (col.replace(' ','_')
-                                                                   .replace(',','_'))
-                                                         )
-                            dir_ = k1.replace('/','-')
-                            dir_ = unidecode(dir_.lower())
-                            df.write.parquet(f'{path_datalake}/odds/{c[0]}/{dir_}', mode='append')
+                    odds['time_casa'] = descricao_partida['time_casa']
+                    odds['time_visitante'] = descricao_partida['time_visitante']
+                    odds['horario'] = descricao_partida['horario']
+                    odds['date_update'] = str(datetime.now())
+                    nome_arquivo = (
+                                    descricao_partida['time_casa']+
+                                    ' vs ' +
+                                    descricao_partida['time_visitante']+
+                                    '.json'
+                                   ).replace(' ','_').lower()
+                    try:
+                        with open(f'{path_datalake}/odds/{c[0]}/{c[1]}/{nome_arquivo}', 'w') as fp:
+                            json.dump(odds, fp)
                             logging.info(f"INFO etl.data_lake.odds.update_odds: "
                                          f"Updated {c}.{descricao_partida['time_casa']} vs "
-                                         f"{descricao_partida['time_visitante']}.{k1}")
+                                         f"{descricao_partida['time_visitante']}")
+                    except:
+                        try:
+                            os.mkdir(f'{path_datalake}/odds/{c[0]}/{c[1]}')
+                            with open(f'{path_datalake}/odds/{c[0]}/{c[1]}/{nome_arquivo}', 'w') as fp:
+                                json.dump(odds, fp)
+                            logging.info(f"INFO etl.data_lake.odds.update_odds: "
+                                         f"Updated {c}.{descricao_partida['time_casa']} vs "
+                                         f"{descricao_partida['time_visitante']}")
                         except Exception as err:
                             logging.error(f"ERROR etl.data_lake.odds.update_odds: "
                                           f"Could not update {c}.{descricao_partida['time_casa']} vs "
-                                          f"{descricao_partida['time_visitante']}.{k1}")
+                                          f"{descricao_partida['time_visitante']}")
                             logging.error(err)
-                else:
+                elif descricao_partida['horario']!='ao vivo':
                     stop = True
             else:
                 stop = True
