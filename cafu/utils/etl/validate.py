@@ -69,6 +69,35 @@ def _validate_invalidate_datalake(success_failed, args):
             except:
                 logging.error(f"ERROR utils.etl.validate.{function}: "
                               f"{c}.{t}.{j} doesn't exist in metadata['partidas']")
+    def _update_jogadores():
+        if len(args)<=1:
+            for c in metadata['jogadores']:
+                for t in metadata['jogadores'][c]:
+                    for j in metadata['jogadores'][c][t]:
+                        if metadata['jogadores'][c][t][j]=='evaluation':
+                            metadata['jogadores'][c][t][j]=success_failed
+        elif len(args)==2:
+            c = args[1]
+            for t in metadata['jogadores'][c]:
+                for j in metadata['jogadores'][c][t]:
+                    if metadata['jogadores'][c][t][j]=='evaluation':
+                        metadata['jogadores'][c][t][j]=success_failed
+        elif len(args)==3:
+            c = args[1]
+            t = args[2]
+            for j in metadata['jogadores'][c][t]:
+                if metadata['jogadores'][c][t][j]=='evaluation':
+                    metadata['jogadores'][c][t][j]=success_failed
+        elif len(args)==4:
+            c = args[1]
+            t = args[2]
+            j = args[3]
+            try:
+                metadata['jogadores'][c][t][j]
+                metadata['jogadores'][c][t][j]=success_failed
+            except:
+                logging.error(f"ERROR utils.etl.validate.{function}: "
+                              f"{c}.{t}.{j} doesn't exist in metadata['jogadores']")
         
     if success_failed=='success':
         function = 'validate_datalake'
@@ -102,6 +131,8 @@ def _validate_invalidate_datalake(success_failed, args):
             _update_jogos_ids()
         elif args[0]=='partidas':
             _update_partidas()
+        elif args[0]=='jogadores':
+            _update_jogadores()
     except Exception as err:
         logging.error(f"ERROR utils.etl.validate.{function}: "
                       f"Could not update metadata. <args>={args}")

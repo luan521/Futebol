@@ -1,5 +1,6 @@
 import re
 import time
+from time import sleep
 import json
 from datetime import datetime
 from tqdm import tqdm
@@ -87,6 +88,7 @@ def update_jogadores(spark):
             for jogo_id in partidas[c][t]:
                 ids_jogadores = find_id_jogadores(jogo_id)
                 for id_ in tqdm(ids_jogadores):
+                    sleep(1)
                     jogador_id = f"{id_['id_part1']}/{id_['id_part2']}"
                     query = Bio(jogador_id)
                     

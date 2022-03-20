@@ -1,7 +1,9 @@
 dict_id_campeonato = {
-                      'brasil-a': '22977-brazil/22980-brasileiro-serie-a',
-                      'brasil-b': '22977-brazil/24267-brasileiro-serie-b',
-                      'franca': '23168-france/23169-ligue-1'
+                      'brasil': '22977-brazil/22980-brasileiro-serie-a',
+                      'espanha': '22925-spain/23034-laliga',
+                      'franca': '23168-france/23169-ligue-1',
+                      'inglaterra': '23025-england/23132-premier-league',
+                      'italia': '23375-italy/23454-serie-a',
                      }
 
 def campeonato_dafabet(campeonato=None):

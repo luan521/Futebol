@@ -19,6 +19,15 @@ cafu.etl.data\_lake.jogadores\_partida module
    :show-inheritance:
    :private-members:
 
+cafu.etl.data\_lake.odds module
+-------------------------------
+
+.. automodule:: cafu.etl.data_lake.odds
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 cafu.etl.data\_lake.partidas\_campeonato module
 -----------------------------------------------
 
