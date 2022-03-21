@@ -1,5 +1,7 @@
 import json
+import pandas as pd
 import sys
+from datetime import date
 from cafu.metadata.paths import path
 path_metadata = path('datalake')+'/metadata.json'
 
@@ -175,3 +177,140 @@ def invalidate_datalake():
     
     args = sys.argv[1:]
     _validate_invalidate_datalake('failed', args)
+    
+class ValidateExecution():
+    """
+    Análise da execução do código.
+    <self.df_log>: (pandas dataframe) logs gerados no dia <day>.
+    <self.important_functions>: (list) funções importantes para serem passadas como argumento 
+    no método <self.print_description_error>
+    
+    Args:
+        day: (str) dia da execução, format 'YYYY-mm-dd'
+    """
+    
+    def __init__(self, day):
+        
+        self.important_functions = [
+                                    'etl.data_lake.partidas_campeonato.partidas_campeonato',
+                                    'utils.loop_try.loop_try'
+                                   ]
+        
+        log_path = path('logs_cafu')+'/logs.txt'
+        log_path = log_path[:29]+day+log_path[39:]
+        with open(log_path) as f:
+            lines = f.read().split('\n')
+        columns = ['date', 'type', 'function', 'description1', 'description2']
+        types = ['INFO', 'SUCCESS', 'P-1 SUCCESS','WARNING', 'ERROR']
+        data = []
+        for i in range(len(lines)):
+            try:
+                div = []
+                j = 0
+                while len(div)<=1:
+                    div = lines[i].split(f' {types[j]} ')
+                    j+=1
+                date = div[0]
+                type_ = types[j-1]
+                function = div[1].split(': ')[0]
+                description1 = div[1].split(function+': ')[1]
+                data.append([date, type_, function, description1, []])
+            except:
+                data[-1][-1].append(lines[i])
+        self.df_log = pd.DataFrame(data, columns=columns)
+    
+    def warning_types(self):
+        """
+        Filtra os warnings gerados e agrupa pela coluna functions. Resultado salvo em <self.df_warning>
+        """
+        
+        index_filter = self.df_log['type'] == 'WARNING'
+        self.df_warning = (
+                              self.df_log[index_filter]
+                              .groupby('function')['function']
+                              .count()
+                              .sort_values(ascending=False)
+                          )
+        
+    def error_types(self):
+        """
+        Filtra os erros gerados e agrupa pela coluna functions. Resultado salvo em <self.df_error>
+        """
+        
+        index_filter = self.df_log['type'] == 'ERROR'
+        self.df_error = (
+                            self.df_log[index_filter]
+                            .groupby('function')['function']
+                            .count()
+                            .sort_values(ascending=False)
+                        )
+        
+    def print_description_warning(self, function):
+        """
+        Printa o valor na coluna description1, para cada warning gerado na função <function>
+        
+        Args:
+            function: (str) exemplos importantes em <self.important_functions>
+        """
+        
+        index_filter = ((self.df_log['type'] == 'WARNING')&
+                        (self.df_log['function']==function))
+        for i in self.df_log[index_filter].index:
+            print(self.df_log['description1'][i])
+            print()
+        
+    def print_description_error(self, function):
+        """
+        Printa o valor na coluna description1, para cada erro gerado na função <function>
+        
+        Args:
+            function: (str) exemplos importantes em <self.important_functions>
+        """
+        
+        index_filter = ((self.df_log['type'] == 'ERROR')&
+                        (self.df_log['function']==function))
+        for i in self.df_log[index_filter].index:
+            print(self.df_log['description1'][i])
+            print()
+            
+def first_validation_execution():
+    """
+    Primeira validação da execução do código.
+    
+    Args:
+        day: (str) dia da execução, format 'YYYY-mm-dd'
+    Returns:
+         dict: funções importantes que geraram erros - quantidade de erros gerados
+    """
+    
+    today = str(date.today())
+    help_ = f"""
+            Primeira validação da execução do código.
+    
+            Args:
+                day: (str) dia da execução, format 'YYYY-mm-dd'
+                Ex (dia atual): {today}
+            Returns:
+                 dict: funções importantes que geraram erros - quantidade de erros gerados
+             """
+    
+    args = sys.argv[1:]
+    if len(args)==0:
+        print(help_)
+        return
+    else:
+        day = args[0]
+        
+    val = ValidateExecution(day)
+    val.error_types()
+    val.warning_types()
+    response = {}
+    response['error'] = {
+                         f: val.df_error[f] for f in val.important_functions 
+                                            if f in val.df_error
+                        }
+    response['warning'] = {
+                           f: val.df_error[f] for f in val.important_functions 
+                                            if f in val.df_warning
+                          }
+    return response

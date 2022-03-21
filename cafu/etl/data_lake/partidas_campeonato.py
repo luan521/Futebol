@@ -119,7 +119,8 @@ def partidas_campeonato(campeonato, temporada):
         
         end = time.time()
         runtime_str = convert_str_var_time(init, end)
-        _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, ids, excedentes, campeonato, temporada, runtime_str)
+        _teste_partidas_campeonato(df, qt_jogos_rodada, qt_partidas_campeonato, 
+                                   ids, excedentes, campeonato, temporada, runtime_str)
         
         return df
     except Exception as err:
