@@ -211,15 +211,16 @@ Busca os dados da partida, entra em loop até que os dados sejam retornados</p>
 <span id="cafu-utils-etl-validate-module"></span><h2>cafu.utils.etl.validate module<a class="headerlink" href="#module-cafu.utils.etl.validate" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="cafu.utils.etl.validate.ValidateExecution">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">ValidateExecution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#ValidateExecution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.ValidateExecution" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">ValidateExecution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">days</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#ValidateExecution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.ValidateExecution" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Análise da execução do código.
 &lt;self.df_log&gt;: (pandas dataframe) logs gerados no dia &lt;day&gt;.
+&lt;self.df_partidas_failed&gt;: (pandas dataframe) falhas geradas (quais tabelas em datalake/partidas)
 &lt;self.important_functions&gt;: (list) funções importantes para serem passadas como argumento
 no método &lt;self.print_description_error&gt;</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>day</strong> – (str) dia da execução, format ‘YYYY-mm-dd’</p>
+<dd class="field-odd"><p><strong>days</strong> – (list of strs) dias de execuções, format ‘YYYY-mm-dd’</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -237,6 +238,23 @@ no método &lt;self.print_description_error&gt;</p>
 <dd class="field-odd"><p><strong>function</strong> – (str) exemplos importantes em &lt;self.important_functions&gt;</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.utils.etl.validate.ValidateExecution.print_description_warning">
+<span class="sig-name descname"><span class="pre">print_description_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#ValidateExecution.print_description_warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.ValidateExecution.print_description_warning" title="Permalink to this definition"></a></dt>
+<dd><p>Printa o valor na coluna description1, para cada warning gerado na função &lt;function&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> – (str) exemplos importantes em &lt;self.important_functions&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cafu.utils.etl.validate.ValidateExecution.warning_types">
+<span class="sig-name descname"><span class="pre">warning_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#ValidateExecution.warning_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.ValidateExecution.warning_types" title="Permalink to this definition"></a></dt>
+<dd><p>Filtra os warnings gerados e agrupa pela coluna functions. Resultado salvo em &lt;self.df_warning&gt;</p>
 </dd></dl>
 
 </dd></dl>
@@ -258,7 +276,7 @@ Valida ou invalida as atualizações no arquivo datalake/metadata.json.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cafu.utils.etl.validate.first_validation_execution">
-<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">first_validation_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#first_validation_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.first_validation_execution" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.etl.validate.</span></span><span class="sig-name descname"><span class="pre">first_validation_execution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/etl/validate.html#first_validation_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.etl.validate.first_validation_execution" title="Permalink to this definition"></a></dt>
 <dd><p>Primeira validação da execução do código.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

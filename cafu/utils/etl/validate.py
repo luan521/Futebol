@@ -182,24 +182,28 @@ class ValidateExecution():
     """
     Análise da execução do código.
     <self.df_log>: (pandas dataframe) logs gerados no dia <day>.
+    <self.df_partidas_failed>: (pandas dataframe) falhas geradas (quais tabelas em datalake/partidas)
     <self.important_functions>: (list) funções importantes para serem passadas como argumento 
     no método <self.print_description_error>
     
     Args:
-        day: (str) dia da execução, format 'YYYY-mm-dd'
+        days: (list of strs) dias de execuções, format 'YYYY-mm-dd'
     """
     
-    def __init__(self, day):
+    def __init__(self, days):
         
         self.important_functions = [
                                     'etl.data_lake.partidas_campeonato.partidas_campeonato',
                                     'utils.loop_try.loop_try'
                                    ]
-        
-        log_path = path('logs_cafu')+'/logs.txt'
-        log_path = log_path[:29]+day+log_path[39:]
-        with open(log_path) as f:
-            lines = f.read().split('\n')
+        # dataframe from logs
+        lines = []
+        for day in days:
+            log_path = path('logs_cafu')+'/logs.txt'
+            log_path = log_path[:29]+day+log_path[39:]
+            with open(log_path) as f:
+                lines_day = f.read().split('\n')
+            lines = lines + lines_day
         columns = ['date', 'type', 'function', 'description1', 'description2']
         types = ['INFO', 'SUCCESS', 'P-1 SUCCESS','WARNING', 'ERROR']
         data = []
@@ -218,6 +222,23 @@ class ValidateExecution():
             except:
                 data[-1][-1].append(lines[i])
         self.df_log = pd.DataFrame(data, columns=columns)
+        
+        # dataframe from metadata.partidas datalake
+        r = open(path('datalake')+'/metadata.json')
+        metadata = json.load(r)
+        failed = []
+        for c in metadata['partidas']:
+            for t in metadata['partidas'][c]:
+                for j in metadata['partidas'][c][t]:
+                    f = metadata['partidas'][c][t][j]['failed']
+                    if len(f)>0:
+                        failed.append([c, t, j, f])
+        columns = ['campeonato', 'temporada', 'jogo_id', 'failed']
+        self.df_partidas_failed = pd.DataFrame(
+                                               failed, 
+                                               columns=columns
+                                              )
+        
     
     def warning_types(self):
         """
