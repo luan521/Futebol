@@ -263,7 +263,8 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">important_functions</span> <span class="o">=</span> <span class="p">[</span>
                                     <span class="s1">&#39;etl.data_lake.partidas_campeonato.partidas_campeonato&#39;</span><span class="p">,</span>
-                                    <span class="s1">&#39;utils.loop_try.loop_try&#39;</span>
+                                    <span class="s1">&#39;utils.loop_try.loop_try&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;queries.Partida.__init__&#39;</span>
                                    <span class="p">]</span>
         <span class="c1"># dataframe from logs</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
@@ -400,8 +401,8 @@
                                             <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">df_error</span>
                         <span class="p">}</span>
     <span class="n">response</span><span class="p">[</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                           <span class="n">f</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">df_error</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">important_functions</span> 
-                                            <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">df_warning</span>
+                           <span class="n">f</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">df_warning</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">important_functions</span> 
+                                                <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">df_warning</span>
                           <span class="p">}</span>
     <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>

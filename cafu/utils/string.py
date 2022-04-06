@@ -62,3 +62,38 @@ def convert_str_var_time(init, end):
         runtime_str = f'{seconds} seconds'
         
     return runtime_str
+
+def filter_string_in_df(df, column, strings, map_string = lambda string:string):
+    """
+    Filtra o dataframe <df>, procurando valores na coluna <column> contendo 
+    map_string(<s>), para todos s em <strings>
+    
+    Args:
+        df: (pandas dataframe) 
+        column: (str) coluna do dataframe <df>
+        strings: (list) lista de strings
+        map_string: (function) args <string>, return str
+    Returns:
+         pandas dataframe: linhas do dataframe <df>, tais que map_string(<s>) 
+         está contida na coluna<column>, para algum <s> em <strings>
+    """
+    
+    def filter_column(strings):
+        def f(line):
+            response = False
+            for s in strings:
+                if map_string(s) in line:
+                    response = True
+            return response
+        return f
+    
+    index_filter = (
+                       df
+                       [column]
+                       .apply(filter_column(strings))
+                   )
+    
+    response = df[index_filter]
+    response.index = range(response.shape[0])
+    
+    return response

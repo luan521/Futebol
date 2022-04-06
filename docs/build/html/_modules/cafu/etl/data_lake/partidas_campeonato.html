@@ -326,11 +326,11 @@
                     <span class="n">schema</span> <span class="o">=</span> <span class="n">get_schema</span><span class="p">(</span><span class="s1">&#39;partidas_resumo&#39;</span><span class="p">)</span>
                     <span class="n">df_resumo</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_resumo&#39;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.update_partidas: &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;Could not create dataframe df_resumo. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;campeonato&gt;=</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">, &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_resumo&#39;</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="c1"># dataframe df_jogadores</span>
                     <span class="n">jogadores</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">jogadores</span><span class="p">()</span>
@@ -353,11 +353,11 @@
                     <span class="n">schema</span> <span class="o">=</span> <span class="n">get_schema</span><span class="p">(</span><span class="s1">&#39;partidas_jogadores_minutagens&#39;</span><span class="p">)</span>
                     <span class="n">df_jogadores</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">df_jogadores</span><span class="o">.</span><span class="n">collect</span><span class="p">(),</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_jogadores&#39;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.update_partidas: &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;Could not create dataframe df_jogadores. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;campeonato&gt;=</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">, &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_jogadores&#39;</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="c1"># dataframe df_gols</span>
                     <span class="n">gols</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">gols</span><span class="p">()</span>
@@ -402,11 +402,11 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">df_gols</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_gols&#39;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.update_partidas: &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;Could not create dataframe df_gols. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;campeonato&gt;=</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">, &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_gols&#39;</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="c1"># dataframe df_minuto_a_minuto</span>
                     <span class="n">minuto_a_minuto</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">minuto_a_minuto</span><span class="p">()</span>
@@ -420,11 +420,11 @@
                     <span class="n">schema</span> <span class="o">=</span> <span class="n">get_schema</span><span class="p">(</span><span class="s1">&#39;partidas_descricoes&#39;</span><span class="p">)</span>
                     <span class="n">df_minuto_a_minuto</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">df_minuto_a_minuto</span><span class="o">.</span><span class="n">collect</span><span class="p">(),</span> <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_minuto_a_minuto&#39;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR etl.data_lake.partidas_campeonato.update_partidas: &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;Could not create dataframe df_minuto_a_minuto. &quot;</span>
                                   <span class="sa">f</span><span class="s2">&quot;&lt;campeonato&gt;=</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, &lt;temporada&gt;=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">, &lt;jogo_id&gt;=</span><span class="si">{</span><span class="n">jogo_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-                    <span class="n">failed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;df_minuto_a_minuto&#39;</span><span class="p">)</span>
                 <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Finalizado&#39;</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
                     <span class="c1"># checkando se o erro foi ocasionando </span>
@@ -474,11 +474,27 @@
                 <span class="n">r</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_datalake</span><span class="o">+</span><span class="s1">&#39;/metadata.json&#39;</span><span class="p">)</span>
                 <span class="n">metadata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> 
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                                                           <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;evaluation&#39;</span><span class="p">,</span> 
-                                                           <span class="s1">&#39;status_partida&#39;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
-                                                           <span class="s1">&#39;failed&#39;</span><span class="p">:</span> <span class="n">failed</span>
-                                                          <span class="p">}</span>
+                    <span class="c1"># garantindo uma tentativa a mais em caso de erro</span>
+                    <span class="k">if</span> <span class="n">jogo_id</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;retry&#39;</span><span class="p">:</span>
+                            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                                                   <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;evaluation&#39;</span><span class="p">,</span> 
+                                                                   <span class="s1">&#39;status_partida&#39;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                                                                   <span class="s1">&#39;failed&#39;</span><span class="p">:</span> <span class="n">failed</span>
+                                                                  <span class="p">}</span>
+                        <span class="k">elif</span> <span class="p">((</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">][</span><span class="s1">&#39;status_partida&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;Cancelado&#39;</span><span class="p">)</span>
+                              <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)):</span>
+                            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                                                   <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;retry&#39;</span><span class="p">,</span> 
+                                                                   <span class="s1">&#39;status_partida&#39;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                                                                   <span class="s1">&#39;failed&#39;</span><span class="p">:</span> <span class="n">failed</span>
+                                                                  <span class="p">}</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                                               <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;evaluation&#39;</span><span class="p">,</span> 
+                                                               <span class="s1">&#39;status_partida&#39;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                                                               <span class="s1">&#39;failed&#39;</span><span class="p">:</span> <span class="n">failed</span>
+                                                              <span class="p">}</span>
                 <span class="k">except</span><span class="p">:</span>
                     <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
                     <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;partidas&#39;</span><span class="p">][</span><span class="n">c</span><span class="p">][</span><span class="n">t</span><span class="p">][</span><span class="n">jogo_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>

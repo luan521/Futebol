@@ -154,7 +154,7 @@ def partidas_desatualizadas():
         jogos_atualizados = []
         try:
             for j in metadata_datalake['partidas'][c[0]][c[1]]:
-                if metadata_datalake['partidas'][c[0]][c[1]][str(j)]['status'] != 'failed':
+                if metadata_datalake['partidas'][c[0]][c[1]][str(j)]['status'] not in ('failed', 'retry'):
                     jogos_atualizados.append(int(j))
         except:
             pass

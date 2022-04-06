@@ -131,6 +131,41 @@
         <span class="n">runtime_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">seconds</span><span class="si">}</span><span class="s1"> seconds&#39;</span>
         
     <span class="k">return</span> <span class="n">runtime_str</span></div>
+
+<div class="viewcode-block" id="filter_string_in_df"><a class="viewcode-back" href="../../../module/cafu.utils.html#cafu.utils.string.filter_string_in_df">[docs]</a><span class="k">def</span> <span class="nf">filter_string_in_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">strings</span><span class="p">,</span> <span class="n">map_string</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">string</span><span class="p">:</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filtra o dataframe &lt;df&gt;, procurando valores na coluna &lt;column&gt; contendo </span>
+<span class="sd">    map_string(&lt;s&gt;), para todos s em &lt;strings&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df: (pandas dataframe) </span>
+<span class="sd">        column: (str) coluna do dataframe &lt;df&gt;</span>
+<span class="sd">        strings: (list) lista de strings</span>
+<span class="sd">        map_string: (function) args &lt;string&gt;, return str</span>
+<span class="sd">    Returns:</span>
+<span class="sd">         pandas dataframe: linhas do dataframe &lt;df&gt;, tais que map_string(&lt;s&gt;) </span>
+<span class="sd">         está contida na coluna&lt;column&gt;, para algum &lt;s&gt; em &lt;strings&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">filter_column</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">map_string</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">response</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">return</span> <span class="n">f</span>
+    
+    <span class="n">index_filter</span> <span class="o">=</span> <span class="p">(</span>
+                       <span class="n">df</span>
+                       <span class="p">[</span><span class="n">column</span><span class="p">]</span>
+                       <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">filter_column</span><span class="p">(</span><span class="n">strings</span><span class="p">))</span>
+                   <span class="p">)</span>
+    
+    <span class="n">response</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">index_filter</span><span class="p">]</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">response</span></div>
 </pre></div>
 
            </div>

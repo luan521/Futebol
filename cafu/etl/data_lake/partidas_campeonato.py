@@ -257,11 +257,11 @@ def update_partidas(spark):
                     schema = get_schema('partidas_resumo')
                     df_resumo = spark.createDataFrame(data, schema=schema)
                 except Exception as err:
+                    failed.append('df_resumo')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
                                   f"Could not create dataframe df_resumo. "
                                   f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
                     logging.error(err)
-                    failed.append('df_resumo')
                 try:
                     # dataframe df_jogadores
                     jogadores = req.jogadores()
@@ -284,11 +284,11 @@ def update_partidas(spark):
                     schema = get_schema('partidas_jogadores_minutagens')
                     df_jogadores = spark.createDataFrame(df_jogadores.collect(), schema=schema)
                 except Exception as err:
+                    failed.append('df_jogadores')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
                                   f"Could not create dataframe df_jogadores. "
                                   f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
                     logging.error(err)
-                    failed.append('df_jogadores')
                 try:
                     # dataframe df_gols
                     gols = req.gols()
@@ -333,11 +333,11 @@ def update_partidas(spark):
                     else:
                         df_gols = None
                 except Exception as err:
+                    failed.append('df_gols')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
                                   f"Could not create dataframe df_gols. "
                                   f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
                     logging.error(err)
-                    failed.append('df_gols')
                 try:
                     # dataframe df_minuto_a_minuto
                     minuto_a_minuto = req.minuto_a_minuto()
@@ -351,11 +351,11 @@ def update_partidas(spark):
                     schema = get_schema('partidas_descricoes')
                     df_minuto_a_minuto = spark.createDataFrame(df_minuto_a_minuto.collect(), schema=schema)
                 except Exception as err:
+                    failed.append('df_minuto_a_minuto')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
                                   f"Could not create dataframe df_minuto_a_minuto. "
                                   f"<campeonato>={c}, <temporada>={t}, <jogo_id>={jogo_id}")
                     logging.error(err)
-                    failed.append('df_minuto_a_minuto')
                 status = 'Finalizado'
                 if len(failed)>0:
                     # checkando se o erro foi ocasionando 
@@ -405,11 +405,27 @@ def update_partidas(spark):
                 r = open(path_datalake+'/metadata.json')
                 metadata = json.load(r) 
                 try:
-                    metadata['partidas'][c][t][jogo_id] = {
-                                                           'status': 'evaluation', 
-                                                           'status_partida': status,
-                                                           'failed': failed
-                                                          }
+                    # garantindo uma tentativa a mais em caso de erro
+                    if jogo_id in metadata['partidas'][c][t]:
+                        if metadata['partidas'][c][t][jogo_id]['status'] == 'retry':
+                            metadata['partidas'][c][t][jogo_id] = {
+                                                                   'status': 'evaluation', 
+                                                                   'status_partida': status,
+                                                                   'failed': failed
+                                                                  }
+                        elif ((metadata['partidas'][c][t][jogo_id]['status_partida'] != 'Cancelado')
+                              and (len(failed)>0)):
+                            metadata['partidas'][c][t][jogo_id] = {
+                                                                   'status': 'retry', 
+                                                                   'status_partida': status,
+                                                                   'failed': failed
+                                                                  }
+                    else:
+                        metadata['partidas'][c][t][jogo_id] = {
+                                                               'status': 'evaluation', 
+                                                               'status_partida': status,
+                                                               'failed': failed
+                                                              }
                 except:
                     metadata['partidas'][c][t] = {}
                     metadata['partidas'][c][t][jogo_id] = {

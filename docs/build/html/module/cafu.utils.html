@@ -264,6 +264,30 @@ quando as colunas &lt;columns_unique&gt; do dataframe histórico, possuem os mes
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="cafu.utils.string.filter_string_in_df">
+<span class="sig-prename descclassname"><span class="pre">cafu.utils.string.</span></span><span class="sig-name descname"><span class="pre">filter_string_in_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_string=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/string.html#filter_string_in_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.string.filter_string_in_df" title="Permalink to this definition"></a></dt>
+<dd><p>Filtra o dataframe &lt;df&gt;, procurando valores na coluna &lt;column&gt; contendo
+map_string(&lt;s&gt;), para todos s em &lt;strings&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – (pandas dataframe)</p></li>
+<li><p><strong>column</strong> – (str) coluna do dataframe &lt;df&gt;</p></li>
+<li><p><strong>strings</strong> – (list) lista de strings</p></li>
+<li><p><strong>map_string</strong> – (function) args &lt;string&gt;, return str</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>linhas do dataframe &lt;df&gt;, tais que map_string(&lt;s&gt;)
+está contida na coluna&lt;column&gt;, para algum &lt;s&gt; em &lt;strings&gt;</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="cafu.utils.string.identify_string_in_list">
 <span class="sig-prename descclassname"><span class="pre">cafu.utils.string.</span></span><span class="sig-name descname"><span class="pre">identify_string_in_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_strings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/utils/string.html#identify_string_in_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.utils.string.identify_string_in_list" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">

@@ -194,7 +194,8 @@ class ValidateExecution():
         
         self.important_functions = [
                                     'etl.data_lake.partidas_campeonato.partidas_campeonato',
-                                    'utils.loop_try.loop_try'
+                                    'utils.loop_try.loop_try',
+                                    'queries.Partida.__init__'
                                    ]
         # dataframe from logs
         lines = []
@@ -331,7 +332,7 @@ def first_validation_execution():
                                             if f in val.df_error
                         }
     response['warning'] = {
-                           f: val.df_error[f] for f in val.important_functions 
-                                            if f in val.df_warning
+                           f: val.df_warning[f] for f in val.important_functions 
+                                                if f in val.df_warning
                           }
     return response
