@@ -99,7 +99,7 @@ def initialize_datalake():
         
 def proximas_partidas():
     """
-    Análisa datalake.jogos_ids, e retorna as datas das próximas partidas dos campeonatos em aberto,
+    Analisa datalake.jogos_ids, e retorna as datas das próximas partidas dos campeonatos em aberto,
     ou se o campeonato já foi finalizado
         
     Returns:
@@ -129,7 +129,7 @@ def proximas_partidas():
 
 def partidas_desatualizadas():
     """
-    Análisa datalake.jogos_ids e datalake.metadata, e retorna os jogos desatualizados em 
+    Analisa datalake.jogos_ids e datalake.metadata, e retorna os jogos desatualizados em 
     datalake.partidas, datalake.descricoes_partidas
         
     Returns:
@@ -171,7 +171,7 @@ def partidas_desatualizadas():
 
 def jogos_ids_jogadores_desatualizados():
     """
-    Análisa datalake.metadata['partidas'] e datalake.metadata['jogadores'], para 
+    Analisa datalake.metadata['partidas'] e datalake.metadata['jogadores'], para 
     retornar os jogos ids dos jogos em que os jogadores não foram buscados para
     atualizar datalake.jogadores
         

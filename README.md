@@ -122,5 +122,5 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
-    - notebooks.etl.sketch.Untled3: valores nulos gerados, identificar na análise automática do log
-    - update_jogadores, check null values in datalake
+    - check null values in all data bases in datalake
+    - include 1 retry in all update functions
