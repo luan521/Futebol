@@ -310,7 +310,7 @@ def first_validation_execution():
             Primeira validação da execução do código.
     
             Args:
-                day: (str) dia da execução, format 'YYYY-mm-dd'
+                day: (list of strs) dias de execuções, format 'YYYY-mm-dd'
                 Ex (dia atual): {today}
             Returns:
                  dict: funções importantes que geraram erros - quantidade de erros gerados
@@ -321,9 +321,9 @@ def first_validation_execution():
         print(help_)
         return
     else:
-        day = args[0]
+        days = args
         
-    val = ValidateExecution(day)
+    val = ValidateExecution(days)
     val.error_types()
     val.warning_types()
     response = {}

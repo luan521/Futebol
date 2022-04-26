@@ -124,3 +124,4 @@ Links e conteúdos relevantes para o projeto
 - análise automática logs
     - check null values in all data bases in datalake
     - include 1 retry in all update functions
+    - perfect retry in update_partidas, retry whenever some information is missing
