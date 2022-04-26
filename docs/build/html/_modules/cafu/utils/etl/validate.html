@@ -379,7 +379,7 @@
 <span class="s2">            Primeira validação da execução do código.</span>
 <span class="s2">    </span>
 <span class="s2">            Args:</span>
-<span class="s2">                day: (str) dia da execução, format &#39;YYYY-mm-dd&#39;</span>
+<span class="s2">                day: (list of strs) dias de execuções, format &#39;YYYY-mm-dd&#39;</span>
 <span class="s2">                Ex (dia atual): </span><span class="si">{</span><span class="n">today</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">            Returns:</span>
 <span class="s2">                 dict: funções importantes que geraram erros - quantidade de erros gerados</span>
@@ -390,9 +390,9 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">help_</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">day</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">days</span> <span class="o">=</span> <span class="n">args</span>
         
-    <span class="n">val</span> <span class="o">=</span> <span class="n">ValidateExecution</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">ValidateExecution</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
     <span class="n">val</span><span class="o">.</span><span class="n">error_types</span><span class="p">()</span>
     <span class="n">val</span><span class="o">.</span><span class="n">warning_types</span><span class="p">()</span>
     <span class="n">response</span> <span class="o">=</span> <span class="p">{}</span>
