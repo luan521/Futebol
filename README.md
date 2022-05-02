@@ -125,13 +125,20 @@ Links e conteúdos relevantes para o projeto
         - odds: parquet (por campeonato.temporada) &#9745;
 
 ## Pendencies
-- completar campeonatos nos arquivos
+- completar campeonatos nos arquivos (2 h)
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
-- análise automática logs
-    - check null values in all data bases in datalake
+- functionalities (5 h)
     - include 1 retry in all update functions
     - perfect retry in update_partidas, retry whenever some information is missing
-- melhorar doc cafu.etl.data_lake, funções de atualização
+    - create dir datalake.evolution
+        - dataframes which contains count and null values evolution, for each dataframe in datalake
+        - must be updated whenever some update function is executed
+- análise automática logs (3 h)
+    - análise dir datalake.evolution
+    - o notebook etl/prod/analise_execucao.ipynb deve estar bem documentado
+    - melhorias na função cafu.utils.etl.validate:first_validation_execution
+        - talvez alguma análise do dir datalake.evolution
+- melhorar doc cafu.etl.data_lake, funções de atualização (2 h)
     - descrever o fluxo de execução em cada função, mostrar como são definidas as informações que precisam ser atualizadas
     - mostrar como são feitas as atualizações do arquivo datalake.metadata
