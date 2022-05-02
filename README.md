@@ -91,6 +91,7 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 >> pip install .
 ```
 **Acesse a doc do código e o diretório "notebooks" para aprender as funcionalidades do projeto**
+
 Para acessar a doc do código:
 ```
 >> python
