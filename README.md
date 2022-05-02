@@ -94,8 +94,8 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 Para acessar a doc do código:
 ```
 >> python
->> from cafu import OpenDoc
->> o = OpenDoc() 
+>>> from cafu import OpenDoc
+>>> o = OpenDoc() 
 ```
 
 ## Contents
