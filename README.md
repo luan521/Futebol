@@ -90,7 +90,13 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 ```
 >> pip install .
 ```
-**Acesse docs.build.html.module e notebooks para aprender as funcionalidades do projeto**
+**Acesse a doc do código e o diretório "notebooks" para aprender as funcionalidades do projeto**
+Para acessar a doc do código:
+```
+>> python
+>> from cafu import OpenDoc
+>> o = OpenDoc() 
+```
 
 ## Contents
 Links e conteúdos relevantes para o projeto
@@ -118,10 +124,13 @@ Links e conteúdos relevantes para o projeto
         - odds: parquet (por campeonato.temporada) &#9745;
 
 ## Pendencies
-- completar campeonatos nos arquivos:
+- completar campeonatos nos arquivos
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - análise automática logs
     - check null values in all data bases in datalake
     - include 1 retry in all update functions
     - perfect retry in update_partidas, retry whenever some information is missing
+- melhorar doc cafu.etl.data_lake, funções de atualização
+    - descrever o fluxo de execução em cada função, mostrar como são definidas as informações que precisam ser atualizadas
+    - mostrar como são feitas as atualizações do arquivo datalake.metadata
