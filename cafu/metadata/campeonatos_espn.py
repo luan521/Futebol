@@ -1,5 +1,10 @@
 campeonatos = {
                'brasil': {
+                          '2022-2022': {
+                                        'nome': '2022 Brasileiro Serie A',
+                                        'id':  631112,
+                                        'qt_jogos_rodada': 10
+                                       },
                           '2021-2021': {
                                         'nome': '2021 Brasileiro Serie A',
                                         'id':  598234,
@@ -41,6 +46,38 @@ campeonatos = {
                                         'qt_jogos_rodada': 10
                                        }
                          },
+               'china': {
+                         '2021-2022': {
+                                       'nome': '2021 Superliga Chinesa, First Phase',
+                                       'id':  600421,
+                                       'qt_jogos_rodada': 8
+                                      },
+                         '2020-2021': {
+                                       'nome': '2020 Superliga Chinesa, Relegation Stage - Third Round',
+                                       'id':  587929,
+                                       'qt_jogos_rodada': 8
+                                      },
+                         '2019-2020': {
+                                       'nome': '2019 Chinese Super League',
+                                       'id':  536654,
+                                       'qt_jogos_rodada': 8
+                                      },
+                         '2018-2019': {
+                                       'nome': '2018 Chinese Super League',
+                                       'id':  507947,
+                                       'qt_jogos_rodada': 8
+                                      },
+                         '2017-2018': {
+                                       'nome': '2017 Chinese Super League',
+                                       'id':  474584,
+                                       'qt_jogos_rodada': 8
+                                      },
+                         '2016-2017': {
+                                       'nome': 'Chinese Super League',
+                                       'id':  445047,
+                                       'qt_jogos_rodada': 8
+                                      },
+                        }
                'espanha': {
                            '2021-2022': {
                                          'nome': '2021-22 LaLiga',
@@ -113,8 +150,132 @@ campeonatos = {
                                         'nome': 'Temporada regular',
                                         'id':  541893,
                                         'qt_jogos_rodada': 10
+                                       },
+                          '2018-2019': {
+                                        'nome': '2018-19 Campeonato Francês, Temporada regular',
+                                        'id':  512249,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2017-2018': {
+                                        'nome': '2017-18 Campeonato Francês, Temporada regular',
+                                        'id':  482292,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2016-2017': {
+                                        'nome': '2016-17 Campeonato Francês, Temporada regular',
+                                        'id':  449198,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2015-2016': {
+                                        'nome': 'Ligue 1 da França 2015/16',
+                                        'id':  424601,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2014-2015': {
+                                        'nome': 'Ligue 1 da França 2014/15',
+                                        'id':  393570,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2013-2014': {
+                                        'nome': '2013/2014 French Ligue 1',
+                                        'id':  369446,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2012-2013': {
+                                        'nome': '2012/2013 French Ligue 1',
+                                        'id':  342863,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2011-2012': {
+                                        'nome': '2011/2012 French Ligue 1',
+                                        'id':  320294,
+                                        'qt_jogos_rodada': 10
                                        }
-                         }
+                         },
+               'inglaterra': {
+                              '2021-2022': {
+                                            'nome': '2021-22 English Premier League',
+                                            'id':  605690,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2020-2021': {
+                                            'nome': '2020-21 English Premier League',
+                                            'id':  578573,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2019-2020': {
+                                            'nome': '2019-20 English Premier League',
+                                            'id':  541711,
+                                            'qt_jogos_rodada': 10
+                                           },  
+                              '2018-2019': {
+                                            'nome': '2018/2019 English Premier League',
+                                            'id':  513709,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2017-2018': {
+                                            'nome': '2017/2018 English Premier League',
+                                            'id':  480781,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2016-2017': {
+                                            'nome': '2016/2017 English Premier League',
+                                            'id':  450883,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2015-2016': {
+                                            'nome': 'Barclays Premier League 2015-2016',
+                                            'id':  422527,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2014-2015': {
+                                            'nome': 'Barclays Premier League 2014-2015',
+                                            'id':  395643,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2013-2014': {
+                                            'nome': 'Barclays Premier League 2013-2014',
+                                            'id':  367363,
+                                            'qt_jogos_rodada': 10
+                                           },
+                              '2012-2013': {
+                                            'nome': 'Barclays Premier League 2012-2013',
+                                            'id':  345731,
+                                            'qt_jogos_rodada': 10
+                                           }
+                             },
+               'portugal': {
+                            '2021-2022': {
+                                          'nome': '2021-22 Portuguese Liga',
+                                          'id':  613695,
+                                          'qt_jogos_rodada': 9 
+                                         },
+                            '2020-2021': {
+                                          'nome': '2020-21 Portuguese Liga',
+                                          'id':  581695,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2019-2020': {
+                                          'nome': '2019-20 Portuguese Liga',
+                                          'id':  551453,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2018-2019': {
+                                          'nome': '2018-2019 Portuguese Liga',
+                                          'id':  520233,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2017-2018': {
+                                          'nome': '2017-2018 Portuguese Liga',
+                                          'id':  489136,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2016-2017': {
+                                          'nome': '2016/2017 Portuguese Liga',
+                                          'id':  459772,
+                                          'qt_jogos_rodada': 9
+                                         }
+                           },
               }
 
 def campeonato_espn(campeonato=None, temporada=None):
