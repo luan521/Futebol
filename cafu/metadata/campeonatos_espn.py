@@ -1,4 +1,61 @@
 campeonatos = {
+               'alemanha': {
+                            '2021-2022': {
+                                          'nome': '2021-22 German Bundesliga',
+                                          'id':  608828,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2020-2021': {
+                                          'nome': '2020-21 German Bundesliga',
+                                          'id':  576612,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2019-2020': {
+                                          'nome': '2019-20 German Bundesliga',
+                                          'id':  548258,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2018-2019': {
+                                          'nome': '2018/19 German Bundesliga',
+                                          'id':  517787,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2017-2018': {
+                                          'nome': '2017/2018 German Bundesliga',
+                                          'id':  487148,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2016-2017': {
+                                          'nome': '2016/2017 German Bundesliga',
+                                          'id':  456793,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2015-2016': {
+                                          'nome': '2015-16 Bundesliga - Campeonato Alemão, Bundesliga - Alemão 2015/16',
+                                          'id':  426999,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2014-2015': {
+                                          'nome': '2014-15 Bundesliga - Campeonato Alemão, Bundesliga Alemã - 2014/2015',
+                                          'id':  396889,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2013-2014': {
+                                          'nome': '2013-14 Bundesliga - Campeonato Alemão, 2013/2014 German Bundesliga',
+                                          'id':  369775,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2012-2013': {
+                                          'nome': '2012-13 Bundesliga - Campeonato Alemão, 2012/2013 German Bundesliga',
+                                          'id':  346271,
+                                          'qt_jogos_rodada': 9
+                                         },
+                            '2011-2012': {
+                                          'nome': '2011-12 Bundesliga - Campeonato Alemão, 2011/2012 German Bundesliga',
+                                          'id':  320919,
+                                          'qt_jogos_rodada': 9
+                                         }
+                           }, 
                'brasil': {
                           '2022-2022': {
                                         'nome': '2022 Brasileiro Serie A',
