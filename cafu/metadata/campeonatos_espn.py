@@ -301,6 +301,28 @@ campeonatos = {
                                             'qt_jogos_rodada': 10
                                            }
                              },
+               'italia': {
+                          '2021-2022': {
+                                        'nome': '2021-22 Italian Serie A',
+                                        'id':  614561,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2020-2021': {                                          
+                                        'nome': '2020-21 Italian Serie A',
+                                        'id':  583085,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2019-2020': {
+                                        'nome': '2019-20 Italian Serie A',
+                                        'id':  554444,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2018-2019': {
+                                        'nome': '2018-2019 Italian Serie A',
+                                        'id':  522693,
+                                        'qt_jogos_rodada': 10
+                                       },
+                         },
                'portugal': {
                             '2021-2022': {
                                           'nome': '2021-22 Portuguese Liga',
