@@ -322,6 +322,21 @@ campeonatos = {
                                         'id':  522693,
                                         'qt_jogos_rodada': 10
                                        },
+                          '2017-2018': {
+                                        'nome': '2017-18 Italian Serie A',
+                                        'id':  491553,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2016-2017': {
+                                        'nome': '2016-17 Italian Serie A',
+                                        'id':  461170,
+                                        'qt_jogos_rodada': 10
+                                       },
+                          '2015-2016': {
+                                        'nome': '2015-16 Italian Serie A',
+                                        'id':  432130,
+                                        'qt_jogos_rodada': 10
+                                       },
                          },
                'portugal': {
                             '2021-2022': {
