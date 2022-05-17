@@ -1,4 +1,5 @@
 dict_id_campeonato = {
+                      'alemanha': '23404-germany/23405-bundesliga',
                       'brasil': '22977-brazil/22980-brasileiro-serie-a',
                       'espanha': '22925-spain/23034-laliga',
                       'franca': '23168-france/23169-ligue-1',

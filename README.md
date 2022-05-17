@@ -125,7 +125,7 @@ Links e conteúdos relevantes para o projeto
         - odds: parquet (por campeonato.temporada) &#9745;
 
 ## Pendencies
-- completar campeonatos nos arquivos (2 h)
+- completar campeonatos nos arquivos (2 h) &#9745;
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
 - functionalities (5 h)
