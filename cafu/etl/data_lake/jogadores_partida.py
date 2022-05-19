@@ -72,7 +72,7 @@ def update_jogadores(spark):
     """
     Atualiza datalake.jogadores
     
-    .. figure:: ../../../imagens_doc/esquema_atualizacao.jpg
+    .. figure:: ../../../imagens_doc/esquema_atualizacao.png
     
     Args:
         spark: (spark session) 
