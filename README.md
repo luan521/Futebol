@@ -139,6 +139,7 @@ Links e conteúdos relevantes para o projeto
     - o notebook etl/prod/analise_execucao.ipynb deve estar bem documentado
     - melhorias na função cafu.utils.etl.validate:first_validation_execution
         - talvez alguma análise do dir datalake.evolution
-- melhorar doc cafu.etl.data_lake, funções de atualização (2 h)
+- melhorar doc cafu.etl.data_lake, funções de atualização (2 h) &#9745;
     - descrever o fluxo de execução em cada função, mostrar como são definidas as informações que precisam ser atualizadas
     - mostrar como são feitas as atualizações do arquivo datalake.metadata
+- melhorar README, Setup. Incluir a inicialização do datalake

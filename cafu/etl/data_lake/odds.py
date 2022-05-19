@@ -20,6 +20,8 @@ def update_odds(spark):
     """
     Atualiza datalake.odds
     
+    .. figure:: ../../../imagens_doc/esquema_atualizacao.jpg
+    
     Args:
         spark: (spark session) 
     """

@@ -136,6 +136,8 @@ def partidas_campeonato(campeonato, temporada):
 def update_jogos_ids():
     """
     Atualiza datalake.jogos_ids
+    
+    .. figure:: ../../../imagens_doc/esquema_atualizacao.jpg
     """
     
     logging.info("INFO etl.data_lake.partidas_campeonato.update_jogos_ids: "
@@ -185,6 +187,8 @@ def update_jogos_ids():
 def update_partidas(spark):
     """
     Atualiza datalake.partidas
+    
+    .. figure:: ../../../imagens_doc/esquema_atualizacao.jpg
     
     Args:
         spark: (spark session) 

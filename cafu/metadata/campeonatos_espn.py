@@ -134,7 +134,7 @@ campeonatos = {
                                        'id':  445047,
                                        'qt_jogos_rodada': 8
                                       },
-                        }
+                        },
                'espanha': {
                            '2021-2022': {
                                          'nome': '2021-22 LaLiga',
@@ -389,7 +389,7 @@ campeonatos = {
                                           'id':  459772,
                                           'qt_jogos_rodada': 9
                                          }
-                           },
+                           }
               }
 
 def campeonato_espn(campeonato=None, temporada=None):

@@ -130,7 +130,7 @@ def proximas_partidas():
 def partidas_desatualizadas():
     """
     Analisa datalake.jogos_ids e datalake.metadata, e retorna os jogos desatualizados em 
-    datalake.partidas, datalake.descricoes_partidas
+    datalake.partidas
         
     Returns:
         dict: campeonato, temporada - lista de jogos desatualizados
