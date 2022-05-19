@@ -90,6 +90,10 @@ Serviço para aposta automática em partidas de futebol, no site [Dafabet](https
 ```
 >> pip install .
 ```
+6. Inicializar o datalake
+```
+>> initialize_datalake
+```
 **Acesse a doc do código e o diretório notebooks (/prod) para aprender as funcionalidades do projeto**
 
 Para acessar a doc do código:
@@ -142,4 +146,3 @@ Links e conteúdos relevantes para o projeto
 - melhorar doc cafu.etl.data_lake, funções de atualização (2 h) &#9745;
     - descrever o fluxo de execução em cada função, mostrar como são definidas as informações que precisam ser atualizadas
     - mostrar como são feitas as atualizações do arquivo datalake.metadata
-- melhorar README, Setup. Incluir a inicialização do datalake
