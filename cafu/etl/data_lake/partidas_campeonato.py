@@ -257,9 +257,11 @@ def update_partidas(spark):
                              'date_update':  datetime.now()
                             }
                            ]
-
                     schema = get_schema('partidas_resumo')
                     df_resumo = spark.createDataFrame(data, schema=schema)
+                    for c in data[0]:
+                        if data[0][c] is None:
+                            failed.append(c)
                 except Exception as err:
                     failed.append('df_resumo')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
@@ -408,30 +410,36 @@ def update_partidas(spark):
                 # atualizando datalake/metadata.json
                 r = open(path_datalake+'/metadata.json')
                 metadata = json.load(r) 
-                try:
-                    # garantindo uma tentativa a mais em caso de erro
-                    if jogo_id in metadata['partidas'][c][t]:
-                        if metadata['partidas'][c][t][jogo_id]['status'] == 'retry':
-                            metadata['partidas'][c][t][jogo_id] = {
-                                                                   'status': 'evaluation', 
-                                                                   'status_partida': status,
-                                                                   'failed': failed
-                                                                  }
-                        elif ((metadata['partidas'][c][t][jogo_id]['status_partida'] != 'Cancelado')
-                              and (len(failed)>0)):
-                            metadata['partidas'][c][t][jogo_id] = {
-                                                                   'status': 'retry', 
-                                                                   'status_partida': status,
-                                                                   'failed': failed
-                                                                  }
+                # garantindo que a temporada <t> esteja definida no metadata 
+                if t not in metadata['partidas'][c]:
+                    metadata['partidas'][c][t] = {}
+                # garantindo uma tentativa a mais em caso de erro
+                if jogo_id in metadata['partidas'][c][t]:
+                    if metadata['partidas'][c][t][jogo_id]['status'] == 'retry':
+                        metadata['partidas'][c][t][jogo_id] = {
+                                                               'status': 'evaluation', 
+                                                               'status_partida': status,
+                                                               'failed': failed
+                                                              }
+                    elif status != 'Cancelado' and len(failed)>0:
+                        metadata['partidas'][c][t][jogo_id] = {
+                                                               'status': 'retry', 
+                                                               'status_partida': status,
+                                                               'failed': failed
+                                                              }
                     else:
                         metadata['partidas'][c][t][jogo_id] = {
                                                                'status': 'evaluation', 
                                                                'status_partida': status,
                                                                'failed': failed
                                                               }
-                except:
-                    metadata['partidas'][c][t] = {}
+                elif status != 'Cancelado' and len(failed)>0:
+                    metadata['partidas'][c][t][jogo_id] = {
+                                                           'status': 'retry', 
+                                                           'status_partida': status,
+                                                           'failed': failed
+                                                          }
+                else:
                     metadata['partidas'][c][t][jogo_id] = {
                                                            'status': 'evaluation', 
                                                            'status_partida': status,

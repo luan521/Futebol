@@ -149,13 +149,27 @@ def update_jogadores(spark):
                     df_jogador.write.parquet(path_datalake+
                                              f'/jogadores/df_jogador', 
                                              mode='append')
+                    failed = []
+                    for c in data[0]:
+                        if data[0][c] is None and c != 'nacionalidade':
+                            failed.append(c)
                 # atualizando datalake/metadata.json
                 r = open(path_datalake+'/metadata.json')
                 metadata = json.load(r) 
-                try:
-                    metadata['jogadores'][c][t][jogo_id] = 'evaluation'
-                except:
+                 # garantindo que a temporada <t> esteja definida no metadata 
+                if t not in metadata['jogadores'][c]:
                     metadata['jogadores'][c][t] = {}
+                # garantindo uma tentativa a mais em caso de erro
+                if jogo_id in metadata['jogadores'][c][t]:
+                    if metadata['jogadores'][c][t][jogo_id] == 'retry':
+                        metadata['jogadores'][c][t][jogo_id] = 'evaluation'
+                    elif len(failed)>0:
+                        metadata['jogadores'][c][t][jogo_id] = 'retry'
+                    else:
+                        metadata['jogadores'][c][t][jogo_id] = 'evaluation'
+                elif len(failed)>0:
+                    metadata['jogadores'][c][t][jogo_id] = 'retry'
+                else:
                     metadata['jogadores'][c][t][jogo_id] = 'evaluation'
                 with open(path_datalake+'/metadata.json', 'w') as fp:
                     json.dump(metadata, fp)

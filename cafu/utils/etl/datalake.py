@@ -192,10 +192,10 @@ def jogos_ids_jogadores_desatualizados():
                 temporada_definida = False
             jogos_desatualizados_ct = []
             jogos_ocorridos = [j for j in metadata_datalake['partidas'][c][t] 
-                                       if metadata_datalake['partidas'][c][t][j] != 'failed']
+                                       if metadata_datalake['partidas'][c][t][j]['status'] not in ('failed', 'retry')]
             if temporada_definida:
                 jogos_atualizados = [j for j in metadata_datalake['jogadores'][c][t] 
-                                             if metadata_datalake['jogadores'][c][t][j] != 'failed']
+                                             if metadata_datalake['jogadores'][c][t][j] not in ('failed', 'retry')]
                 jogos_desatualizados_ct = list(set(jogos_ocorridos).difference(jogos_atualizados))
             else:
                 jogos_desatualizados_ct = jogos_ocorridos

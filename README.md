@@ -134,7 +134,7 @@ Links e conteúdos relevantes para o projeto
     - cafu.metadata.campeonatos_dafabet
 - functionalities (5 h)
     - include 1 retry in all update functions
-    - perfect retry in update_partidas, retry whenever some information is missing
+    - perfect retry in update_partidas, retry whenever some information is missing &#9745;
     - create dir datalake.evolution
         - dataframes which contains count and null values evolution, for each dataframe in datalake
         - must be updated whenever some update function is executed
