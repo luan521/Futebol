@@ -18,7 +18,7 @@ logging.basicConfig(filename=filename,
 
 def update_odds(spark):
     """
-    Atualiza datalake.odds
+    Atualiza datalake.odds. Atualiza os campeonatos que possuem jogos na data atual ou no dia seguinte
     
     .. figure:: ../../../imagens_doc/esquema_atualizacao.png
     
