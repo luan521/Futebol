@@ -21,6 +21,7 @@ def initialize_datalake():
     Prepara o diretório do datalake
     
     ```
+    ├── evolution_null_values
     ├── jogadores
     ├── jogos_ids
     ├── partidas
@@ -41,6 +42,13 @@ def initialize_datalake():
         os.mkdir(path_datalake+f'/partidas/partidas_canceladas')
         os.mkdir(path_datalake+f'/odds')
         os.mkdir(path_datalake+'/jogadores')
+        os.mkdir(path_datalake+f'/evolution_null_values')
+        os.mkdir(path_datalake+f'/evolution_null_values/partidas')
+        os.mkdir(path_datalake+f'/evolution_null_values/partidas/resumo')
+        os.mkdir(path_datalake+f'/evolution_null_values/partidas/descricoes')
+        os.mkdir(path_datalake+f'/evolution_null_values/partidas/gols')
+        os.mkdir(path_datalake+f'/evolution_null_values/partidas/jogadores_minutagens')
+        os.mkdir(path_datalake+f'/evolution_null_values/jogadores')
         campeonatos = list(campeonatos.keys())
         for c in campeonatos:
             os.mkdir(path_datalake+f'/jogos_ids/{c}')
@@ -48,6 +56,10 @@ def initialize_datalake():
             os.mkdir(path_datalake+f'/partidas/descricoes/{c}')
             os.mkdir(path_datalake+f'/partidas/gols/{c}')
             os.mkdir(path_datalake+f'/partidas/jogadores_minutagens/{c}')
+            os.mkdir(path_datalake+f'/evolution_null_values/partidas/resumo/{c}')
+            os.mkdir(path_datalake+f'/evolution_null_values/partidas/descricoes/{c}')
+            os.mkdir(path_datalake+f'/evolution_null_values/partidas/gols/{c}')
+            os.mkdir(path_datalake+f'/evolution_null_values/partidas/jogadores_minutagens/{c}')
         campeonatos = campeonato_dafabet()
         campeonatos = list(campeonatos.keys())
         campeonatos = set([c.split('-')[0] for c in campeonatos])
@@ -68,18 +80,43 @@ def initialize_datalake():
         for c in campeonatos:
             df_resumo.write.parquet(path_datalake+
                                     f'/partidas/resumo/{c}/df_resumo')
+            (
+                pd.DataFrame(columns=df_resumo.columns)
+                .to_csv(path_datalake+
+                        f'/evolution_null_values/partidas/resumo/{c}/df_resumo.csv')
+            )
             df_jogadores.write.parquet(path_datalake+
                                        f'/partidas/jogadores_minutagens/{c}/df_jogadores')
+            (
+                pd.DataFrame(columns=df_jogadores.columns)
+                .to_csv(path_datalake+
+                        f'/evolution_null_values/partidas/jogadores_minutagens/{c}/df_jogadores.csv')
+            )
             df_gols.write.parquet(path_datalake+
                                   f'/partidas/gols/{c}/df_gols')
+            (
+                pd.DataFrame(columns=df_gols.columns)
+                .to_csv(path_datalake+
+                        f'/evolution_null_values/partidas/gols/{c}/df_gols.csv')
+            )
             df_minuto_a_minuto.write.parquet(path_datalake+
                                              f'/partidas/descricoes/{c}/df_minuto_a_minuto')
+            (
+                pd.DataFrame(columns=df_minuto_a_minuto.columns)
+                .to_csv(path_datalake+
+                        f'/partidas/descricoes/{c}/df_minuto_a_minuto.csv')
+            )
         schema = get_schema('partidas_canceladas')
         df_partidas_canceladas = spark.createDataFrame(data=[], schema=schema)
         df_partidas_canceladas.write.parquet(path_datalake+'/partidas/partidas_canceladas/df_canceladas')
         schema = get_schema('jogadores')
         df_jogadores = spark.createDataFrame(data=[], schema=schema)
         df_jogadores.write.parquet(path_datalake+'/jogadores/df_jogadores')
+        (
+            pd.DataFrame(columns=df_jogadores.columns)
+            .to_csv(path_datalake+
+                    '/evolution_null_values/jogadores/df_jogadores.csv')
+        )
             
         # criando arquivo metadata
         campeonatos = campeonato_espn()

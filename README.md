@@ -132,10 +132,10 @@ Links e conteúdos relevantes para o projeto
 - completar campeonatos nos arquivos (2 h) &#9745;
     - cafu.metadata.campeonatos_espn
     - cafu.metadata.campeonatos_dafabet
-- functionalities (5 h)
-    - include 1 retry in all update functions &#9745;
-    - perfect retry in update_partidas, retry whenever some information is missing &#9745;
-    - create dir datalake.evolution
+- functionalities (5 h) &#9745;
+    - include 1 retry in all update functions 
+    - perfect retry in update_partidas, retry whenever some information is missing 
+    - create dir datalake.evolution 
         - dataframes which contains count and null values evolution, for each dataframe in datalake
         - must be updated whenever some update function is executed
 - análise automática logs (3 h)

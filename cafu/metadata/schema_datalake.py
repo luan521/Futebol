@@ -82,17 +82,11 @@ schema_datalake = {
 
 f"""
 Local paths of databases in <schema_datalake>:
-
 - partidas_resumo: {path_datalake}/partidas/resumo
-
 - partidas_descricoes: {path_datalake}/partidas/descricoes
-
 - partidas_gols: {path_datalake}/partidas/gols
-
 - partidas_jogadores_minutagens: {path_datalake}/partidas/jogadores_minutagens
-
 - partidas_canceladas: {path_datalake}/partidas/partidas_canceladas
-
 - jogadores: {path_datalake}/jogadores
 """
 

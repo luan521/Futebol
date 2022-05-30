@@ -122,6 +122,30 @@
 </dd></dl>
 
 </section>
+<section id="module-cafu.etl.data_lake.null_values">
+<span id="cafu-etl-data-lake-null-values-module"></span><h2>cafu.etl.data_lake.null_values module<a class="headerlink" href="#module-cafu.etl.data_lake.null_values" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.etl.data_lake.null_values._count_null_values">
+<span class="sig-prename descclassname"><span class="pre">cafu.etl.data_lake.null_values.</span></span><span class="sig-name descname"><span class="pre">_count_null_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/etl/data_lake/null_values.html#_count_null_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.etl.data_lake.null_values._count_null_values" title="Permalink to this definition"></a></dt>
+<dd><p>Método interno da biblioteca cafu.
+Conta a quantidade de valores nulos no dataframe &lt;df&gt;, com exceção da coluna date_update</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cafu.etl.data_lake.null_values.update_null_values">
+<span class="sig-prename descclassname"><span class="pre">cafu.etl.data_lake.null_values.</span></span><span class="sig-name descname"><span class="pre">update_null_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cafu/etl/data_lake/null_values.html#update_null_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cafu.etl.data_lake.null_values.update_null_values" title="Permalink to this definition"></a></dt>
+<dd><p>Atualiza a quantidade de valores nulos nos dataframes de &lt;info&gt;, em datalake/evolution_null_values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spark</strong> – (spark session)</p></li>
+<li><p><strong>info</strong> – (str) partidas or jogadores</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-cafu.etl.data_lake.odds">
 <span id="cafu-etl-data-lake-odds-module"></span><h2>cafu.etl.data_lake.odds module<a class="headerlink" href="#module-cafu.etl.data_lake.odds" title="Permalink to this headline"></a></h2>
 <dl class="py function">
