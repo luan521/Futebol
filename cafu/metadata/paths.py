@@ -6,7 +6,7 @@ paths = {
          'credentials': '/home/luan/futebol/credentials',
          'logs_cafu': '/home/luan/futebol/logs_cafu',
          'dir_results': '/home/luan/futebol/testes',
-         'datalake': '/home/luan/futebol/datalake_teste'
+         'datalake': '/home/luan/futebol/datalake'
         }
 
 """
