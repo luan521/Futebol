@@ -103,38 +103,6 @@ campeonatos = {
                                         'qt_jogos_rodada': 10
                                        }
                          },
-               'china': {
-                         '2021-2022': {
-                                       'nome': '2021 Superliga Chinesa, First Phase',
-                                       'id':  600421,
-                                       'qt_jogos_rodada': 8
-                                      },
-                         '2020-2021': {
-                                       'nome': '2020 Superliga Chinesa, Relegation Stage - Third Round',
-                                       'id':  587929,
-                                       'qt_jogos_rodada': 8
-                                      },
-                         '2019-2020': {
-                                       'nome': '2019 Chinese Super League',
-                                       'id':  536654,
-                                       'qt_jogos_rodada': 8
-                                      },
-                         '2018-2019': {
-                                       'nome': '2018 Chinese Super League',
-                                       'id':  507947,
-                                       'qt_jogos_rodada': 8
-                                      },
-                         '2017-2018': {
-                                       'nome': '2017 Chinese Super League',
-                                       'id':  474584,
-                                       'qt_jogos_rodada': 8
-                                      },
-                         '2016-2017': {
-                                       'nome': 'Chinese Super League',
-                                       'id':  445047,
-                                       'qt_jogos_rodada': 8
-                                      },
-                        },
                'espanha': {
                            '2021-2022': {
                                          'nome': '2021-22 LaLiga',

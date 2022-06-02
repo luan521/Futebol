@@ -172,16 +172,16 @@ def update_jogos_ids():
             metadata['jogos_ids'][camp][temporada] = 'evaluation'
             with open(path('datalake')+'/metadata.json', 'w') as fp:
                 json.dump(metadata, fp)
-            logging.info(f"INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+            logging.info(f"INFO etl.data_lake.partidas_campeonato.update_jogos_ids: "
                          f"Update league {camp} | {temporada}.")
         except Exception as err:
-            logging.error("ERROR etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+            logging.error("ERROR etl.data_lake.partidas_campeonato.update_jogos_ids: "
                           f"Could not update league {camp} | {temporada}")
             logging.error(err)
             return
         
     if len(campeonatos)==0:    
-        logging.info("INFO etl.data_lake.partidas_campeonato.update_partidas_campeonato: "
+        logging.info("INFO etl.data_lake.partidas_campeonato.update_jogos_ids: "
                      "All leagues already up to date")
         
 def update_partidas(spark):
@@ -259,9 +259,9 @@ def update_partidas(spark):
                            ]
                     schema = get_schema('partidas_resumo')
                     df_resumo = spark.createDataFrame(data, schema=schema)
-                    for c in data[0]:
-                        if data[0][c] is None:
-                            failed.append(c)
+                    for column in data[0]:
+                        if data[0][column] is None:
+                            failed.append(column)
                 except Exception as err:
                     failed.append('df_resumo')
                     logging.error(f"ERROR etl.data_lake.partidas_campeonato.update_partidas: "
