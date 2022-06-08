@@ -12,6 +12,34 @@ logging.basicConfig(filename=filename,
                     datefmt='%d/%m/%Y %I:%M:%S %p',
                     level=logging.INFO)
 
+def _dates_between(start_datetime, end_datetime):
+    """
+    Método interno da biblioteca cafu.
+    Computa as datas dos dias no intervalo [<start_datetime>, <end_datetime>]
+    
+    Args:
+        start_datetime: (str) data inicial, no formato %Y%m%d ou %Y-%m-%d
+        end_datetime: (str) data final, no formato %Y%m%d ou %Y-%m-%d
+    Returns:
+        list: todas as datas, no formato %Y%m%d, entre a data inicial e a data final
+    """
+    dates = list(pd.date_range(start_datetime, end_datetime))
+    
+    list_dates = []
+    for date in dates:         
+        # Convertendo a data para o formato desejado
+        year = str(date.year)
+        month = str(date.month)
+        if len(month) == 1:
+            month = '0'+month
+        day = str(date.day)
+        if len(day) == 1:
+            day = '0'+day
+        
+        list_dates.append(year+'-'+month+'-'+day)
+    
+    return list_dates
+
 def _validate_invalidate_datalake(success_failed, args):
     """
     Método interno da biblioteca cafu.
@@ -187,10 +215,11 @@ class ValidateExecution():
     no método <self.print_description_error>
     
     Args:
-        days: (list of strs) dias de execuções, format 'YYYY-mm-dd'
+        start_datetime: (str) dia inicial de execução, format 'YYYY-mm-dd'
+        end_datetime: (str) dia final de execução, format 'YYYY-mm-dd'
     """
     
-    def __init__(self, days):
+    def __init__(self, start_datetime, end_datetime):
         
         self.important_functions = [
                                     'etl.data_lake.partidas_campeonato.partidas_campeonato',
@@ -198,13 +227,17 @@ class ValidateExecution():
                                     'queries.Partida.__init__'
                                    ]
         # dataframe from logs
+        days = _dates_between(start_datetime, end_datetime)
         lines = []
         for day in days:
             log_path = path('logs_cafu')+'/logs.txt'
             log_path = log_path[:29]+day+log_path[39:]
-            with open(log_path) as f:
-                lines_day = f.read().split('\n')
-            lines = lines + lines_day
+            try:
+                with open(log_path) as f:
+                    lines_day = f.read().split('\n')
+                lines = lines + lines_day
+            except:
+                pass
         columns = ['date', 'type', 'function', 'description1', 'description2']
         types = ['INFO', 'SUCCESS', 'P-1 SUCCESS','WARNING', 'ERROR']
         data = []
@@ -221,7 +254,10 @@ class ValidateExecution():
                 description1 = div[1].split(function+': ')[1]
                 data.append([date, type_, function, description1, []])
             except:
-                data[-1][-1].append(lines[i])
+                try:
+                    data[-1][-1].append(lines[i])
+                except:
+                    pass
         self.df_log = pd.DataFrame(data, columns=columns)
         
         # dataframe from metadata.partidas datalake
