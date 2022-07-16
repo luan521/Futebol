@@ -2,11 +2,11 @@ import os
 from datetime import date
 
 paths = {
-         'initial_path': '/home/luan/futebol/Futebol',
-         'credentials': '/home/luan/futebol/credentials',
-         'logs_cafu': '/home/luan/futebol/logs_cafu',
-         'dir_results': '/home/luan/futebol/testes',
-         'datalake': '/home/luan/futebol/datalake'
+         'initial_path': '/Users/luanhenriquecosta/futebol/Futebol',
+         'credentials': '/Users/luanhenriquecosta/futebol/credentials',
+         'logs_cafu': '/Users/luanhenriquecosta/futebol/logs_cafu',
+         'dir_results': '/Users/luanhenriquecosta/futebol/testes',
+         'datalake': '/Users/luanhenriquecosta/futebol/datalake'
         }
 
 """

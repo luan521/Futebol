@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import json
 from datetime import date
-from cafu.utils.spark_delta import get_spark
+from cafu.utils.spark import get_spark
 from cafu.metadata.schema_datalake import get_schema
 from cafu.metadata.campeonatos_espn import campeonato_espn
 from cafu.metadata.campeonatos_dafabet import campeonato_dafabet
